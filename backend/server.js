@@ -16,7 +16,7 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/users', require('./routes/users'));
 
 // Serve frontend
-app.use(express.static(path.join(__dirname, '../public')));
+app.use('/', express.static(path.join(__dirname, '../public')));
 app.use('/admin', express.static(path.join(__dirname, '../admin')));
 
 // SPA fallback
