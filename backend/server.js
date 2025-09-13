@@ -15,22 +15,25 @@ app.use(express.json());
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/users', require('./routes/users'));
 
-// Serve frontend
-app.use('/', express.static(path.join(__dirname, '../public')));
-app.use('/admin', express.static(path.join(__dirname, '../admin')));
+// Define absolute paths
+const publicPath = path.resolve(__dirname, '../public');
+const adminPath = path.resolve(__dirname, '../admin');
 
-// SPA fallback (works in Express 5+)
+console.log("Public path:", path.join(publicPath, 'index.html'));
+console.log("Admin path:", path.join(adminPath, 'index.html'));
+
+// Serve static
+app.use('/', express.static(publicPath));
+app.use('/admin', express.static(adminPath));
+
+// SPA fallback
 app.get(/.*/, (req, res) => {
   if (req.originalUrl.startsWith('/admin')) {
-    res.sendFile(path.resolve(__dirname, '../admin/index.html'));
+    res.sendFile(path.join(adminPath, 'index.html'));
   } else {
-    res.sendFile(path.resolve(__dirname, '../public/index.html'));
+    res.sendFile(path.join(publicPath, 'index.html'));
   }
 });
 
-
-console.log("Public path:", path.resolve(__dirname, '../public/index.html'));
-console.log("Admin path:", path.resolve(__dirname, '../admin/index.html'));
-
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
