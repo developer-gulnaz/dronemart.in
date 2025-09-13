@@ -2,7 +2,7 @@
 const API_BASE_URL =
   window.location.hostname === "localhost"
     ? "http://localhost:5000/api"
-    : "https://yourdomain.com/api";
+    : "/api";
 
 document.addEventListener("DOMContentLoaded", () => {
   const name = localStorage.getItem("name");
