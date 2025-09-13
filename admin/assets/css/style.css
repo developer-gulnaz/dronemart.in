@@ -28,6 +28,9 @@
     --light-color: #f8f9fa;
 }
 
+a{
+    text-decoration: none;
+}
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f5f7fb;
@@ -230,7 +233,7 @@ body {
 /* Topbar Styles */
 .topbar {
     background-color: white;
-    padding: 15px 20px;
+    padding: 0 20px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     margin-bottom: 20px;
@@ -256,8 +259,8 @@ body {
 
 .profile-dropdown {
     position: absolute;
-    top: 15%;
-    right: 5px;
+    top: 18%;
+    right: 7px;
     background: white;
     border-radius: 8px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);

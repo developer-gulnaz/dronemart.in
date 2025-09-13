@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DroneMart Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+</head>
+
+<body>
+
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h4>DroneMart Admin</h4>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="bi bi-arrow-left-circle"></i>
+            </button>
+        </div>
+        <ul class="sidebar-menu">
+            <li>
+                <a href="dashboard.html" class="active">
+                    <i class="bi bi-speedometer2"></i>
+                    <span class="menu-text">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="users.html">
+                    <i class="bi bi-people"></i>
+                    <span class="menu-text">Users</span>
+                </a>
+            </li>
+            <li>
+                <a href="leads.html">
+                    <i class="bi bi-people-fill"></i>
+                    <span class="menu-text">Leads</span>
+                </a>
+            </li>
+            <li>
+                <a href="orders.html">
+                    <i class="bi bi-cart"></i>
+                    <span class="menu-text">Orders</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="bi bi-graph-up"></i>
+                    <span class="menu-text">Analytics</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="bi bi-gear"></i>
+                    <span class="menu-text">Settings</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Topbar / Header -->
+        <div class="topbar">
+            <button class="hamburger" id="hamburger">
+                <i class="bi bi-list"></i>
+            </button>
+            <h4 class="mb-0">Users</h4>
+            <div class="profile p-3" id="profileToggle">
+                <div class="d-flex align-items-center">
+                    <img src="https://ui-avatars.com/api/?name=User&background=random" alt="Profile"
+                        class="rounded-circle me-2" width="40" height="40">
+                    <div class="d-none d-md-block">
+                        <div class="fw-bold" id="adminName">User</div>
+                        <small class="text-muted" id="userType">Guest</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Dropdown -->
+            <div class="profile-dropdown" id="profileDropdown">
+                <div class="dropdown-item">
+                    <i class="bi bi-person"></i> Profile
+                </div>
+                <div class="dropdown-item">
+                    <i class="bi bi-gear"></i> Settings
+                </div>
+                <div class="dropdown-item">
+                    <i class="bi bi-bell"></i> Notifications
+                </div>
+                <hr>
+                <div class="dropdown-item" id="logoutBtn">
+                    <i class="bi bi-box-arrow-right"></i> Logout
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Filter -->
+        <!-- Row 1: Keyword Search -->
+        <div class="row mb-3">
+            <div class="col-md-2 d-flex align-items-center">
+                <span class="fw-bold me-2"> Search:</span>
+            </div>
+            <div class="col-md-4 d-flex align-items-center">
+                <input type="text" id="searchKeyword" class="form-control" placeholder="Enter name or mobile">
+            </div>
+        </div>
+
+        <!-- Row 2: Datewise Search (Single Row) -->
+        <div class="row mb-4 align-items-center">
+            <div class="col-md-2 d-flex align-items-center">
+                <span class="fw-bold me-2">Datewise Search:</span>
+            </div>
+            <div class="col-md-3 d-flex align-items-center">
+                <input type="date" id="searchFromDate" class="form-control">
+            </div>
+            <div class="col-md-3 d-flex align-items-center">
+                <input type="date" id="searchToDate" class="form-control">
+            </div>
+            <div class="col-md-2 d-flex align-items-center">
+                <button id="searchBtn" class="btn btn-primary w-100">Search</button>
+            </div>
+        </div>
+
+
+
+        <!-- Users Table -->
+        <div class="table-responsive">
+            <table class="table table-hover" id="usersTable">
+                <thead class="table-primary">
+                    <tr>
+                        <th>Sr No</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Mobile</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+        </div>
+    </div>
+    <script src="assets/js/dashboard.js"></script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // Set admin info from localStorage
+            const adminName = localStorage.getItem('name') || 'Admin';
+            const userType = localStorage.getItem('userType') || 'Administrator';
+
+            document.getElementById('adminName').textContent = adminName;
+            document.getElementById('userType').textContent = userType;
+
+            // Elements
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const hamburger = document.getElementById('hamburger');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+            const profileToggle = document.getElementById('profileToggle');
+            const profileDropdown = document.getElementById('profileDropdown');
+            const logoutBtn = document.getElementById('logoutBtn');
+
+            // Unified checkWidth function
+            function checkWidth() {
+                if (window.innerWidth <= 992) {
+                    // Mobile: hide sidebar completely
+                    sidebar.classList.remove('collapsed', 'active');
+                    mainContent.classList.remove('expanded');
+                    hamburger.style.display = 'block';
+                } else {
+                    // Desktop: collapsed sidebar by default
+                    sidebar.classList.add('collapsed');
+                    mainContent.classList.add('expanded');
+                    hamburger.style.display = 'none';
+                }
+            }
+
+            // Run on load and resize
+            checkWidth();
+            window.addEventListener('resize', checkWidth);
+
+            // Desktop sidebar toggle (collapsed)
+            sidebarToggle.addEventListener('click', function () {
+                if (window.innerWidth > 992) {
+                    sidebar.classList.toggle('collapsed');
+                    mainContent.classList.toggle('expanded');
+
+                    const icon = sidebarToggle.querySelector('i');
+                    if (sidebar.classList.contains('collapsed')) {
+                        icon.classList.remove('bi-arrow-left-circle');
+                        icon.classList.add('bi-arrow-right-circle');
+                    } else {
+                        icon.classList.remove('bi-arrow-right-circle');
+                        icon.classList.add('bi-arrow-left-circle');
+                    }
+                } else {
+                    // Mobile back arrow closes sidebar
+                    sidebar.classList.remove('active');
+                    hamburger.style.display = 'block';
+                }
+            });
+
+            // Hamburger opens sidebar on mobile
+            hamburger.addEventListener('click', function () {
+                sidebar.classList.add('active');
+                hamburger.style.display = 'none';
+            });
+
+            // Overlay click closes sidebar on mobile
+            sidebarOverlay.addEventListener('click', function () {
+                sidebar.classList.remove('active');
+                hamburger.style.display = 'block';
+            });
+
+            // Profile dropdown toggle
+            profileToggle.addEventListener('click', function (e) {
+                e.stopPropagation();
+                profileDropdown.classList.toggle('active');
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function (e) {
+                if (!profileToggle.contains(e.target) && !profileDropdown.contains(e.target)) {
+                    profileDropdown.classList.remove('active');
+                }
+            });
+
+            // Logout functionality
+            logoutBtn.addEventListener('click', function () {
+                if (confirm('Are you sure you want to logout?')) {
+                    localStorage.removeItem('adminToken');
+                    localStorage.removeItem('userType');
+                    localStorage.removeItem('name');
+                    window.location.href = '/admin';
+                }
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const usersTable = document.getElementById('usersTable').getElementsByTagName('tbody')[0];
+            const searchKeyword = document.getElementById('searchKeyword');
+            const searchFromDate = document.getElementById('searchFromDate');
+            const searchToDate = document.getElementById('searchToDate');
+            const searchBtn = document.getElementById('searchBtn');
+
+            function filterTable() {
+                const keyword = searchKeyword.value.toLowerCase();
+                const fromDate = searchFromDate.value;
+                const toDate = searchToDate.value;
+
+                for (let row of usersTable.rows) {
+                    const name = row.cells[1].textContent.toLowerCase();
+                    const mobile = row.cells[3].textContent.toLowerCase();
+                    const rowDate = row.cells[4].textContent;
+
+                    // Keyword match (live)
+                    const matchesKeyword = name.includes(keyword) || mobile.includes(keyword);
+
+                    // Date match (only triggered by button)
+                    let matchesDate = true;
+                    if (fromDate && toDate) {
+                        matchesDate = rowDate >= fromDate && rowDate <= toDate;
+                    } else if (fromDate) {
+                        matchesDate = rowDate >= fromDate;
+                    } else if (toDate) {
+                        matchesDate = rowDate <= toDate;
+                    }
+
+                    // Show or hide row
+                    row.style.display = matchesKeyword && matchesDate ? '' : 'none';
+                }
+            }
+
+            // Live filter for keyword
+            searchKeyword.addEventListener('input', () => {
+                const keyword = searchKeyword.value.toLowerCase();
+
+                for (let row of usersTable.rows) {
+                    const name = row.cells[1].textContent.toLowerCase();
+                    const mobile = row.cells[3].textContent.toLowerCase();
+
+                    row.style.display = (name.includes(keyword) || mobile.includes(keyword)) ? '' : 'none';
+                }
+            });
+
+            // Date filter triggered by button
+            searchBtn.addEventListener('click', filterTable);
+        });
+    </script>
+</body>
+
+</html>

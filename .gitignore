@@ -7,4 +7,6 @@
 # Logs
 /backend/*.log
 
+#files
+/backend/addUser.js
 #/frontend/node_modules/

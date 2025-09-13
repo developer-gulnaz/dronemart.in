@@ -27,7 +27,7 @@ app.use('/', express.static(publicPath));
 app.use('/admin', express.static(adminPath));
 
 // SPA fallback
-app.get(/.*/, (req, res) => {
+app.get(/^\/(?!api).*/, (req, res) => {
   if (req.originalUrl.startsWith('/admin')) {
     res.sendFile(path.join(adminPath, 'index.html'));
   } else {
@@ -35,6 +35,6 @@ app.get(/.*/, (req, res) => {
   }
 });
 
- const PORT = process.env.PORT || 5000;
-// const PORT = 5000;
+// const PORT = process.env.PORT || 5000;
+ const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

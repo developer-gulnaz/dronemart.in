@@ -1,20 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/User'); // your user model
-const { protectAdmin } = require('../middleware/authMiddleware'); 
+const { protectAdmin } = require('../middleware/authMiddleware');
 
-router.get('/recent', protectAdmin, async (req, res) => {
-  try {
-    const users = await User.find({})
-      .sort({ createdAt: -1 })
-      .select('name email mobile createdAt');
+const {
+  getRecentUsers,
+  getDashboardStatus
+} = require('../controllers/userController');
 
-   // console.log('Fetched users:', users); // <-- debug
-    res.json(users);
-  } catch (err) {
-    console.error('Error fetching recent users:', err); // <-- debug
-    res.status(500).json({ message: 'Server error' });
-  }
-});
+// Get recent users
+// GET /api/users/recent
+router.get('/recent', protectAdmin, getRecentUsers);
+
+// Dashboard status
+// GET /api/users/dashboard/status
+router.get('/dashboard/status', protectAdmin, getDashboardStatus);
 
 module.exports = router;

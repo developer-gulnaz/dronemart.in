@@ -1,7 +1,7 @@
 // Optional: reusable API function for login (no token needed)
 async function apiRequestLogin(endpoint, body) {
-    const api_url = "/api/" + endpoint; // production path
-    // const api_url = "http://localhost:5000/api/" + endpoint; // local testing
+    //const api_url = "/api/" + endpoint; // production path
+     const api_url = "http://localhost:5000/api/" + endpoint; // local testing
 
     try {
         const res = await fetch(api_url, {
