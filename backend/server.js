@@ -20,13 +20,15 @@ app.use('/', express.static(path.join(__dirname, '../public')));
 app.use('/admin', express.static(path.join(__dirname, '../admin')));
 
 // SPA fallback
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
   if (req.originalUrl.startsWith('/admin')) {
     res.sendFile(path.join(__dirname, '../admin/index.html'));
   } else {
     res.sendFile(path.join(__dirname, '../public/index.html'));
   }
 });
+console.log("Public path:", path.resolve(__dirname, '../public/index.html'));
+console.log("Admin path:", path.resolve(__dirname, '../admin/index.html'));
 
 const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
