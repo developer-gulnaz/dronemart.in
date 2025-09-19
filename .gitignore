@@ -8,5 +8,8 @@
 /backend/*.log
 
 #files
+/backend/createAdmin.js
 /backend/addUser.js
+
+
 #/frontend/node_modules/

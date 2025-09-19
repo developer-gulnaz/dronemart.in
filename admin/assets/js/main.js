@@ -1,13 +1,16 @@
-// Optional: reusable API function for login (no token needed)
+// -----------------------------
+// API Request Helper (Session-based)
+// -----------------------------
 async function apiRequestLogin(endpoint, body) {
-    const api_url = "/api/" + endpoint; // production path
-    // const api_url = "http://localhost:5000/api/" + endpoint; // local testing
+    const api_url = "http://localhost:5000/api/" + endpoint; // local testing
+    // const api_url = "/api/" + endpoint; // production path
 
     try {
         const res = await fetch(api_url, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(body)
+            body: JSON.stringify(body),
+            credentials: "include" // ✅ send/receive session cookie
         });
 
         const data = await res.json().catch(() => ({}));
@@ -23,7 +26,9 @@ async function apiRequestLogin(endpoint, body) {
     }
 }
 
-// Login form submit handler
+// -----------------------------
+// Login Form Submit Handler
+// -----------------------------
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -38,18 +43,31 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     try {
         const data = await apiRequestLogin('auth/login', { email, password });
 
-        if (data.token) {
-            // Save data to localStorage
-            localStorage.setItem('adminToken', data.token);
-            localStorage.setItem('userType', data.userType || 'admin');
-            localStorage.setItem('adminName', data.name || 'Admin');
+        // ✅ Save session info (no token needed)
+        sessionStorage.setItem('userType', data.userType || 'admin');
+        sessionStorage.setItem('name', data.email.split('@')[0] || 'Admin');
 
-            // Redirect to dashboard
-            window.location.href = 'dashboard.html';
-        } else {
-            alert(data.message || 'Login failed');
-        }
+        // Redirect to dashboard
+        window.location.href = 'dashboard.html';
     } catch (err) {
-        alert('Server error. Please try again later.');
+        alert(err.message || 'Login failed. Please try again.');
     }
 });
+
+// -----------------------------
+// Logout Function
+// -----------------------------
+async function logout() {
+    try {
+        await fetch("http://localhost:5000/api/auth/logout", {
+            method: "POST",
+            credentials: "include" // ✅ clear session on server
+        });
+    } catch (err) {
+        console.error("Logout API failed:", err);
+    }
+
+    // Clear client-side session
+    sessionStorage.clear();
+    window.location.href = "/";
+}

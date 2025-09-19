@@ -1,28 +1,42 @@
 const Admin = require('../models/Admin');
-const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs'); // assuming passwords are hashed
 
-const generateToken = (id) => jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '1d' });
-
-exports.loginUser = async (req, res) => {
+// -----------------------------
+// ADMIN LOGIN (SESSION)
+// -----------------------------
+exports.loginAdmin = async (req, res) => {
   const { email, password } = req.body;
+
   try {
     const admin = await Admin.findOne({ email });
     if (!admin) return res.status(401).json({ message: 'Invalid credentials' });
 
-    const isMatch = await admin.matchPassword(password);
+    const isMatch = await bcrypt.compare(password, admin.password);
     if (!isMatch) return res.status(401).json({ message: 'Invalid credentials' });
 
-    const token = generateToken(admin._id, admin.userType);
+    // Save admin ID and type in session
+    req.session.adminId = admin._id;
+    req.session.userType = admin.userType;
 
     res.status(200).json({
-      token,
+      message: "Admin login successful",
       email: admin.email,
-      userType: admin.userType,
-      message: "Login successful"
+      userType: admin.userType
     });
 
   } catch (err) {
     console.error('Server error:', err);
     res.status(500).json({ message: 'Server error' });
   }
+};
+
+// -----------------------------
+// ADMIN LOGOUT
+// -----------------------------
+exports.logoutAdmin = (req, res) => {
+  req.session.destroy(err => {
+    if (err) return res.status(500).json({ message: "Logout failed" });
+    res.clearCookie('sessionId'); // matches cookie name in server.js
+    res.json({ message: "Admin logged out successfully" });
+  });
 };

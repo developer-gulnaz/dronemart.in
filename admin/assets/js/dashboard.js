@@ -4,44 +4,71 @@ const API_BASE_URL =
     ? "http://localhost:5000/api"
     : "/api";
 
-document.addEventListener("DOMContentLoaded", () => {
-  const name = localStorage.getItem("name");
-  const userType = localStorage.getItem("userType");
-  const profileImg = document.querySelector("#profileToggle img");
 
-  if (userType === "superadmin") {
-    adminName.textContent = name || "Super Admin"; // from DB or fallback
-    userType.textContent = "Super Admin";
-    profileImg.src = `https://ui-avatars.com/api/?name=SA&background=random`;
-  } else if (userType === "admin") {
-    adminName.textContent = name || "Admin"; // from DB or fallback
-    userType.textContent = "Admin";
-    profileImg.src = `https://ui-avatars.com/api/?name=A&background=random`;
-  } else {
-    adminName.textContent = name || "User";
-    userType.textContent = "Guest";
-    profileImg.src = `https://ui-avatars.com/api/?name=G&background=random`;
+// Update Profile UI Based on Role
+
+
+function updateProfileBasedOnRole() {
+  const userType = sessionStorage.getItem("userType");
+  const name = sessionStorage.getItem("name") || "Admin";
+
+  const adminNameElement = document.getElementById("adminName");
+  const userTypeElement = document.getElementById("userType");
+  const profileIcon = document.querySelector(".profile i");
+  const profileImage = document.querySelector(".profile img");
+
+  if (adminNameElement) adminNameElement.textContent = name;
+  if (userTypeElement)
+    userTypeElement.textContent =
+      userType === "superadmin" ? "Super Administrator" : "Administrator";
+
+  if (profileImage) {
+    if (userType === "superadmin") {
+      profileImage.src = `https://ui-avatars.com/api/?name=SA&background=random`;
+    } else if (userType === "admin") {
+      profileImage.src = `https://ui-avatars.com/api/?name=A&background=random`;
+    } else {
+      profileImage.src = `https://ui-avatars.com/api/?name=G&background=random`;
+    }
   }
-});
 
-// Function to load dashboard status (from API)
+  // Optional: keep role-specific icon badges
+  if (userType === "superadmin") {
+    if (profileIcon) {
+      profileIcon.classList.remove("bi-person-circle");
+      profileIcon.classList.add("bi-shield-fill", "text-warning");
+    }
+    if (profileImage) profileImage.classList.add("superadmin-badge");
+  } else {
+    if (profileIcon) {
+      profileIcon.classList.remove("bi-shield-fill", "text-warning");
+      profileIcon.classList.add("bi-person-circle");
+    }
+    if (profileImage) profileImage.classList.remove("superadmin-badge");
+  }
+}
+
+
+// Load Dashboard Status
+
 async function loadDashboardstatus() {
   try {
-    const token = localStorage.getItem("adminToken");
-    if (!token) {
-      window.location.href = "/admin";
+    const res = await fetch(`${API_BASE_URL}/users/dashboard/status`, {
+      credentials: "include", // ✅ send session cookie
+    });
+
+    if (res.status === 401) {
+      logout();
       return;
     }
 
-    const res = await fetch(`${API_BASE_URL}/users/dashboard/status`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
     if (res.ok) {
       const data = await res.json();
-      document.getElementById("totalUsers").textContent = data.totalUsers || "0";
+      document.getElementById("totalUsers").textContent =
+        data.totalUsers || "0";
       document.getElementById("newLeads").textContent = data.newLeads || "0";
-      document.getElementById("newOrders").textContent = data.newOrders || "0";
+      document.getElementById("newOrders").textContent =
+        data.newOrders || "0";
       document.getElementById("revenue").textContent = `$${data.revenue || "0"}`;
     }
   } catch (error) {
@@ -49,18 +76,19 @@ async function loadDashboardstatus() {
   }
 }
 
-// Function to populate users table (recent users)
+
+// Load Recent Users Table
+
 async function loadUsers() {
   try {
-    const token = localStorage.getItem("adminToken");
-    if (!token) {
-      window.location.href = "/admin";
+    const res = await fetch(`${API_BASE_URL}/users/recent`, {
+      credentials: "include", // ✅ send session cookie
+    });
+
+    if (res.status === 401) {
+      logout();
       return;
     }
-
-    const res = await fetch(`${API_BASE_URL}/users/recent`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
 
     if (!res.ok) {
       const errorData = await res.json();
@@ -89,7 +117,7 @@ async function loadUsers() {
     users.forEach((user, index) => {
       const row = document.createElement("tr");
       const srNo = index + 1;
-      const userType = localStorage.getItem("userType");
+      const userType = sessionStorage.getItem("userType");
 
       let actions = `
         <button class="btn btn-sm btn-outline-primary me-2 edit-btn" data-id="${user._id}">
@@ -107,7 +135,7 @@ async function loadUsers() {
 
       row.innerHTML = `
         <td>${srNo}</td>
-        <td>${user.name || "-"}</td>
+        <td>${user.firstName + " " + user.lastName || "-"}</td>
         <td>${user.email || "-"}</td>
         <td>${user.mobile || "-"}</td>
         <td>${new Date(user.createdAt).toLocaleDateString()}</td>
@@ -125,14 +153,39 @@ async function loadUsers() {
   }
 }
 
-// Load users & dashboard stats on page load
+
+// Logout Function
+
+async function logout() {
+  try {
+    await fetch(`${API_BASE_URL}/auth/logout`, {
+      method: "POST",
+      credentials: "include", // ✅ clear server session
+    });
+  } catch (err) {
+    console.error("Logout API failed:", err);
+  }
+
+  sessionStorage.clear();
+  window.location.href = "/admin";
+}
+
+
+// On Page Load
+
 document.addEventListener("DOMContentLoaded", function () {
+  // Ensure session exists
+  const userType = sessionStorage.getItem("userType");
+  if (!userType) {
+    logout();
+    return;
+  }
+
   loadDashboardstatus();
   loadUsers();
   updateProfileBasedOnRole();
 
   // Role-based UI restrictions
-  const userType = localStorage.getItem("userType");
   if (userType === "admin") {
     document.querySelectorAll(".superadmin-only").forEach((el) => {
       el.style.display = "none";
@@ -143,34 +196,10 @@ document.addEventListener("DOMContentLoaded", function () {
       btn.classList.add("disabled");
     });
   }
-});
 
-// Function to update profile based on role
-function updateProfileBasedOnRole() {
-  const userType = localStorage.getItem("userType");
-  const name = localStorage.getItem("name") || "Admin";
-
-  const adminNameElement = document.getElementById("adminName");
-  const userTypeElement = document.getElementById("userType");
-  const profileIcon = document.querySelector(".profile i");
-  const profileImage = document.querySelector(".profile img");
-
-  if (adminNameElement) adminNameElement.textContent = name;
-  if (userTypeElement)
-    userTypeElement.textContent =
-      userType === "superadmin" ? "Super Administrator" : "Administrator";
-
-  if (userType === "superadmin") {
-    if (profileIcon) {
-      profileIcon.classList.remove("bi-person-circle");
-      profileIcon.classList.add("bi-shield-fill", "text-warning");
-    }
-    if (profileImage) profileImage.classList.add("superadmin-badge");
-  } else {
-    if (profileIcon) {
-      profileIcon.classList.remove("bi-shield-fill", "text-warning");
-      profileIcon.classList.add("bi-person-circle");
-    }
-    if (profileImage) profileImage.classList.remove("superadmin-badge");
+  // Attach logout button
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", logout);
   }
-}
+});

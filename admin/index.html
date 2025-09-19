@@ -23,6 +23,27 @@
     </form>
   </div>
 
-  <script src="assets/js/main.js"></script>
-</body>
+    <script src="assets/js/main.js"></script>
+  <script src="assets/js/index.js"></script>
+    <script>
+    window.addEventListener("scroll", function () {
+      const header = document.getElementById("header");
+      const topbar = header?.querySelector(".top-bar");
+      const navbarActions = header?.querySelector(".navbar-actions"); // navbar header-actions
+
+      if (window.scrollY > 10) {
+        // Scroll down: hide topbar, show navbar actions
+        header.classList.add("scrolled");
+
+        if (topbar) topbar.classList.add("hidden");
+        if (navbarActions) navbarActions.classList.add("visible");
+      } else {
+        // Scroll up: show topbar, hide navbar actions
+        header.classList.remove("scrolled");
+
+        if (topbar) topbar.classList.remove("hidden");
+        if (navbarActions) navbarActions.classList.remove("visible");
+      }
+    });
+  </script></body>
 </html>
