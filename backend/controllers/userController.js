@@ -1,5 +1,4 @@
 
-const Razorpay = require("razorpay");
 const crypto = require("crypto");
 const User = require("../models/User");
 const Order = require("../models/Order");
@@ -264,7 +263,7 @@ exports.updateAddress = async (req, res) => {
     return res.status(400).json({ message: "Street and Apartment are required" });
   }
 
-  const user = await User.findById(req.user.id);
+  const user = await User.findById(req.session.userId);
   if (!user) return res.status(404).json({ message: "User not found" });
 
   // Initialize address if not present
@@ -278,101 +277,5 @@ exports.updateAddress = async (req, res) => {
   res.json({ message: "Address updated successfully", address: user.address });
 };
 
-// Add Payment Method
-exports.addPaymentMethod = async (req, res) => {
-  const { type, details } = req.body;
-  if (!type || !details) return res.status(400).json({ message: "Type and details required" });
-
-  const user = await User.findById(req.user.id);
-  if (!user) return res.status(404).json({ message: "User not found" });
-
-  // Prevent duplicate same method
-  const exists = user.paymentMethods.find(m => m.type === type && JSON.stringify(m.details) === JSON.stringify(details));
-  if (!exists) user.paymentMethods.push({ type, details });
-
-  await user.save();
-  res.json({ message: "Payment method saved", paymentMethods: user.paymentMethods });
-};
 
 
-// Place Order
-exports.createOrder = async (req, res) => {
-  try {
-    const { products, shippingAddress, paymentMethod } = req.body;
-
-    if (!products || products.length === 0) {
-      return res.status(400).json({ message: "Cart is empty" });
-    }
-
-    // Calculate total
-    const total = products.reduce((sum, i) => sum + i.price * i.quantity, 0);
-
-    // Map frontend names to schema names
-    const order = new Order({
-      user: req.session.userId,
-      products,
-      address: shippingAddress,   // <-- Mongoose expects 'address'
-      payment: paymentMethod,     // <-- Mongoose expects 'payment'
-      total
-    });
-
-    const created = await order.save();
-    res.status(201).json(created);
-
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Failed to create order" });
-  }
-};
-
-// -----------------------------
-// Create Razorpay Order
-// -----------------------------
-exports.createRazorpayOrder = async (req, res) => {
-  const { total } = req.body;
-
-  try {
-    const instance = new Razorpay({
-      key_id: process.env.RAZORPAY_KEY_ID,
-      key_secret: process.env.RAZORPAY_KEY_SECRET,
-    });
-
-    const options = {
-      amount: total * 100, // amount in paise
-      currency: "INR",
-      receipt: `order_rcptid_${Date.now()}`,
-    };
-
-    const order = await instance.orders.create(options);
-    res.json(order);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Failed to create payment order" });
-  }
-};
-
-// -----------------------------
-// Verify Razorpay Payment
-// -----------------------------
-exports.verifyRazorpayPayment = async (req, res) => {
-  const { razorpay_order_id, razorpay_payment_id, razorpay_signature, orderId } = req.body;
-
-  const generated_signature = crypto
-    .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
-    .update(`${razorpay_order_id}|${razorpay_payment_id}`)
-    .digest("hex");
-
-  if (generated_signature === razorpay_signature) {
-    // Payment success → update order
-    const order = await Order.findById(orderId);
-    if (!order) return res.status(404).json({ message: "Order not found" });
-
-    order.paymentStatus = "paid";
-    order.paymentDetails = { razorpay_order_id, razorpay_payment_id };
-    await order.save();
-
-    return res.json({ success: true, order });
-  } else {
-    res.status(400).json({ success: false, message: "Payment verification failed" });
-  }
-};

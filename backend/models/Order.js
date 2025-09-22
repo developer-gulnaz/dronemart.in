@@ -2,19 +2,29 @@ const mongoose = require("mongoose");
 
 const OrderSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  
   items: [
     {
-      product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
-      title: String,
-      price: Number,
-      image: String,
-      quantity: Number
-    }
+      product: { type: mongoose.Schema.Types.ObjectId, ref: "Product", required: true },
+      title: { type: String, required: true },
+      price: { type: Number, required: true },
+      image: { type: String },
+      quantity: { type: Number, required: true },
+    },
   ],
-  address: { type: Object, required: true },  // Reuse User address snapshot
-  payment: { type: Object, required: true },  // Type + details
+
   total: { type: Number, required: true },
-  status: { type: String, enum: ["pending", "processing", "shipped", "delivered", "cancelled"], default: "pending" }
+
+  paymentMethod: { type: String, enum: ["COD", "PayU"], required: true },
+
+  status: {
+    type: String,
+    enum: ["pending","cod-pending","confirmed","processing","shipped","delivered","cancelled","payment-failed", "initiated"],
+    default: "pending",
+  },
+
+  paymentRef: { type: mongoose.Schema.Types.ObjectId, ref: "Payment" }
+
 }, { timestamps: true });
 
 module.exports = mongoose.model("Order", OrderSchema, "orders");

@@ -7,12 +7,9 @@ const {
   getUserProfile,
   updateUserProfile,
   deleteUserProfile,
-  updateAddress,
-  addPaymentMethod,
-  createOrder,
-  createRazorpayOrder,
-  verifyRazorpayPayment
+  updateAddress
 } = require('../controllers/userController');
+
 
 // -----------------------------
 // Middleware to check admin session
@@ -62,14 +59,5 @@ router.delete('/me', checkUserSession, deleteUserProfile);
 
 // Add / Update shipping address
 router.post("/update-address", checkUserSession, updateAddress);
-
-router.post("/payment-methods", checkUserSession, addPaymentMethod);
-
-router.post("/create-order", checkUserSession, createOrder);
-
-router.post("/create-razorpay-order", checkUserSession, createRazorpayOrder);
-
-router.post("/verify-payment", checkUserSession, verifyRazorpayPayment);
-
 
 module.exports = router;

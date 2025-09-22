@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const Order = require("../models/Order");
-
+const User = require("../models/User");
+const Payment = require("../models/Payment");
+const orderController = require("../controllers/orderController");
 // -----------------------------
 // Middleware
 // -----------------------------
@@ -35,47 +37,67 @@ router.get("/my", checkUserSession, async (req, res) => {
   }
 });
 
-// Create new order
-router.post("/", checkUserSession, async (req, res) => {
-  try {
-    const { products, total, shippingAddress, paymentMethod } = req.body;
 
-    if (!products || products.length === 0) {
-      return res.status(400).json({ message: "No products in order" });
-    }
-
-    const order = new Order({
-      user: req.session.userId,
-      products: products.map(p => ({
-        product: p.product,
-        title: p.title,
-        image: p.image,
-        price: p.price,
-        quantity: p.quantity || 1,
-      })),
-      total,
-      shippingAddress,
-      paymentMethod,
-      status: "Pending",
-    });
-
-    const createdOrder = await order.save();
-    res.status(201).json(createdOrder);
-  } catch (err) {
-    console.error("Error creating order:", err);
-    res.status(500).json({ message: "Server error" });
-  }
-});
-
-// Get order by ID
+// Get order by ID with user & payment details
 router.get("/:id", checkUserSession, async (req, res) => {
   try {
-    const order = await Order.findById(req.params.id);
-    if (order && order.user.toString() === req.session.userId.toString()) {
-      res.json(order);
+    const order = await Order.findById(req.params.id).lean();
+    if (!order) return res.status(404).json({ message: "Order not found" });
+    if (order.user.toString() !== req.session.userId.toString())
+      return res.status(403).json({ message: "Unauthorized" });
+    
+    // Fetch user details
+    const user = await User.findById(order.user).lean();
+    const shippingAddress = {
+      name: `${user.firstName} ${user.lastName}`,
+      street: user.street || "",
+      apartment: user.apartment || "",
+      city: user.city || "",
+      state: user.state || "",
+      pincode: user.pincode || "",
+      country: user.country || "INDIA",
+      email: user.email || "",
+      phone: user.mobile || "",
+    };
+
+    // Fetch payment details (if exists)
+    let paymentDetails = {};
+    if (order.paymentMethod !== "COD") {
+      const payment = await Payment.findOne({ order: order._id }).lean();
+      if (payment) {
+        paymentDetails = {
+          method: payment.method,
+          cardNumber: payment.cardNumber,
+          upiId: payment.upiId,
+          txnId: payment.txnId,
+          status: payment.status,
+          amount: payment.amount,
+        };
+      }
     } else {
-      res.status(404).json({ message: "Order not found" });
+      // COD fallback
+      paymentDetails = {
+        method: "COD",
+        status: order.paymentStatus,
+        amount: order.total,
+      };
     }
+
+    // Optional: calculate subtotal, tax, shipping (can hardcode or calculate)
+    const subtotal = order.items.reduce((sum, i) => sum + i.price * i.quantity, 0);
+    const shippingCost = 0;
+    const tax = 0;
+
+    res.json({
+      ...order,
+      shippingAddress,
+      paymentDetails,
+      subtotal,
+      shippingCost,
+      tax,
+      total: order.total,
+      estimatedDelivery: "3-5 business days", // optional
+    });
   } catch (err) {
     console.error("Error fetching order:", err);
     res.status(500).json({ message: "Server error" });
@@ -117,7 +139,7 @@ router.get("/", checkAdminSession, async (req, res) => {
 router.put("/:id/status", checkAdminSession, async (req, res) => {
   try {
     const { status } = req.body;
-    const validStatuses = ["Pending", "Processing", "Shipped", "Delivered", "Cancelled"];
+    const validStatuses = ["pending", "processing", "shipped", "delivered", "cancelled"];
 
     if (!status || !validStatuses.includes(status)) {
       return res.status(400).json({ message: "Invalid status" });
@@ -149,5 +171,22 @@ router.delete("/:id/admin", checkAdminSession, async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
+router.post("/create", checkUserSession, orderController.createOrder);
+
+// COD order
+router.post("/cod", checkUserSession, orderController.createCodOrder);
+
+// PayU payment
+router.post("/payu/initiate", checkUserSession, orderController.initiatePayuPayment);
+router.post("/payu-success", orderController.payuSuccess);
+router.post("/payu-failure", orderController.payuFailure);
+
+// Save cart in session (for PayU order creation)
+router.post("/session/save-cart", (req, res) => {
+  req.session.cartItems = req.body.items || [];
+  res.json({ success: true });
+});
+
 
 module.exports = router;

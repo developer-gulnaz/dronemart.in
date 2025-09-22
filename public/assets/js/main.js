@@ -592,7 +592,6 @@
           // Hide form fields
           const formFields = form.querySelectorAll('.form-group, .review-sections, .form-check, .d-flex');
           formFields.forEach(field => {
-            field.style.display = 'none';
           });
 
           // Show success message
@@ -725,7 +724,6 @@
           const sections = document.querySelectorAll('.checkout-section');
           sections.forEach((section, index) => {
             if (index < sections.length - 1) {
-              section.style.display = 'none';
             }
           });
 

@@ -16,12 +16,6 @@ const userSchema = mongoose.Schema(
     street: { type: String },
     apartment: { type: String },
 
-    paymentMethods: [
-      {
-        type: { type: String }, // e.g., "card" or "upi"
-        details: { type: Object }
-      }
-    ]
   },
   { timestamps: true }
 );

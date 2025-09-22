@@ -17,7 +17,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     await loadWishlist();
     await loadPaymentMethods();
     await loadReviews();
-    await loadAddresses();
 
     // Setup event listeners
     setupEventListeners();
@@ -32,8 +31,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
       const ordersRes = await fetch("/api/orders/my", { credentials: "include" });
       if (!ordersRes.ok) throw new Error("Failed to fetch orders");
-
       const orders = await ordersRes.json();
+
+      // const payRes = await fetch(`/api/payments/${orderId}`, { credentials: "include" });
+      // const payment = await payRes.json();
+
       const ordersGrid = document.getElementById("ordersGrid");
       ordersGrid.innerHTML = "";
       document.getElementById("orderCount").textContent = orders.length;
@@ -48,6 +50,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const orderCard = document.createElement("div");
         orderCard.classList.add("order-card");
         orderCard.innerHTML = `
+                <a href="order-details.html?orderId=${order._id}" class="order-link" style="text-decoration: none; color: inherit;">
                     <div class="order-header">
                         <div class="order-id"><span class="label">Order ID:</span> ${order._id}</div>
                         <div class="order-date">${new Date(order.createdAt).toLocaleDateString()}</div>
@@ -57,11 +60,13 @@ document.addEventListener("DOMContentLoaded", async () => {
                             ${(order.products || []).map((p) => `<img src="${p.image}" alt="${p.title}" loading="lazy">`).join("")}
                         </div>
                         <div class="order-info">
-                            <div class="info-row"><span>Status</span> <span class="status ${order.status?.toLowerCase()}">${order.status || 'Unknown'}</span></div>
-                            <div class="info-row"><span>Items</span> ${order.products?.length || 0}</div>
+                            <div class="info-row"><span>Payment Type</span> <span class="status ${order.paymentMethod?.toLowerCase()}">${order.paymentMethod || '--'}</span></div>
+                            <div class="info-row"><span>Order Status</span> <span class="status ${order.status?.toLowerCase()}">${order.status || '--'}</span></div>
+                            <div class="info-row"><span>Items</span> ${order.items?.length || 0}</div>
                             <div class="info-row"><span>Total</span> <span class="price">$${(order.total || 0).toFixed(2)}</span></div>
                         </div>
                     </div>
+                  </a>
                 `;
         ordersGrid.appendChild(orderCard);
       });
@@ -181,41 +186,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       document.getElementById("reviewsContainer").innerHTML = `<div class="error-message">Failed to load reviews</div>`;
     }
   }
-
-  async function loadAddresses() {
-    try {
-      const addressRes = await fetch("/api/addresses", { credentials: "include" });
-      if (!addressRes.ok) throw new Error("Failed to fetch addresses");
-
-      const addresses = await addressRes.json();
-      const addressesContainer = document.getElementById("addressesContainer");
-      const addressesEmpty = document.getElementById("addressesEmpty");
-      addressesContainer.innerHTML = "";
-
-      if (addresses.length === 0) {
-        addressesEmpty.classList.remove("d-none");
-      } else {
-        addressesEmpty.classList.add("d-none");
-      }
-
-      addresses.forEach((a) => {
-        const card = document.createElement("div");
-        card.classList.add("col-md-6");
-        card.innerHTML = `
-                    <div class="address-card">
-                        <h4>${a.label}</h4>
-                        <p>${a.street}, ${a.city}, ${a.state}, ${a.zip}</p>
-                        <p>${a.country}</p>
-                    </div>
-                `;
-        addressesContainer.appendChild(card);
-      });
-    } catch (error) {
-      console.error("Error loading addresses:", error);
-      document.getElementById("addressesContainer").innerHTML = `<div class="error-message">Failed to load addresses</div>`;
-    }
-  }
-
   // ---------- Event Listeners Setup ----------
   function setupEventListeners() {
     // Personal Info Form
