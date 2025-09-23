@@ -33,9 +33,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (!ordersRes.ok) throw new Error("Failed to fetch orders");
       const orders = await ordersRes.json();
 
-      // const payRes = await fetch(`/api/payments/${orderId}`, { credentials: "include" });
-      // const payment = await payRes.json();
-
       const ordersGrid = document.getElementById("ordersGrid");
       ordersGrid.innerHTML = "";
       document.getElementById("orderCount").textContent = orders.length;
@@ -46,35 +43,50 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.getElementById("ordersEmpty")?.classList.add("d-none");
       }
 
-      orders.forEach((order) => {
+      for (const order of orders) {
+        let paymentStatus = "--";
+
+        // 🔹 Fetch payment details for this order (if not COD)
+        try {
+          const payRes = await fetch(`/api/payments/${order._id}`, { credentials: "include" });
+          if (payRes.ok) {
+            const payment = await payRes.json();
+            paymentStatus = payment?.status || "--";
+          }
+        } catch (err) {
+          console.warn(`No payment record found for order ${order._id}`);
+        }
+
         const orderCard = document.createElement("div");
         orderCard.classList.add("order-card");
         orderCard.innerHTML = `
-                <a href="order-details.html?orderId=${order._id}" class="order-link" style="text-decoration: none; color: inherit;">
-                    <div class="order-header">
-                        <div class="order-id"><span class="label">Order ID:</span> ${order._id}</div>
-                        <div class="order-date">${new Date(order.createdAt).toLocaleString()}</div>
-                    </div>
-                    <div class="order-content">
-                        <div class="product-grid">
-                            ${(order.products || []).map((p) => `<img src="${p.image}" alt="${p.title}" loading="lazy">`).join("")}
-                        </div>
-                        <div class="order-info">
-                            <div class="info-row"><span>Payment Type</span> <span class="status ${order.paymentMethod?.toLowerCase()}">${order.paymentMethod || '--'}</span></div>
-                            <div class="info-row"><span>Order Status</span> <span class="status ${order.status?.toLowerCase()}">${order.status || '--'}</span></div>
-                            <div class="info-row"><span>Items</span> ${order.items?.length || 0}</div>
-                            <div class="info-row"><span>Total</span> <span class="price">$${(order.total || 0).toFixed(2)}</span></div>
-                        </div>
-                    </div>
-                  </a>
-                `;
+        <a href="order-details.html?orderId=${order._id}" class="order-link" style="text-decoration: none; color: inherit;">
+          <div class="order-header">
+            <div class="order-id"><span class="label">Order ID:</span> ${order._id}</div>
+            <div class="order-date">${new Date(order.createdAt).toLocaleString()}</div>
+          </div>
+          <div class="order-content">
+            <div class="product-grid">
+              ${(order.items || []).map((p) => `<img src="${p.image}" alt="${p.title}" loading="lazy">`).join("")}
+            </div>
+            <div class="order-info">
+              <div class="info-row"><span>Payment Type</span> <span class="status ${order.paymentMethod?.toLowerCase()}">${order.paymentMethod || '--'}</span></div>
+              <div class="info-row"><span>Order Status</span> <span class="status ${order.status?.toLowerCase()}">${order.status || '--'}</span></div>
+              <div class="info-row"><span>Payment Status</span> <span class="status ${paymentStatus.toLowerCase()}">${paymentStatus}</span></div>
+              <div class="info-row"><span>Items</span> ${order.items?.length || 0}</div>
+              <div class="info-row"><span>Total</span> <span class="price">$${(order.total || 0).toFixed(2)}</span></div>
+            </div>
+          </div>
+        </a>
+      `;
         ordersGrid.appendChild(orderCard);
-      });
+      }
     } catch (error) {
       console.error("Error loading orders:", error);
       document.getElementById("ordersGrid").innerHTML = `<div class="error-message">Failed to load orders</div>`;
     }
   }
+
 
   async function loadWishlist() {
     try {

@@ -7632,6 +7632,11 @@ section,
   font-weight: 500;
 }
 
+.account .content-area .orders-grid .order-card .order-content .order-info .info-row .status.pending{
+   background-color: #fffdc0;
+  color: #fff200;
+}
+.account .content-area .orders-grid .order-card .order-content .order-info .info-row .status.processing,
 .account .content-area .orders-grid .order-card .order-content .order-info .info-row .status.processing {
   background-color: #fff7ed;
   color: #f97316;
@@ -7642,12 +7647,14 @@ section,
   color: #06b6d4;
 }
 
-.account .content-area .orders-grid .order-card .order-content .order-info .info-row .status.delivered {
+.account .content-area .orders-grid .order-card .order-content .order-info .info-row .status.delivered,
+.account .content-area .orders-grid .order-card .order-content .order-info .info-row .status.paid {
   background-color: #f0fdf4;
   color: #22c55e;
 }
 
-.account .content-area .orders-grid .order-card .order-content .order-info .info-row .status.cancelled {
+.account .content-area .orders-grid .order-card .order-content .order-info .info-row .status.cancelled,
+.account .content-area .orders-grid .order-card .order-content .order-info .info-row .status.failed {
   background-color: #fef2f2;
   color: #ef4444;
 }
