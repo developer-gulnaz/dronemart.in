@@ -89,7 +89,7 @@ exports.createCodOrder = async (req, res) => {
         // Remove purchased items from cart
         await removePurchasedItems(userId, items);
 
-        res.status(201).json({ orderId: created._id }); // ✅ send correct key
+        res.status(201).json({ orderId: created._id });
 
     } catch (err) {
         console.error("COD Order Error:", err);
@@ -183,7 +183,7 @@ exports.initiatePayuPayment = async (req, res) => {
 exports.payuSuccess = async (req, res) => {
     try {
         const {
-            udf1, status, txnid, mihpayid, mode, bank_ref_num, productinfo, ...rest
+            udf1, udf2, status, txnid, mihpayid, mode, bank_ref_num, productinfo, ...rest
         } = req.body;
 
         const orderId = udf1;
@@ -243,7 +243,7 @@ exports.payuFailure = async (req, res) => {
             await payment.save();
         }
 
-        res.redirect(`/payment-failed.html?orderId=${orderId}`);
+        res.redirect(`/order-details.html?orderId=${orderId}`);
     } catch (err) {
         console.error("PayU Failure Error:", err);
         res.status(500).send("PayU failure handling failed");

@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <a href="order-details.html?orderId=${order._id}" class="order-link" style="text-decoration: none; color: inherit;">
                     <div class="order-header">
                         <div class="order-id"><span class="label">Order ID:</span> ${order._id}</div>
-                        <div class="order-date">${new Date(order.createdAt).toLocaleDateString()}</div>
+                        <div class="order-date">${new Date(order.createdAt).toLocaleString()}</div>
                     </div>
                     <div class="order-content">
                         <div class="product-grid">

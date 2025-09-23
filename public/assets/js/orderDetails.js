@@ -1,11 +1,21 @@
 document.addEventListener("DOMContentLoaded", async () => {
 
-  
   const queryParams = new URLSearchParams(window.location.search);
   const orderId = queryParams.get("orderId");
 
   if (!orderId) {
     alert("Order ID not found");
+    return;
+  }
+
+  // ---------------- Load user ----------------
+  let profile = {};
+  try {
+    const res = await fetch("/api/users/profile", { credentials: "include" });
+    if (!res.ok) throw new Error("Login required");
+    profile = await res.json();
+  } catch (err) {
+    window.location.href = "login.html";
     return;
   }
 
@@ -40,7 +50,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const paymentNumberEl = document.querySelector("[data-card-number]");
     const txnIdEl = document.querySelector("[data-txn-id]");
     const paymentIconEl = document.querySelector(".payment-icon i");
-    
+
     if (order.paymentMethod === "COD") {
       // No Payment entry in DB
       paymentTypeEl.textContent = "Cash on Delivery";
