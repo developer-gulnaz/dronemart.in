@@ -2,6 +2,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   const wishlistContainer = document.querySelector("#wishlist .wishlist-items");
 
   try {
+    // 🔹 check login status
+    const authRes = await fetch("/api/auth/check", { credentials: "include" });
+    if (authRes.status === 401) {
+      window.location.href = "/login.html"; // redirect if not logged in
+      return;
+    }
+
     // Fetch wishlist from backend
     const res = await fetch("/api/wishlist", { credentials: "include" });
     if (!res.ok) throw new Error("Failed to fetch wishlist");

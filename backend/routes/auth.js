@@ -21,4 +21,13 @@ router.post('/logout', (req, res) => {
   });
 });
 
+// ------------------- CHECK LOGIN -------------------
+router.get("/check", (req, res) => {
+  if (req.session.userId) {
+    res.json({ loggedIn: true, userId: req.session.userId });
+  } else {
+    res.status(401).json({ loggedIn: false });
+  }
+});
+
 module.exports = router;

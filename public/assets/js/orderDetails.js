@@ -8,14 +8,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  // ---------------- Load user ----------------
-  let profile = {};
-  try {
-    const res = await fetch("/api/users/profile", { credentials: "include" });
-    if (!res.ok) throw new Error("Login required");
-    profile = await res.json();
-  } catch (err) {
-    window.location.href = "login.html";
+  // 🔹 check login status
+  const authRes = await fetch("/api/auth/check", { credentials: "include" });
+  if (authRes.status === 401) {
+    window.location.href = "/login.html"; // redirect if not logged in
     return;
   }
 
