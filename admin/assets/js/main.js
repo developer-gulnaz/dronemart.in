@@ -1,16 +1,21 @@
 // -----------------------------
-// API Request Helper (Session-based)
+// Universal API Request Helper
 // -----------------------------
-async function apiRequestLogin(endpoint, body) {
+const api_url = window.location.hostname === "localhost"
+  ? `http://${window.location.hostname}:5000/api`
+  : "/api";
 
-   try {
-    const res = await fetch("/api/", {
-      method: 'POST',
+async function apiRequest(endpoint, method = 'GET', body = null) {
+  try {
+    const options = {
+      method,
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-      credentials: "include" // ✅ send/receive session cookie
-    });
+      credentials: 'include', // ✅ send/receive session cookie
+    };
 
+    if (body) options.body = JSON.stringify(body);
+
+    const res = await fetch(`${api_url}/${endpoint}`, options);
     const data = await res.json().catch(() => ({}));
 
     if (!res.ok) {
@@ -27,45 +32,60 @@ async function apiRequestLogin(endpoint, body) {
 // -----------------------------
 // Login Form Submit Handler
 // -----------------------------
-document.getElementById('loginForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
+const loginForm = document.getElementById('loginForm');
+if (loginForm) {
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-  const email = document.getElementById('email').value.trim();
-  const password = document.getElementById('password').value;
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
 
-  if (!email || !password) {
-    alert('Please enter both email and password.');
-    return;
-  }
+    if (!email || !password) {
+      alert('Please enter both email and password.');
+      return;
+    }
 
-  try {
-    const data = await apiRequestLogin('auth/login', { email, password });
+    try {
+      const data = await apiRequest('auth/login', 'POST', { email, password });
 
-    // ✅ Save session info (no token needed)
-    sessionStorage.setItem('userType', data.userType || 'admin');
-    sessionStorage.setItem('name', data.email.split('@')[0] || 'Admin');
+      // ✅ Save session info
+      sessionStorage.setItem('userType', data.userType || 'admin');
+      sessionStorage.setItem('name', data.email.split('@')[0] || 'Admin');
 
-    // Redirect to dashboard
-    window.location.href = 'dashboard.html';
-  } catch (err) {
-    alert(err.message || 'Login failed. Please try again.');
-  }
-});
+      // Redirect to dashboard
+      window.location.href = 'dashboard.html';
+    } catch (err) {
+      alert(err.message || 'Login failed. Please try again.');
+    }
+  });
+}
 
 // -----------------------------
 // Logout Function
 // -----------------------------
 async function logout() {
   try {
-    await fetch("http://localhost:5000/api/auth/logout", {
-      method: "POST",
-      credentials: "include"
-    });
+    await apiRequest('auth/logout', 'POST');
   } catch (err) {
     console.error("Logout API failed:", err);
   }
 
   // Clear client-side session
   sessionStorage.clear();
-  window.location.href = "/admin";
+  window.location.href = '/admin';
+}
+
+// -----------------------------
+// Update User Status Example
+// -----------------------------
+async function updateUserStatus(userId, statusTag) {
+  try {
+    const data = await apiRequest(`users/${userId}/status`, 'PATCH', { statusTag });
+
+    console.log('User updated:', data.user);
+    alert('User status updated successfully!');
+  } catch (err) {
+    console.error(err);
+    alert('Failed to update user status.');
+  }
 }

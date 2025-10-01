@@ -1,39 +1,22 @@
+// -----------------------------
+// Universal API Request Helper
+// -----------------------------
+const api_url = window.location.hostname === "localhost"
+  ? `http://${window.location.hostname}:5000/api`
+  : "/api";
 
-// Load Dashboard Status
-async function loadDashboardstatus() {
+async function apiRequest(endpoint, method = 'GET', body = null) {
   try {
-    const res = await fetch(`/api/users/dashboard/status`, {
-      credentials: "include", // ✅ send session cookie
-    });
+    const options = {
+      method,
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include', // ✅ send/receive session cookie
+    };
 
-    if (res.status === 401) {
-      logout();
-      return;
-    }
+    if (body) options.body = JSON.stringify(body);
 
-    if (res.ok) {
-      const data = await res.json();
-      document.getElementById("totalUsers").textContent =
-        data.totalUsers || "0";
-      document.getElementById("newLeads").textContent = data.newLeads || "0";
-      document.getElementById("newOrders").textContent =
-        data.newOrders || "0";
-      document.getElementById("revenue").textContent = `₹${data.revenue || "0"}`;
-
-    }
-  } catch (error) {
-    console.error("Error loading dashboard status:", error);
-  }
-}
-
-
-// Load Recent Users Table
-
-async function loadUsers() {
-  try {
-    const res = await fetch(`/api/users/recent`, {
-      credentials: "include", // ✅ send session cookie
-    });
+    const res = await fetch(`${api_url}/${endpoint}`, options);
+    const data = await res.json().catch(() => ({}));
 
     if (res.status === 401) {
       logout();
@@ -41,21 +24,45 @@ async function loadUsers() {
     }
 
     if (!res.ok) {
-      const errorData = await res.json();
-      console.error("API error:", errorData);
-      alert("Failed to fetch users: " + (errorData.message || "Unknown error"));
-      return;
+      throw new Error(data.message || `API error: ${res.status}`);
     }
 
-    const users = await res.json();
+    return data;
+  } catch (err) {
+    console.error(`Error calling ${endpoint}:`, err);
+    throw err;
+  }
+}
 
+// -----------------------------
+// Load Dashboard Status
+// -----------------------------
+async function loadDashboardStatus() {
+  try {
+    const data = await apiRequest('users/dashboard/status', 'GET');
+    if (!data) return;
+
+    document.getElementById("totalUsers").textContent = data.totalUsers || "0";
+    document.getElementById("newLeads").textContent = data.newLeads || "0";
+    document.getElementById("newOrders").textContent = data.newOrders || "0";
+    document.getElementById("revenue").textContent = `₹${data.revenue || "0"}`;
+  } catch (err) {
+    console.error("Error loading dashboard status:", err);
+  }
+}
+
+// -----------------------------
+// Load Recent Users Table
+// -----------------------------
+async function loadUsers() {
+  try {
+    const users = await apiRequest('users/recent', 'GET');
     if (!Array.isArray(users)) {
       console.error("Users data is not an array:", users);
       return;
     }
 
     console.log("Recent Users from DB:", users);
-
     const tbody = document.querySelector("#usersTable tbody");
     tbody.innerHTML = "";
 
@@ -103,9 +110,24 @@ async function loadUsers() {
   }
 }
 
+// -----------------------------
+// Logout Function
+// -----------------------------
+async function logout() {
+  try {
+    await apiRequest('auth/logout', 'POST');
+  } catch (err) {
+    console.error("Logout API failed:", err);
+  }
 
+  sessionStorage.clear();
+  window.location.href = "/admin";
+}
+
+// -----------------------------
 // On Page Load
-document.addEventListener("DOMContentLoaded", function () {
+// -----------------------------
+document.addEventListener("DOMContentLoaded", () => {
   // Ensure session exists
   const userType = sessionStorage.getItem("userType");
   if (!userType) {
@@ -113,7 +135,7 @@ document.addEventListener("DOMContentLoaded", function () {
     return;
   }
 
-  loadDashboardstatus();
+  loadDashboardStatus();
   loadUsers();
 
   // Role-based UI restrictions
@@ -134,21 +156,3 @@ document.addEventListener("DOMContentLoaded", function () {
     logoutBtn.addEventListener("click", logout);
   }
 });
-
-
-// -----------------------------
-// Logout Function
-// -----------------------------
-async function logout() {
-  try {
-    await fetch(`/api/auth/logout`, {
-      method: "POST",
-      credentials: "include", // ✅ clear server session
-    });
-  } catch (err) {
-    console.error("Logout API failed:", err);
-  }
-
-  sessionStorage.clear();
-  window.location.href = "/admin";
-}
