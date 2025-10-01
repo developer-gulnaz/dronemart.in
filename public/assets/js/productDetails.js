@@ -209,11 +209,26 @@ function populateProductUI(product) {
   </div>
 `;
 
+  // Clear any previous content
+  const mainContainer = document.getElementById("product-package-container"); // wrap both sections
+  if (mainContainer) mainContainer.innerHTML = "";
 
-  // ---------- In The Box ----------
-  const gridContainer = document.getElementById("in-the-box-grid");
-  if (gridContainer) {
-    gridContainer.innerHTML = ""; // Clear previous content
+  const djiBrand = "DJI";
+  const specialCategories = ["Agriculture", "FPV", "Accessories"];
+
+  if (product.brand === djiBrand) {
+    // Create DJI container dynamically
+    const djiContainer = document.createElement("div");
+    djiContainer.innerHTML = `
+    <div class="package-contents">
+      <h4>In the box</h4>
+      <div class="in-the-box-grid" id="in-the-box-grid"></div>
+    </div>
+  `;
+    mainContainer.appendChild(djiContainer);
+
+    // Populate DJI items
+    const grid = djiContainer.querySelector(".in-the-box-grid");
     (product.inTheBox || []).forEach(item => {
       const div = document.createElement("div");
       div.classList.add("in-the-box-item");
@@ -222,7 +237,25 @@ function populateProductUI(product) {
       <div><strong>${item.title}</strong></div>
       <div>× ${item.quantity}</div>
     `;
-      gridContainer.appendChild(div);
+      grid.appendChild(div);
+    });
+  } else if (specialCategories.includes(product.category)) {
+    // Create Specialized container dynamically
+    const specContainer = document.createElement("div");
+    specContainer.innerHTML = `
+    <div class="package-contents">
+      <h4>Package Contents</h4>
+      <ul class="contents-list" id="package-contents-list"></ul>
+    </div>
+  `;
+    mainContainer.appendChild(specContainer);
+
+    // Populate specialized items
+    const ul = specContainer.querySelector("#package-contents-list");
+    (product.inTheBox || []).forEach(item => {
+      const li = document.createElement("li");
+      li.innerHTML = `<i class="bi bi-check-circle"></i> ${item.quantity} × ${item.title}`;
+      ul.appendChild(li);
     });
   }
 

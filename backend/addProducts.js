@@ -1119,6 +1119,82 @@ const products = [
             }
         },
         featured: false
+    },
+    {
+        title: "AgroWingz AW20C 20L Hexacopter Spraying Drone",
+        slug: "agrowingz-20l",
+        category: "Agriculture",
+        brand: "EFT",
+        price: 215000,
+        salePrice: 195000,
+        badge: "Professional",
+        stock: 5,
+        inStock: true,
+        image: "assets/img/product/specialized/agroWingz 20L.png",
+        thumbnails: [
+            "assets/img/product/specialized/agroWingz 20L.png",
+            "assets/img/product/specialized/agroWingz 20L_1.png",
+            "assets/img/product/specialized/agroWingz 20L_2.png",
+            "assets/img/product/specialized/agroWingz 20L_3.png",
+            "assets/img/product/specialized/agroWingz 20L_4.png",
+            "assets/img/product/specialized/agroWingz 20L_5.png",
+            "assets/img/product/specialized/agroWingz 20L_6.png",
+            "assets/img/product/specialized/agroWingz 20L_7.jpeg"
+        ],
+        description: `The **AgroWingz AW20C 20L Hexacopter** is a **professional agricultural drone** built for precision crop spraying. Its **20L tank** enables accurate application of fertilizers, pesticides, and nutrients, reducing waste. With **GPS positioning** and **waypoint navigation**, it covers large fields efficiently. The **foldable frame** ensures easy transport, while the **high payload capacity** and **advanced flight control system** guarantee stability and reliability. Perfect for farms of all sizes, it improves **productivity and efficiency** in modern agriculture.`,
+        shortDescription: "20L agricultural spraying drone with GPS navigation and robust foldable design.",
+        specs: {
+            aircraft: {
+                weight: "23.5 kg",
+                dimensions: {
+                    folded: "1224 x 1203 x 660 mm",
+                    unfolded: "2717 x 2717 x 660 mm"
+                },
+                maxFlightTime: "Depends on payload",
+                payloadCapacity: "46.5 kg",
+                propellerType: "34 inch",
+                batteryCells: "14S LiPo",
+                ESCRequired: "80A FOC",
+                wheelbase: "1854 mm"
+            },
+            tank: {
+                capacity: "20 Liters",
+                type: "Brushless Pump with 8L/min output"
+            },
+            features: [
+                "Efficient Agricultural Spraying",
+                "Classic Folding Body for Easy Transport",
+                "High Payload Capacity",
+                "GPS Positioning & Waypoint Navigation",
+                "Robust Build for Harsh Environments",
+                "Integrated Power Supply Wiring",
+                "Precision and Accuracy",
+                "Scalable and Customizable"
+            ]
+        },
+        inTheBox: [
+            { title: "E620P Drone Frame", quantity: 1 },
+            { title: "20L Tank", quantity: 1 },
+            { title: "Hobbywing X9 Motor CW", quantity: 3 },
+            { title: "Hobbywing X9 Motor CCW", quantity: 3 },
+            { title: "Drone Propeller CW", quantity: 3 },
+            { title: "Drone Propeller CCW", quantity: 3 },
+            { title: "Brushless Pump 8L", quantity: 1 },
+            { title: "Extended Spray Bar", quantity: 4 },
+            { title: "Universal Spray Pneumatic Bracket", quantity: 1 },
+            { title: "RTK Mount", quantity: 1 },
+            { title: "Front Radar Mount", quantity: 1 },
+            { title: "Height Radar Mount", quantity: 1 }
+        ],
+
+        rating: 0,
+        reviews: 0,
+        featured: true,
+        metaTitle: "AgroWingz AW20C 20L Hexacopter Agricultural Spraying Drone",
+        metaDescription: "EFT E620P 20L Hexacopter Drone Kit for precision crop spraying with GPS navigation, high payload capacity, and robust build.",
+        keywords: ["EFT E620P", "20L spraying drone", "agricultural drone", "hexacopter drone"],
+        createdAt: new Date(),
+        updatedAt: new Date()
     }
 ];
 

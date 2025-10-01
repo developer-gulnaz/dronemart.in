@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const inTheBoxSchema = new mongoose.Schema({
   title: { type: String, required: true },      // e.g., "DJI Mavic 3 Pro"
   quantity: { type: Number, default: 1 },       // e.g., 1, 2, 3
-  image: { type: String, require: true }                       // optional image URL
+  image: { type: String}                       // optional image URL
 }, { _id: false }); // no separate _id for sub-docs
 
 const productSchema = new mongoose.Schema({
