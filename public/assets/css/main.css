@@ -27,7 +27,7 @@
   /* Default color used for the majority of the text content across the entire website */
   --heading-color: #000000;
   /* Color for headings, subheadings and title throughout the website */
-  --accent-color: #252223;
+  --accent-color: #0b64ca;
   /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
   --surface-color: #ffffff;
   /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
@@ -1793,8 +1793,8 @@ h6 {
   position: relative;
 }
 
-.page-title h1 {
-  font-size: 24px;
+.page-title h3 {
+  font-size: 21px;
   font-weight: 700;
 }
 
@@ -2043,7 +2043,6 @@ section,
   display: flex;
   justify-content: center;
   align-items: center;
-  left: -20px;
 }
 
 .hero .hero-visuals .product-showcase {
@@ -2595,17 +2594,21 @@ section,
   border-color: var(--heading-color);
 }
 
+;
+
 .best-sellers .product-info {
   padding: 30px 20px 25px;
 }
 
 .best-sellers .product-category {
-  color: color-mix(in srgb, var(--default-color), transparent 40%);
+  background: linear-gradient(135deg, var(--surface-color) 0%, color-mix(in srgb, var(--accent-color), transparent 95%) 100%);
   font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: 0.8px;
   text-transform: uppercase;
   margin-bottom: 8px;
+  border-radius: 12px;
+  padding: 10px 25px;
 }
 
 .best-sellers .product-name {
@@ -2810,16 +2813,6 @@ section,
   font-size: 1.4rem;
 }
 
-.cards .product-category .category-title:after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 2px;
-  width: 50px;
-  background-color: var(--accent-color);
-}
-
 .cards .product-category .product-list {
   display: flex;
   flex-direction: column;
@@ -2860,13 +2853,14 @@ section,
   transform: scale(1.1);
 }
 
-.cards .product-card .product-image .product-badges {
-  position: absolute;
-  top: 5px;
-  left: 5px;
+.cards .product-card .product-info .product-badges {
+
   display: flex;
   flex-direction: column;
   gap: 3px;
+  font-size: 9px;
+  font-weight: 500;
+  z-index: 99;
 }
 
 .cards .product-card .product-image .product-badges [class^=badge-] {
@@ -3380,9 +3374,12 @@ section,
   position: relative;
   margin-bottom: 1.5rem;
   border-radius: 16px;
+  margin-left: 2rem;
+  width: 450px;
+  height: 400px;
   overflow: hidden;
   background: linear-gradient(145deg, var(--surface-color), color-mix(in srgb, var(--surface-color), #f8f9fa 50%));
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 32px rgb(83 149 238 / 30%);
 }
 
 .product-details .product-gallery .main-showcase .image-zoom-container {
@@ -3396,7 +3393,7 @@ section,
   height: 100%;
   object-fit: contain;
   transition: transform 0.4s ease;
-  cursor: crosshair;
+  cursor: pointer;
 }
 
 .product-details .product-gallery .main-showcase .image-zoom-container .main-product-image:hover {
@@ -3454,6 +3451,13 @@ section,
   .product-details .product-gallery .thumbnail-grid {
     grid-template-columns: repeat(4, 1fr);
   }
+
+  .product-details .product-gallery .main-showcase {
+    margin: 0;
+    width: fit-content;
+    height: 380px;
+    margin-bottom: 15px;
+  }
 }
 
 .product-details .product-gallery .thumbnail-grid .thumbnail-wrapper {
@@ -3472,13 +3476,14 @@ section,
 }
 
 .product-details .product-gallery .thumbnail-grid .thumbnail-wrapper.active {
-  border-color: var(--accent-color);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent-color), transparent 70%);
+  border-color: #96979e;
+  box-shadow: 0 0 0 2px color-mix(in srgb, #96979e, transparent 70%);
 }
 
 .product-details .product-gallery .thumbnail-grid .thumbnail-wrapper img {
   width: 100%;
   height: 100%;
+  opacity: 60%;
   object-fit: cover;
 }
 
@@ -3869,7 +3874,6 @@ section,
 
 .product-details .info-tabs-container .tabs-navigation .nav-link {
   flex: 1;
-  padding: 1rem 1.5rem;
   background: none;
   border: none;
   border-radius: 12px;
@@ -3952,6 +3956,10 @@ section,
   margin: 0;
 }
 
+.product-details .info-tabs-container .overview-content .row .col-lg-6 {
+  padding: 0 20px !important;
+}
+
 .product-details .info-tabs-container .overview-content .package-contents {
   padding: 2rem;
   background: linear-gradient(135deg, var(--surface-color), color-mix(in srgb, var(--surface-color), #f8f9fa 50%));
@@ -3988,7 +3996,7 @@ section,
   margin-bottom: 2rem;
 }
 
-.product-details .info-tabs-container .technical-content .tech-group h4 {
+.product-details .info-tabs-container .technical-content .tech-group h5 {
   color: var(--heading-color);
   font-weight: 700;
   margin-bottom: 1rem;
@@ -3996,17 +4004,39 @@ section,
   border-bottom: 2px solid var(--accent-color);
 }
 
+.product-details .info-tabs-container .technical-content .tech-group .spec-table .spec-row {
+  display: flex;
+  padding: 0.5rem 1.25rem;
+  font-size: 14px;
+  border-bottom: 1px solid color-mix(in srgb, var(--default-color), transparent 95%);
+}
+
 .product-details .info-tabs-container .technical-content .tech-group .spec-table {
+  width: 100%;
+  border-collapse: collapse;
   background: var(--surface-color);
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
 }
 
-.product-details .info-tabs-container .technical-content .tech-group .spec-table .spec-row {
-  display: flex;
-  padding: 0.875rem 1.25rem;
-  border-bottom: 1px solid color-mix(in srgb, var(--default-color), transparent 95%);
+/* Zebra striping */
+.product-details .info-tabs-container .technical-content .tech-group .spec-table .spec-row:nth-child(odd) {
+  background: linear-gradient(135deg, color-mix(in srgb, #877fff, transparent 90%), color-mix(in srgb, #080a6e, transparent 95%));
+  /* light blue for odd rows */
+}
+
+.product-details .info-tabs-container .technical-content .tech-group .spec-table .spec-row:nth-child(even) {
+  background-color: #ffffff;
+  /* white for even rows */
+}
+
+/* Hover effect */
+.product-details .info-tabs-container .technical-content .tech-group .spec-table .spec-row:hover {
+  background: linear-gradient(135deg, color-mix(in srgb, #7e76ed, transparent 90%), color-mix(in srgb, #6dc9d5, transparent 95%));
+  /* slightly darker light blue on hover */
+  cursor: pointer;
+  /* optional: show pointer on hover */
 }
 
 .product-details .info-tabs-container .technical-content .tech-group .spec-table .spec-row:last-child {
@@ -4014,7 +4044,7 @@ section,
 }
 
 .product-details .info-tabs-container .technical-content .tech-group .spec-table .spec-row .spec-name {
-  flex: 1;
+  width: 150px;
   font-weight: 600;
   color: var(--heading-color);
 }
@@ -4022,7 +4052,7 @@ section,
 .product-details .info-tabs-container .technical-content .tech-group .spec-table .spec-row .spec-value {
   flex: 1;
   color: color-mix(in srgb, var(--default-color), transparent 20%);
-  text-align: right;
+  text-align: left;
 }
 
 .product-details .info-tabs-container .reviews-content .reviews-header {
@@ -7632,10 +7662,11 @@ section,
   font-weight: 500;
 }
 
-.account .content-area .orders-grid .order-card .order-content .order-info .info-row .status.pending{
-   background-color: #fffdc0;
+.account .content-area .orders-grid .order-card .order-content .order-info .info-row .status.pending {
+  background-color: #fffdc0;
   color: #fff200;
 }
+
 .account .content-area .orders-grid .order-card .order-content .order-info .info-row .status.processing,
 .account .content-area .orders-grid .order-card .order-content .order-info .info-row .status.processing {
   background-color: #fff7ed;

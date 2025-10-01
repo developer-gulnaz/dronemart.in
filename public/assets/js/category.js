@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             const col = document.createElement('div');
             col.className = 'col-12 col-md-6 col-lg-4';
             col.innerHTML = `
-              <div class="product-card card shadow-sm border-0" data-id="${p._id}">
+              <div class="product-card card shadow-sm border-0" data-id="${p._id}", data-slug="${p.slug}" >
                 <div class="product-image">
                   <img src="${p.image}" alt="${p.title}">
                   <div class="product-overlay">
@@ -47,9 +47,9 @@ document.addEventListener('DOMContentLoaded', async function () {
                 </div>
                 <div class="product-details">
                   <div class="product-category">${p.category || ""}</div>
-                  <h4 class="product-title"><a href="product-details.html?id=${p._id}">${p.title}</a></h4>
+                  <h4 class="product-title"><a href="product-details.html?slug=${p.slug}">${p.title}</a></h4>
                   <div class="product-meta">
-                    <div class="product-price">$${p.price}</div>
+                    <div class="product-price">₹${p.price}</div>
                     <div class="product-rating"><i class="bi bi-star-fill"></i> ${p.rating || 0}</div>
                   </div>
                 </div>
@@ -65,93 +65,65 @@ document.addEventListener('DOMContentLoaded', async function () {
     function attachActionEvents() {
         document.querySelectorAll(".view-btn").forEach(btn => {
             btn.addEventListener("click", function () {
-                const id = this.closest(".product-card").dataset.id;
-                window.location.href = `product-details.html?id=${id}`;
+                const slug = this.closest(".product-card").dataset.slug;
+                window.location.href = `product-details.html?slug=${slug}`;
             });
         });
 
+        // products: array of products on the current page
         document.querySelectorAll(".cart-btn").forEach(btn => {
-            btn.addEventListener("click", async function () {
+            btn.addEventListener("click", function () {
                 const card = this.closest(".product-card");
-                const id = card.dataset.id;
-                const product = products.find(p => p._id === id);
+                if (!card) return;
 
-                try {
-                    const res = await fetch("/api/cart", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        credentials: "include",
-                        body: JSON.stringify({
-                            product: product._id,
-                            quantity: 1
-                        })
-                    });
-                    if (res.status === 401) {
-                        alert("Please login to add products to cart");
-                        window.location.href = "login.html";
-                        return;
-                    }
-                    if (res.ok) {
-                        const cartData = await res.json();
-                        alert(`${product.title} added to cart ✅`);
-                        window.updateCartBadge?.(cartData.items.length || 0);
-                    } else {
-                        console.error("Failed to add to cart", res.status);
-                    }
-                } catch (err) {
-                    console.error("Error adding to cart:", err);
-                }
+                const product = {
+                    _id: card.dataset.id,
+                    title: card.dataset.title,
+                    price: card.dataset.price,
+                    image: card.dataset.image
+                };
+
+                window.addToCart(product);
             });
         });
+
 
         document.querySelectorAll(".wishlist-btn").forEach(btn => {
-            btn.addEventListener("click", async function () {
+            btn.addEventListener("click", function () {
                 const card = this.closest(".product-card");
+                if (!card) return;
+
                 const id = card.dataset.id;
                 const product = products.find(p => p._id === id);
+                if (!product) return;
 
-                try {
-                    const res = await fetch("/api/wishlist", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        credentials: "include",
-                        body: JSON.stringify({
-                            product: product._id,
-                            title: product.title,
-                            image: product.image,
-                            price: product.price
-                        })
-                    });
-
-                    if (res.status === 401) {
-                        alert("Please login to add products to wishlist");
-                        window.location.href = "login.html";
-                        return;
-                    }
-
-                    if (res.ok) {
-                        const wishlistData = await res.json();
-                        alert(`${product.title} added to wishlist ❤️`);
-                        window.updateWishlistBadge?.(wishlistData.items.length || 0);
-                    } else {
-                        console.error("Failed to add to wishlist", res.status);
-                    }
-                } catch (err) {
-                    console.error("Error adding to wishlist:", err);
-                }
+                window.addToWishlist(product);
             });
         });
+
     }
 
     // === Search ===
     function performSearch() {
         const term = (searchInput.value || '').toLowerCase();
-        fetchProducts(term);
+
+        // Filter locally from already fetched products
+        const filtered = products.filter(p =>
+            p.title.toLowerCase().includes(term) ||
+            (p.category || "").toLowerCase().includes(term)
+        );
+
+        renderProducts(filtered);
     }
+
     searchButton.addEventListener('click', performSearch);
+
     searchInput.addEventListener('keyup', e => {
         if (e.key === 'Enter') performSearch();
     });
+
+    searchInput.addEventListener('input', performSearch);
+
 
     // === Sort ===
     sortSelect.addEventListener('change', function () {
@@ -195,3 +167,4 @@ document.addEventListener('DOMContentLoaded', async function () {
     // === Initial Load ===
     fetchProducts();
 });
+

@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             </div>
             <div class="col-lg-2 col-12 mt-3 mt-lg-0 text-center">
               <div class="price-tag">
-                <span class="current-price">$${item.price.toFixed(2)}</span>
+                <span class="current-price">₹${item.price.toFixed(2)}</span>
               </div>
             </div>
             <div class="col-lg-3 col-12 mt-3 mt-lg-0 text-center">
@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             </div>
             <div class="col-lg-2 col-12 mt-3 mt-lg-0 text-center">
               <div class="item-total">
-                <span>$${itemTotal.toFixed(2)}</span>
+                <span>₹${itemTotal.toFixed(2)}</span>
               </div>
             </div>
           </div>
@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       `;
     });
 
-    subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
+    subtotalEl.textContent = `₹${subtotal.toFixed(2)}`;
 
     // --- Shipping logic ---
     const shippingEl = document.querySelector(".summary-item.shipping-item");
@@ -121,7 +121,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     // --- Total calculation ---
     const tax = subtotal * 0.10;
     const total = subtotal + tax + shipping;
-    totalEl.textContent = `$${total.toFixed(2)}`;
+    totalEl.textContent = `₹${total.toFixed(2)}`;
 
     // --- Update shipping dynamically ---
     const shippingRadios = document.querySelectorAll('input[name="shipping"]');
@@ -132,10 +132,11 @@ document.addEventListener("DOMContentLoaded", async function () {
         else if (radio.id === "express") newShipping = 12.99;
         else newShipping = 0; // free
 
-        // shippingEl.querySelector(".summary-value").textContent = `$${newShipping.toFixed(2)}`;
-        totalEl.textContent = `$${(subtotal + tax + newShipping).toFixed(2)}`;
+        // shippingEl.querySelector(".summary-value").textContent = `₹${newShipping.toFixed(2)}`;
+        totalEl.textContent = `₹${(subtotal + tax + newShipping).toFixed(2)}`;
       });
     });
+
   }
 
 
@@ -165,6 +166,10 @@ document.addEventListener("DOMContentLoaded", async function () {
       if (res.ok) {
         cart = (await res.json()).items;
         renderCart();
+        // Update header cart badge live
+        if (window.updateCartBadge) {
+          window.updateCartBadge(cart.length);
+        }
       }
     } catch (err) {
       console.error("Error removing cart item:", err);
@@ -219,7 +224,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
       const res = await fetch("/api/payment-methods", { credentials: "include" });
       const methods = res.ok ? await res.json() : [];
-      
+
       if (methods.length > 0) {
         paymentMessage.textContent = `You have ${methods.length} payment method(s) available. Select to proceed.`;
         confirmBtn.disabled = false;

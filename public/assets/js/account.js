@@ -33,60 +33,48 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (!ordersRes.ok) throw new Error("Failed to fetch orders");
       const orders = await ordersRes.json();
 
+      // const payRes = await fetch(`/api/payments/${orderId}`, { credentials: "include" });
+      // const payment = await payRes.json();
+
       const ordersGrid = document.getElementById("ordersGrid");
       ordersGrid.innerHTML = "";
       document.getElementById("orderCount").textContent = orders.length;
-
+      updateUserBadge(orders.length);
       if (orders.length === 0) {
         document.getElementById("ordersEmpty")?.classList.remove("d-none");
       } else {
         document.getElementById("ordersEmpty")?.classList.add("d-none");
       }
 
-      for (const order of orders) {
-        let paymentStatus = "--";
-
-        // 🔹 Fetch payment details for this order (if not COD)
-        try {
-          const payRes = await fetch(`/api/payments/${order._id}`, { credentials: "include" });
-          if (payRes.ok) {
-            const payment = await payRes.json();
-            paymentStatus = payment?.status || "--";
-          }
-        } catch (err) {
-          console.warn(`No payment record found for order ${order._id}`);
-        }
-
+      orders.forEach((order) => {
         const orderCard = document.createElement("div");
         orderCard.classList.add("order-card");
         orderCard.innerHTML = `
-        <a href="order-details.html?orderId=${order._id}" class="order-link" style="text-decoration: none; color: inherit;">
-          <div class="order-header">
-            <div class="order-id"><span class="label">Order ID:</span> ${order._id}</div>
-            <div class="order-date">${new Date(order.createdAt).toLocaleString()}</div>
-          </div>
-          <div class="order-content">
-            <div class="product-grid">
-              ${(order.items || []).map((p) => `<img src="${p.image}" alt="${p.title}" loading="lazy">`).join("")}
-            </div>
-            <div class="order-info">
-              <div class="info-row"><span>Payment Type</span> <span class="status ${order.paymentMethod?.toLowerCase()}">${order.paymentMethod || '--'}</span></div>
-              <div class="info-row"><span>Order Status</span> <span class="status ${order.status?.toLowerCase()}">${order.status || '--'}</span></div>
-              <div class="info-row"><span>Payment Status</span> <span class="status ${paymentStatus.toLowerCase()}">${paymentStatus}</span></div>
-              <div class="info-row"><span>Items</span> ${order.items?.length || 0}</div>
-              <div class="info-row"><span>Total</span> <span class="price">$${(order.total || 0).toFixed(2)}</span></div>
-            </div>
-          </div>
-        </a>
-      `;
+                <a href="order-details.html?orderId=${order._id}" class="order-link" style="text-decoration: none; color: inherit;">
+                    <div class="order-header">
+                        <div class="order-id"><span class="label">Order ID:</span> ${order._id}</div>
+                        <div class="order-date">${new Date(order.createdAt).toLocaleString()}</div>
+                    </div>
+                    <div class="order-content">
+                        <div class="product-grid">
+                            ${(order.products || []).map((p) => `<img src="${p.image}" alt="${p.title}" loading="lazy">`).join("")}
+                        </div>
+                        <div class="order-info">
+                            <div class="info-row"><span>Payment Type</span> <span class="status ${order.paymentMethod?.toLowerCase()}">${order.paymentMethod || '--'}</span></div>
+                            <div class="info-row"><span>Order Status</span> <span class="status ${order.status?.toLowerCase()}">${order.status || '--'}</span></div>
+                            <div class="info-row"><span>Items</span> ${order.items?.length || 0}</div>
+                            <div class="info-row"><span>Total</span> <span class="price">₹${(order.total || 0).toFixed(2)}</span></div>
+                        </div>
+                    </div>
+                  </a>
+                `;
         ordersGrid.appendChild(orderCard);
-      }
+      });
     } catch (error) {
       console.error("Error loading orders:", error);
       document.getElementById("ordersGrid").innerHTML = `<div class="error-message">Failed to load orders</div>`;
     }
   }
-
 
   async function loadWishlist() {
     try {
@@ -94,37 +82,59 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (!wishlistRes.ok) throw new Error("Failed to fetch wishlist");
 
       const wishlist = await wishlistRes.json();
+      console.log("Wishlist data:", wishlist);
       const wishlistContainer = document.getElementById("wishlistContainer");
       const wishlistEmpty = document.getElementById("wishlistEmpty");
       wishlistContainer.innerHTML = "";
-      document.getElementById("wishlistCountSidebar").textContent = wishlist.length;
+      document.getElementById("wishlistCountSidebar").textContent = wishlist.items.length;
 
-      if (wishlist.length === 0) {
+      if (wishlist.items.length === 0) {
         wishlistEmpty.classList.remove("d-none");
       } else {
         wishlistEmpty.classList.add("d-none");
       }
 
-      wishlist.forEach((item) => {
+      wishlist.items.forEach((item) => {
         const card = document.createElement("div");
-        card.classList.add("col-md-4");
+        card.classList.add("wishlist-item"); // add "wishlist-item" for consistency
         card.innerHTML = `
-                    <div class="wishlist-card">
-                        <div class="wishlist-image">
-                            <img src="${item.image}" alt="${item.title}">
-                            <button class="btn-remove"><i class="bi bi-trash"></i></button>
-                        </div>
-                        <div class="wishlist-content">
-                            <h4>${item.title}</h4>
-                            <div class="price">$${item.price}</div>
-                            <button class="btn btn-sm btn-primary btn-add-cart">Add to Cart</button>
-                        </div>
-                    </div>
-                `;
-        wishlistContainer.appendChild(card);
+        <div class="wishlist-card">
+            <div class="wishlist-image">
+                <img src="${item.image}" alt="${item.title}">
+                <button class="btn-remove" data-id="${item.product}"><i class="bi bi-trash"></i></button>
+            </div>
+            <div class="wishlist-content">
+                <h4>${item.title}</h4>
+                <div class="price">₹${item.price}</div>
+                <button class="btn btn-sm btn-primary btn-add-cart">Add to Cart</button>
+            </div>
+        </div> `;
 
-        card.querySelector(".btn-add-cart").addEventListener("click", () => addToCart(item._id));
-        card.querySelector(".btn-remove").addEventListener("click", () => removeFromWishlist(item._id, card));
+        wishlistContainer.appendChild(card);
+        // Use global remove function
+        card.querySelector(".btn-remove").addEventListener("click", (e) => {
+          const id = e.currentTarget.dataset.id;
+          window.removeFromWishlist(id, e.currentTarget); // pass clicked button for DOM removal
+        });
+
+        // Use global addToCart + then remove from wishlist
+        card.querySelector(".btn-add-cart").addEventListener("click", async () => {
+          const product = {
+            _id: item.product,   // ✅ real productId, not wishlistId
+            title: item.title,
+            price: item.price,
+            image: item.image
+          };
+
+          try {
+            await window.addToCart(product, 1);
+
+            // after adding to cart, also remove from wishlist globally
+            window.removeFromWishlist(item.product, card.querySelector(".btn-add-cart"));
+          } catch (err) {
+            console.error("Add to cart from wishlist error:", err);
+          }
+        });
       });
     } catch (error) {
       console.error("Error loading wishlist:", error);
@@ -320,29 +330,50 @@ document.addEventListener("DOMContentLoaded", async () => {
       alert("Failed to add to cart. Please try again.");
     }
   }
-
-  async function removeFromWishlist(productId, card) {
-    try {
-      const res = await fetch(`/api/wishlist/${productId}`, {
-        method: "DELETE",
-        credentials: "include"
-      });
-
-      if (res.ok) {
-        card.remove();
-        // Update wishlist count and check empty state
-        const remainingCards = document.querySelectorAll('#wishlistContainer .wishlist-card').length;
-        document.getElementById("wishlistCountSidebar").textContent = remainingCards;
-
-        if (remainingCards === 0) {
-          document.getElementById("wishlistEmpty").classList.remove("d-none");
-        }
-      } else {
-        throw new Error("Failed to remove from wishlist");
-      }
-    } catch (error) {
-      console.error("Error removing from wishlist:", error);
-      alert("Failed to remove from wishlist. Please try again.");
-    }
-  }
 });
+
+
+function updateUserBadge(orderCount) {
+  const badge = document.querySelector(".status-badge");
+  const userStatus = document.getElementById("accountUserStatus");
+  const statusIcon = document.querySelector(".user-status i"); // <i> inside user-status
+
+  if (!badge || !userStatus || !statusIcon) return;
+
+  let icon = "";
+  let title = "";
+  let color = "";
+
+  if (orderCount >= 10) {
+    icon = "bi bi-award";     // 🏆
+    title = "Elite Member";
+    color = "#d4af37";        // Premium gold
+  } else if (orderCount >= 5) {
+    icon = "bi bi-star-fill"; // ⭐
+    title = "Gold Member";
+    color = "#ffcc00";        // Bright yellow
+  } else if (orderCount >= 2) {
+    icon = "bi bi-shield-check"; // 🛡️
+    title = "Verified Member";
+    color = "#4cafef";           // Blue
+  } else {
+    badge.style.display = "none";
+    statusIcon.className = "bi bi-person"; // fallback icon
+    userStatus.textContent = "Member";
+    userStatus.style.color = "";
+    return;
+  }
+
+  // Update avatar badge
+  badge.innerHTML = `<i class="${icon}"></i>`;
+  badge.style.display = "inline-flex";
+  badge.style.color = color;
+  badge.setAttribute("title", title);
+
+  // Update status section (icon + text)
+  statusIcon.className = icon;
+  statusIcon.style.color = color;
+  userStatus.textContent = title;
+  userStatus.style.color = color;
+}
+

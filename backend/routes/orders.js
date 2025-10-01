@@ -136,7 +136,7 @@ router.get("/", checkAdminSession, async (req, res) => {
 });
 
 // Update order status
-router.put("/:id/status", checkAdminSession, async (req, res) => {
+router.patch("/:id/status", checkAdminSession, async (req, res) => {
   try {
     const { status } = req.body;
     const validStatuses = ["pending", "processing", "shipped", "delivered", "cancelled"];

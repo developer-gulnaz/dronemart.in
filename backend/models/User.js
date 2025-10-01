@@ -11,11 +11,12 @@ const userSchema = mongoose.Schema(
     city: { type: String, required: true },
     state: { type: String, required: true },
     pincode: { type: String, required: true },
-
-    // Optional fields for registration, mandatory at checkout
     street: { type: String },
     apartment: { type: String },
 
+    // Added fields
+    statusTag: { type: String, default: "New" },
+    modifiedAt: { type: Date },
   },
   { timestamps: true }
 );
@@ -33,4 +34,4 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-module.exports = mongoose.model("User", userSchema, 'users');
+module.exports = mongoose.model("User", userSchema, "users");

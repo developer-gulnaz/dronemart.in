@@ -23,17 +23,19 @@ router.get("/", checkUserSession, async (req, res) => {
       await cart.save();
     }
 
-    // Map items to include product info for frontend
+    // Map items safely to include product info for frontend
     const cartWithDetails = {
       ...cart.toObject(),
-      items: cart.items.map(item => ({
-        _id: item._id,
-        product: item.product._id,
-        title: item.product.title,
-        price: item.product.price,
-        image: item.product.image,
-        quantity: item.quantity || 1
-      }))
+      items: cart.items
+        .filter(item => item.product) // Skip null/deleted products
+        .map(item => ({
+          _id: item._id,
+          product: item.product._id,
+          title: item.product.title,
+          price: item.product.price,
+          image: item.product.image,
+          quantity: item.quantity || 1
+        }))
     };
 
     res.json(cartWithDetails);
@@ -55,9 +57,10 @@ router.post("/", checkUserSession, async (req, res) => {
     if (!cart) cart = new Cart({ user: req.session.userId, items: [] });
 
     const exists = cart.items.find(item => item.product.toString() === product);
-    if (!exists) {
-      cart.items.push({ product });
+    if (exists) {
+      return res.status(400).json({ message: "Item already in cart" });
     }
+    cart.items.push({ product });
 
     await cart.save();
     res.status(201).json(cart);
@@ -94,14 +97,16 @@ router.put("/:productId", checkUserSession, async (req, res) => {
     // Map items for frontend
     const cartWithDetails = {
       ...cart.toObject(),
-      items: cart.items.map(item => ({
-        _id: item._id,
-        product: item.product._id,
-        title: item.product.title,
-        price: item.product.price,
-        image: item.product.image,
-        quantity: item.quantity
-      }))
+      items: cart.items
+        .filter(item => item.product)
+        .map(item => ({
+          _id: item._id,
+          product: item.product._id,
+          title: item.product.title,
+          price: item.product.price,
+          image: item.product.image,
+          quantity: item.quantity
+        }))
     };
 
     res.json(cartWithDetails);
@@ -130,14 +135,16 @@ router.delete("/:productId", checkUserSession, async (req, res) => {
 
     const cartWithDetails = {
       ...cart.toObject(),
-      items: cart.items.map(item => ({
-        _id: item._id,
-        product: item.product._id,
-        title: item.product.title,
-        price: item.product.price,
-        image: item.product.image,
-        quantity: item.quantity
-      }))
+      items: cart.items
+        .filter(item => item.product)
+        .map(item => ({
+          _id: item._id,
+          product: item.product._id,
+          title: item.product.title,
+          price: item.product.price,
+          image: item.product.image,
+          quantity: item.quantity
+        }))
     };
 
     res.json(cartWithDetails);

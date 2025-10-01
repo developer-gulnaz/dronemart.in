@@ -426,7 +426,7 @@
       if (applyButton) {
         applyButton.addEventListener('click', function() {
           // This would typically trigger a form submission or AJAX request
-          console.log(`Applying price filter: $${minValue} - $${maxValue}`);
+          console.log(`Applying price filter: ₹${minValue} - ₹${maxValue}`);
 
           // Here you would typically add code to filter products or redirect to a filtered URL
         });
@@ -444,8 +444,8 @@
 
       // Helper function to update price displays
       function updateDisplays() {
-        minPriceDisplay.textContent = `$${minValue}`;
-        maxPriceDisplay.textContent = `$${maxValue}`;
+        minPriceDisplay.textContent = `₹${minValue}`;
+        maxPriceDisplay.textContent = `₹${maxValue}`;
       }
     });
   }
@@ -894,7 +894,7 @@
                 discountElement.className = 'order-discount d-flex justify-content-between';
                 discountElement.innerHTML = `
                 <span>Discount (20%)</span>
-                <span>-$${(currentTotal * 0.2).toFixed(2)}</span>
+                <span>-₹${(currentTotal * 0.2).toFixed(2)}</span>
               `;
 
                 // Insert before the total

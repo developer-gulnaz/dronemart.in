@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const OrderSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-  
+
   items: [
     {
       product: { type: mongoose.Schema.Types.ObjectId, ref: "Product", required: true },
@@ -19,9 +19,11 @@ const OrderSchema = new mongoose.Schema({
 
   status: {
     type: String,
-    enum: ["pending","cod-pending","confirmed","processing","shipped","delivered","cancelled","payment-failed", "initiated"],
+    enum: ["pending", "cod-pending", "confirmed", "processing", "shipped", "delivered", "cancelled", "payment-failed", "initiated"],
     default: "pending",
   },
+
+  paymentStatus: { type: String, enum: ["initiated", "cod-pending", "pending", "completed", "not paid(cancelled)", "paid"] },
 
   paymentRef: { type: mongoose.Schema.Types.ObjectId, ref: "Payment" }
 

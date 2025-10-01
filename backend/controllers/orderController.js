@@ -48,7 +48,7 @@ exports.createOrder = async (req, res) => {
             payment: { method: paymentMethod },
             total,
             status: "pending",
-            paymentStatus: paymentMethod === "cod" ? "cod_pending" : "pending",
+            paymentStatus: paymentMethod === "cod" ? "cod-pending" : "pending",
         });
 
         const created = await order.save();
@@ -82,7 +82,7 @@ exports.createCodOrder = async (req, res) => {
             paymentMethod: "COD",
             total: totalAmount,
             status: "pending",
-            paymentStatus: "cod_pending",
+            paymentStatus: "cod-pending",
         });
 
         const created = await order.save();

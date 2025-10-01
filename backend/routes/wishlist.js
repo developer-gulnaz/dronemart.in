@@ -24,17 +24,19 @@ router.get("/", checkUserSession, async (req, res) => {
       await wishlist.save();
     }
 
-    // Map items to include product info for frontend
+    // Map items safely to include product info for frontend
     const wishlistWithDetails = {
       ...wishlist.toObject(),
-      items: wishlist.items.map(item => ({
-        _id: item._id,
-        product: item.product._id,
-        title: item.product.title,
-        price: item.product.price,
-        image: item.product.image,
-        quantity: item.quantity || 1
-      }))
+      items: wishlist.items
+        .filter(item => item.product)
+        .map(item => ({
+          _id: item._id,
+          product: item.product._id,
+          title: item.product.title,
+          price: item.product.price,
+          image: item.product.image,
+          quantity: item.quantity || 1
+        }))
     };
 
     res.json(wishlistWithDetails);
@@ -43,7 +45,6 @@ router.get("/", checkUserSession, async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
-
 
 // -----------------------------
 // Add to wishlist
@@ -57,7 +58,11 @@ router.post("/", checkUserSession, async (req, res) => {
     if (!wishlist) wishlist = new Wishlist({ user: req.session.userId, items: [] });
 
     const exists = wishlist.items.find(item => item.product.toString() === product);
-    if (!exists) wishlist.items.push({ product });
+    if (exists) {
+      return res.status(400).json({ message: "Item already in wishlist" });
+    }
+
+    wishlist.items.push({ product });
 
     await wishlist.save();
     res.status(201).json(wishlist);
@@ -72,17 +77,21 @@ router.post("/", checkUserSession, async (req, res) => {
 // -----------------------------
 router.delete("/:productId", checkUserSession, async (req, res) => {
   try {
-    let wishlist = await Wishlist.findOne({ user: req.session.userId });
+    const wishlist = await Wishlist.findOneAndUpdate(
+      { user: req.session.userId },
+      { $pull: { items: { product: req.params.productId } } }, // remove product from items array
+      { new: true } // return updated document
+    );
+
     if (!wishlist) return res.status(404).json({ message: "Wishlist not found" });
 
-    wishlist.items = wishlist.items.filter(i => i.product.toString() !== req.params.productId);
-    await wishlist.save();
     res.json(wishlist);
   } catch (err) {
     console.error("Error removing wishlist item:", err);
     res.status(500).json({ message: "Server error" });
   }
 });
+
 
 // -----------------------------
 // Clear wishlist

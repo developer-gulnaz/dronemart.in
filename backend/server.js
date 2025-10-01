@@ -7,11 +7,14 @@ const connectDB = require('./config/db');
 connectDB();
 const app = express();
 
-// Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// ✅ Session setup (no CORS needed since same-origin)
+if (process.env.NODE_ENV === "production") {
+  app.set('trust proxy', 1);
+}
+
+// Session configuration
 app.use(session({
   name: "sessionId",
   secret: process.env.SESSION_SECRET || "secret123",
@@ -21,7 +24,8 @@ app.use(session({
     httpOnly: true,
     maxAge: 1000 * 60 * 60 * 24, // 1 day
     sameSite: "lax",
-    secure: process.env.NODE_ENV === "production" // Railway uses HTTPS
+    // secure: false
+    secure: process.env.NODE_ENV === "production" // true in production
   }
 }));
 
@@ -38,9 +42,6 @@ app.use('/api/payments', require('./routes/payments'));
 const publicPath = path.resolve(__dirname, '../public');
 const adminPath = path.resolve(__dirname, '../admin');
 
-console.log("Public path:", path.join(publicPath, 'index.html'));
-console.log("Admin path:", path.join(adminPath, 'index.html'));
-
 // Serve static files
 app.use('/', express.static(publicPath));
 app.use('/admin', express.static(adminPath));
@@ -54,16 +55,15 @@ app.get(/^\/(?!api).*/, (req, res) => {
   }
 });
 
-// Debug route
+// Debug session (optional)
 app.get("/api/debug-session", (req, res) => {
   res.json({ session: req.session });
 });
 
-app.get("/test", (req, res) => {
-  res.send("Server is live!");
-});
+// Use Railway port or fallback to 5000
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
-// Start server
-// const PORT = process.env.PORT || 5000;
-const PORT = 5000;
-app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
+
+// const PORT = 4000;
+// app.listen(PORT, "0.0.0.0", () => console.log(`Server running on port ${PORT}`));

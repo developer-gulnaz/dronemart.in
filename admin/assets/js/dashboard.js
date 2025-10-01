@@ -1,59 +1,8 @@
-// ✅ API Base URL (change in one place for local/prod)
-const API_BASE_URL =
-  window.location.hostname === "localhost"
-    ? "http://localhost:5000/api"
-    : "/api";
-
-
-// Update Profile UI Based on Role
-
-
-function updateProfileBasedOnRole() {
-  const userType = sessionStorage.getItem("userType");
-  const name = sessionStorage.getItem("name") || "Admin";
-
-  const adminNameElement = document.getElementById("adminName");
-  const userTypeElement = document.getElementById("userType");
-  const profileIcon = document.querySelector(".profile i");
-  const profileImage = document.querySelector(".profile img");
-
-  if (adminNameElement) adminNameElement.textContent = name;
-  if (userTypeElement)
-    userTypeElement.textContent =
-      userType === "superadmin" ? "Super Administrator" : "Administrator";
-
-  if (profileImage) {
-    if (userType === "superadmin") {
-      profileImage.src = `https://ui-avatars.com/api/?name=SA&background=random`;
-    } else if (userType === "admin") {
-      profileImage.src = `https://ui-avatars.com/api/?name=A&background=random`;
-    } else {
-      profileImage.src = `https://ui-avatars.com/api/?name=G&background=random`;
-    }
-  }
-
-  // Optional: keep role-specific icon badges
-  if (userType === "superadmin") {
-    if (profileIcon) {
-      profileIcon.classList.remove("bi-person-circle");
-      profileIcon.classList.add("bi-shield-fill", "text-warning");
-    }
-    if (profileImage) profileImage.classList.add("superadmin-badge");
-  } else {
-    if (profileIcon) {
-      profileIcon.classList.remove("bi-shield-fill", "text-warning");
-      profileIcon.classList.add("bi-person-circle");
-    }
-    if (profileImage) profileImage.classList.remove("superadmin-badge");
-  }
-}
-
 
 // Load Dashboard Status
-
 async function loadDashboardstatus() {
   try {
-    const res = await fetch(`${API_BASE_URL}/users/dashboard/status`, {
+    const res = await fetch(`/api/users/dashboard/status`, {
       credentials: "include", // ✅ send session cookie
     });
 
@@ -69,7 +18,8 @@ async function loadDashboardstatus() {
       document.getElementById("newLeads").textContent = data.newLeads || "0";
       document.getElementById("newOrders").textContent =
         data.newOrders || "0";
-      document.getElementById("revenue").textContent = `$${data.revenue || "0"}`;
+      document.getElementById("revenue").textContent = `₹${data.revenue || "0"}`;
+
     }
   } catch (error) {
     console.error("Error loading dashboard status:", error);
@@ -81,7 +31,7 @@ async function loadDashboardstatus() {
 
 async function loadUsers() {
   try {
-    const res = await fetch(`${API_BASE_URL}/users/recent`, {
+    const res = await fetch(`/api/users/recent`, {
       credentials: "include", // ✅ send session cookie
     });
 
@@ -154,25 +104,7 @@ async function loadUsers() {
 }
 
 
-// Logout Function
-
-async function logout() {
-  try {
-    await fetch(`${API_BASE_URL}/auth/logout`, {
-      method: "POST",
-      credentials: "include", // ✅ clear server session
-    });
-  } catch (err) {
-    console.error("Logout API failed:", err);
-  }
-
-  sessionStorage.clear();
-  window.location.href = "/admin";
-}
-
-
 // On Page Load
-
 document.addEventListener("DOMContentLoaded", function () {
   // Ensure session exists
   const userType = sessionStorage.getItem("userType");
@@ -183,7 +115,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   loadDashboardstatus();
   loadUsers();
-  updateProfileBasedOnRole();
 
   // Role-based UI restrictions
   if (userType === "admin") {
@@ -203,3 +134,21 @@ document.addEventListener("DOMContentLoaded", function () {
     logoutBtn.addEventListener("click", logout);
   }
 });
+
+
+// -----------------------------
+// Logout Function
+// -----------------------------
+async function logout() {
+  try {
+    await fetch(`/api/auth/logout`, {
+      method: "POST",
+      credentials: "include", // ✅ clear server session
+    });
+  } catch (err) {
+    console.error("Logout API failed:", err);
+  }
+
+  sessionStorage.clear();
+  window.location.href = "/admin";
+}

@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Index - Dronemart</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon">
+
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="assets/vendor/drift-zoom/drift-basic.css" rel="stylesheet">
+
+    <!-- Main CSS File -->
+    <link href="assets/css/main.css" rel="stylesheet">
+    <link href="assets/css/styles.css" rel="stylesheet">
+
+</head>
+
+<body class="index-page">
+
+    <header id="header" class="header sticky-top">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="container-fluid container-xl">
+                <div class="row align-items-center">
+                    <div class="col-lg-4 d-none d-lg-flex">
+
+                    </div>
+
+                    <div class="col-lg-4 col-md-12 text-center">
+                        <div class="announcement-slider swiper init-swiper">
+                            <script type="application/json" class="swiper-config">
+                {
+                  "loop": true,
+                  "speed": 600,
+                  "autoplay": {
+                    "delay": 5000
+                  },
+                  "slidesPerView": 1,
+                  "direction": "vertical",
+                  "effect": "slide"
+                }
+              </script>
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">🚚 Free shipping on orders over $1200</div>
+                                <div class="swiper-slide">💰 30 days money back guarantee.</div>
+                                <div class="swiper-slide">🎁 10% off on your first order</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Search -->
+                    <!-- <form class="search-form desktop-search-form">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search for products">
+              <button class="btn" type="submit">
+                <i class="bi bi-search"></i>
+              </button>
+            </div>
+          </form> -->
+
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="header-nav">
+            <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+                <a href="index.html" class="logo d-flex align-items-center">
+                    <!-- <img src="assets/img/logo.png" alt=""> -->
+                    <h1 class="sitename">Dronemart</h1>
+                </a>
+                <nav id="navmenu" class="navmenu">
+                    <ul>
+                        <li><a href="index.html" class="active">Home</a></li>
+                        <li><a href="category.html">Category</a></li>
+
+                        <!-- Products Mega Menu 1 -->
+                        <li class="products-megamenu-1"><a href="#"><span>Products</span> <i
+                                    class="bi bi-chevron-down toggle-dropdown"></i></a>
+
+                            <!-- Products Mega Menu 1 Mobile View -->
+                            <ul class="mobile-megamenu">
+
+                                <li><a href="#">DJI Mavic</a></li>
+                                <li><a href="#">DJI Air</a></li>
+                                <li><a href="#">DJI Mini</a></li>
+                                <li><a href="#">DJI Avata</a></li>
+                                <li><a href="#">DJI Flip</a></li>
+                                <li><a href="#">DJI Neo</a></li>
+                            </ul><!-- End Products Mega Menu 1 Mobile View -->
+
+                            <!-- Products Mega Menu 1 Desktop View -->
+                            <div class="desktop-megamenu">
+
+                                <div class="megamenu-tabs">
+                                    <ul class="nav nav-tabs" id="productMegaMenuTabs" role="tablist">
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link active" id="mavic-tab" data-bs-toggle="tab"
+                                                data-bs-target="#featured-mavic" type="button" aria-selected="true"
+                                                role="tab">DJI
+                                                Mavic</button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="air-tab" data-bs-toggle="tab"
+                                                data-bs-target="#featured-air" type="button" aria-selected="false"
+                                                tabindex="-1" role="tab"> DJI Air</button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="mini-tab" data-bs-toggle="tab"
+                                                data-bs-target="#featured-mini" type="button" aria-selected="false"
+                                                tabindex="-1" role="tab"> DJI Mini</button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="flip-tab" data-bs-toggle="tab"
+                                                data-bs-target="#featured-flip" type="button" aria-selected="false"
+                                                tabindex="-1" role="tab"> DJI Flip</button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="avata-tab" data-bs-toggle="tab"
+                                                data-bs-target="#featured-avata" type="button" aria-selected="false"
+                                                tabindex="-1" role="tab">DJI Avata</button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="neo-tab" data-bs-toggle="tab"
+                                                data-bs-target="#featured-neo" type="button" aria-selected="false"
+                                                tabindex="-1" role="tab">DJI Neo</button>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <!-- Tabs Content -->
+                                <div class="megamenu-content tab-content">
+
+                                    <!-- Mavic -->
+                                    <div class="tab-pane fade show active" id="featured-mavic" role="tabpanel"
+                                        aria-labelledby="mavic-tab">
+                                        <div class="product-grid">
+                                            <div class="product-card">
+                                                <div class="product-image">
+                                                    <img src="assets/img/product/mavic 4 pro flymore.webp"
+                                                        alt="Featured Product" loading="lazy">
+                                                </div>
+                                                <div class="product-info">
+                                                    <h5>Mavic 4 Pro Creator Combo</h5>
+                                                    <p class="price">2,50,000</p>
+                                                    <a href="product-details.html?slug=dji-mavic-4-pro"
+                                                        class="btn-view">View Product</a>
+                                                </div>
+                                            </div>
+                                            <div class="product-card">
+                                                <div class="product-image">
+                                                    <img src="assets/img/product/mavic3pro7.jpg" alt="Featured Product"
+                                                        loading="lazy">
+                                                </div>
+                                                <div class="product-info">
+                                                    <h5>Mavic 3 Pro</h5>
+                                                    <p class="price">1,80,000</p>
+                                                    <a href="product-details.html?slug=dji-mavic-3-pro"
+                                                        class="btn-view">View Product</a>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <!-- Air -->
+                                    <div class="tab-pane fade" id="featured-air" role="tabpanel"
+                                        aria-labelledby="air-tab">
+                                        <div class="product-grid">
+                                            <div class="product-card">
+                                                <div class="product-image">
+                                                    <img src="assets/img/product/air3s5.jpg" alt="New Arrival"
+                                                        loading="lazy">
+                                                </div>
+                                                <div class="product-info">
+                                                    <h5>DJI Air 3S</h5>
+                                                    <p class="price">1,90,000</p>
+                                                    <a href="product-details.html?slug=dji-air-3s" class="btn-view">View
+                                                        Product</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Mini Tab -->
+                                    <div class="tab-pane fade" id="featured-mini" role="tabpanel"
+                                        aria-labelledby="mini-tab">
+                                        <div class="product-grid" style="grid-template-columns: repeat(3, 1fr);">
+                                            <div class="product-card">
+                                                <div class="product-image">
+                                                    <img src="assets/img/product/mini 5 pro 2.png" alt="Sale Product"
+                                                        loading="lazy">
+                                                    <span class="badge-new">New</span>
+                                                </div>
+                                                <div class="product-info">
+                                                    <h5>DJI Mini 5 Pro</h5>
+                                                    <p class="price"><span class="original-price">1,16,000</span>
+                                                        1,02,000</p>
+                                                    <a href="product-details.html?slug=dji-mini-5-pro"
+                                                        class="btn-view">View Product</a>
+                                                </div>
+                                            </div>
+                                            <div class="product-card">
+                                                <div class="product-image">
+                                                    <img src="assets/img/product/dji mini 4 pro.webp" alt="Sale Product"
+                                                        loading="lazy">
+                                                </div>
+                                                <div class="product-info">
+                                                    <h5>DJI Mni 4 Pro</h5>
+                                                    <p class="price"><span class="original-price">1,16,000</span>
+                                                        1,02,000</p>
+                                                    <a href="product-details.html?slug=dji-mini-4-pro"
+                                                        class="btn-view">View Product</a>
+                                                </div>
+                                            </div>
+                                            <div class="product-card">
+                                                <div class="product-image">
+                                                    <img src="assets/img/product/dji mini 3 pro.jpg" alt="Sale Product"
+                                                        loading="lazy">
+                                                </div>
+                                                <div class="product-info">
+                                                    <h5>DJI Mni 3 Pro</h5>
+                                                    <p class="price"><span class="original-price">98,000</span> 80,000
+                                                    </p>
+                                                    <a href="product-details.html?slug=dji-mini-3-pro"
+                                                        class="btn-view">View Product</a>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <!-- Flip Tab -->
+                                    <div class="tab-pane fade" id="featured-flip" role="tabpanel"
+                                        aria-labelledby="flip-tab">
+                                        <div class="product-grid">
+                                            <div class="product-card">
+                                                <div class="product-image">
+                                                    <img src="assets/img/product/dji flip.jpg" alt="Sale Product"
+                                                        loading="lazy">
+                                                    <span class="badge-sale">-7%</span>
+                                                </div>
+                                                <div class="product-info">
+                                                    <h5>Wireless Keyboard</h5>
+                                                    <p class="price"><span class="original-price">$89.99</span> $62.99
+                                                    </p>
+                                                    <a href="product-details.html?slug=dji-flip-rc2"
+                                                        class="btn-view">View Product</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- avata Tab -->
+                                    <div class="tab-pane fade" id="featured-avata" role="tabpanel"
+                                        aria-labelledby="avata-tab">
+                                        <div class="product-grid">
+                                            <div class="product-card">
+                                                <div class="product-image">
+                                                    <img src="assets/img/product/avata 21.png" alt="Sale Product"
+                                                        loading="lazy">
+                                                    <span class="badge-sale">-7%</span>
+                                                </div>
+                                                <div class="product-info">
+                                                    <h5>DJI Avata 2</h5>
+                                                    <p class="price"><span class="original-price">80,000</span>76,000
+                                                    </p>
+                                                    <a href="product-details.html?slug=dji-avata-2"
+                                                        class="btn-view">View Product</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Neo Tab -->
+                                    <div class="tab-pane fade" id="featured-neo" role="tabpanel"
+                                        aria-labelledby="neo-tab">
+                                        <div class="product-grid">
+                                            <div class="product-card">
+                                                <div class="product-image">
+                                                    <img src="assets/img/product/neo5.jpg" alt="Sale Product"
+                                                        loading="lazy">
+                                                    <span class="badge-sale">-7%</span>
+                                                </div>
+                                                <div class="product-info">
+                                                    <h5>DJI Neo</h5>
+                                                    <p class="price"><span class="original-price">67,000</span>46,000
+                                                    </p>
+                                                    <a href="product-details.html?slug=dji-noe" class="btn-view">View
+                                                        Product</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div><!-- End Products Mega Menu 1 Desktop View -->
+
+                        </li><!-- End Products Mega Menu 1 -->
+                        <!-- Products Mega Menu 2 -->
+                        <li class="products-megamenu-2"><a href="#"><span>Accessories</span> <i
+                                    class="bi bi-chevron-down toggle-dropdown"></i></a>
+
+                            <!-- Products Mega Menu 2 Mobile View -->
+                            <ul class="mobile-megamenu">
+                                <li class="dropdown"><a href="#"><span>DJI Batteries</span> <i
+                                            class="bi bi-chevron-down toggle-dropdown"></i></a>
+                                    <ul>
+                                        <li><a href="#">Shirts &amp; Tops</a></li>
+                                        <li><a href="#">Coats &amp; Outerwear</a></li>
+                                        <li><a href="#">Underwear</a></li>
+                                        <li><a href="#">Sweatshirts</a></li>
+                                        <li><a href="#">Dresses</a></li>
+                                        <li><a href="#">Swimwear</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="dropdown"><a href="#"><span>Controllers</span> <i
+                                            class="bi bi-chevron-down toggle-dropdown"></i></a>
+                                    <ul>
+                                        <li><a href="#">Boots</a></li>
+                                        <li><a href="#">Sandals</a></li>
+                                        <li><a href="#">Heels</a></li>
+                                        <li><a href="#">Loafers</a></li>
+                                        <li><a href="#">Slippers</a></li>
+                                        <li><a href="#">Oxfords</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="dropdown"><a href="#"><span>Propellers</span> <i
+                                            class="bi bi-chevron-down toggle-dropdown"></i></a>
+                                    <ul>
+                                        <li><a href="#">Handbags</a></li>
+                                        <li><a href="#">Eyewear</a></li>
+                                        <li><a href="#">Hats</a></li>
+                                        <li><a href="#">Watches</a></li>
+                                        <li><a href="#">Jewelry</a></li>
+                                        <li><a href="#">Belts</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="dropdown"><a href="#"><span>Profeller Guards</span> <i
+                                            class="bi bi-chevron-down toggle-dropdown"></i></a>
+                                    <ul>
+                                        <li><a href="#">Plus Size</a></li>
+                                        <li><a href="#">Petite</a></li>
+                                        <li><a href="#">Wide Shoes</a></li>
+                                        <li><a href="#">Narrow Shoes</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown"><a href="#"><span>Gimbals</span> <i
+                                            class="bi bi-chevron-down toggle-dropdown"></i></a>
+                                    <ul>
+                                        <li><a href="#">Plus Size</a></li>
+                                        <li><a href="#">Petite</a></li>
+                                        <li><a href="#">Wide Shoes</a></li>
+                                        <li><a href="#">Narrow Shoes</a></li>
+                                    </ul>
+                                </li>
+
+                            </ul><!-- End Products Mega Menu 2 Mobile View -->
+
+                            <!-- DJI Accessories Mega Menu Desktop View -->
+                            <div class="desktop-megamenu">
+
+                                <div class="megamenu-tabs">
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link active" id="access-battery-tab" data-bs-toggle="tab"
+                                                data-bs-target="#access-battery" type="button" aria-selected="true"
+                                                role="tab">Batteries</button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="access-controllers-tab" data-bs-toggle="tab"
+                                                data-bs-target="#access-controllers" type="button" aria-selected="false"
+                                                tabindex="-1" role="tab">Remote Controllers</button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="access-propellers-tab" data-bs-toggle="tab"
+                                                data-bs-target="#access-propellers" type="button" aria-selected="false"
+                                                tabindex="-1" role="tab">Propellers</button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="access-propeller-guard-tab"
+                                                data-bs-toggle="tab" data-bs-target="#access-propeller-guard"
+                                                type="button" aria-selected="false" tabindex="-1" role="tab">Propeller
+                                                Guards</button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="access-charger-tab" data-bs-toggle="tab"
+                                                data-bs-target="#access-charger" type="button" aria-selected="false"
+                                                tabindex="-1" role="tab">Chargers</button>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <!-- Tabs Content -->
+                                <div class="megamenu-content tab-content">
+
+                                    <!-- Batteries Tab -->
+                                    <div class="tab-pane fade show active" id="access-battery" role="tabpanel"
+                                        aria-labelledby="access-battery-tab">
+                                        <div class="category-layout">
+                                            <div class="categories-section">
+                                                <div class="category-links">
+                                                    <div class="link-row"
+                                                        style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+
+                                                        <a href="#">DJI Mini 2 Intelligent Flight Battery</a>
+                                                        <a href="#">DJI Mini 3 Pro Intelligent Flight Battery</a>
+                                                        <a href="#">DJI Mini 4 Pro Intelligent Flight Battery</a>
+                                                        <a href="#">DJI Air 2 Battery</a>
+                                                        <a href="#">DJI Avata Battery</a>
+                                                        <a href="#">Mavic 2 Pro Battery</a>
+                                                        <a href="#">Mavic 3 Battery</a>
+                                                        <a href="#">Matrice 300 TB60 Battery</a>
+                                                        <a href="#">Mavic 3 Enterprise Battery Kit</a>
+                                                        <a href="#">Matrice 30 TB30 Battery</a>
+                                                        <a href="#">Intelligent Flight Battery Plus (Mini 3/4
+                                                            Series)</a>
+                                                        <a href="#"><strong>View all Batteries</strong></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="featured-section">
+                                                <div class="featured-image">
+                                                    <img src="assets/img/product/dji batteries.png"
+                                                        alt="DJI Batteries Collection">
+                                                    <div class="featured-content">
+                                                        <h3>DJI<br>Batteries<br>Collection</h3>
+                                                        <a href="#" class="btn-shop">Shop now</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Controllers Tab -->
+                                    <div class="tab-pane fade" id="access-controllers" role="tabpanel"
+                                        aria-labelledby="access-controllers-tab">
+                                        <div class="category-layout">
+                                            <div class="categories-section">
+                                                <div class="category-links">
+                                                    <div class="link-row"
+                                                        style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+                                                        <a href="#">DJI RC Remote Controller</a>
+                                                        <a href="#">DJI RC-N1 Remote Controller</a>
+                                                        <a href="#">DJI RC Pro Controller</a>
+                                                        <a href="#">DJI Smart Controller</a>
+                                                        <a href="#">DJI FPV Remote Controller V2</a>
+                                                        <a href="#">DJI Avata Remote Controller</a>
+                                                        <a href="#">View all Controllers</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="featured-section">
+                                                <div class="featured-image">
+                                                    <img src="assets/img/product/dji rc.png"
+                                                        alt="DJI Controllers Collection">
+                                                    <div class="featured-content">
+                                                        <h3>DJI<br>Controllers<br>Collection</h3>
+                                                        <a href="#" class="btn-shop">Shop now</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Propellers Tab -->
+                                    <div class="tab-pane fade" id="access-propellers" role="tabpanel"
+                                        aria-labelledby="access-propellers-tab">
+                                        <div class="category-layout">
+                                            <div class="categories-section">
+                                                <div class="category-links">
+                                                    <div class="link-row"
+                                                        style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+                                                        <a href="#">DJI Mini 2 Propellers</a>
+                                                        <a href="#">DJI Mini 3 Pro Propellers</a>
+                                                        <a href="#">DJI Mini 4 Pro Propellers</a>
+                                                        <a href="#">DJI Air 2S Propellers</a>
+                                                        <a href="#">Mavic 2 Pro Propellers</a>
+                                                        <a href="#">Mavic 3 Propellers</a>
+                                                        <a href="#">DJI FPV Propellers</a>
+                                                        <a href="#">View all Propellers</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="featured-section">
+                                                <div class="featured-image">
+                                                    <img src="assets/img/product/dji propellers.png"
+                                                        alt="DJI Propellers Collection">
+                                                    <div class="featured-content">
+                                                        <h3>DJI<br>Propellers<br>Collection</h3>
+                                                        <a href="#" class="btn-shop">Shop now</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Propeller Guards Tab -->
+                                    <div class="tab-pane fade" id="access-propeller-guard" role="tabpanel"
+                                        aria-labelledby="access-propeller-guard-tab">
+                                        <div class="category-layout">
+                                            <div class="categories-section">
+                                                <div class="category-links">
+                                                    <div class="link-row"
+                                                        style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+                                                        <a href="#">DJI Mini 2 Propeller Guards</a>
+                                                        <a href="#">DJI Mini 3 Pro Propeller Guards</a>
+                                                        <a href="#">DJI Mini 4 Pro Propeller Guards</a>
+                                                        <a href="#">DJI Air 2S Propeller Guards</a>
+                                                        <a href="#">View all Propeller Guards</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="featured-section">
+                                                <div class="featured-image">
+                                                    <img src="assets/img/product/dji propellers guard.png"
+                                                        alt="DJI Propeller Guards">
+                                                    <div class="featured-content">
+                                                        <h3>DJI<br>Propeller<br>Guards</h3>
+                                                        <a href="#" class="btn-shop">Shop now</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Chargers Tab -->
+                                    <div class="tab-pane fade" id="access-charger" role="tabpanel"
+                                        aria-labelledby="access-charger-tab">
+                                        <div class="category-layout">
+                                            <div class="categories-section">
+                                                <div class="category-links">
+                                                    <div class="link-row"
+                                                        style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+                                                        <a href="#">DJI Mini 2 Charger</a>
+                                                        <a href="#">DJI Mini 3 Pro Charger</a>
+                                                        <a href="#">DJI Mini 4 Pro Charger</a>
+                                                        <a href="#">DJI Air 2S Charger</a>
+                                                        <a href="#">Mavic 2 Pro Charger</a>
+                                                        <a href="#">Mavic 3 Charger</a>
+                                                        <a href="#">DJI FPV Battery Charger</a>
+                                                        <a href="#">View all Chargers</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="featured-section">
+                                                <div class="featured-image">
+                                                    <img src="assets/img/product/dji chargers.png"
+                                                        alt="DJI Chargers Collection">
+                                                    <div class="featured-content">
+                                                        <h3>DJI<br>Chargers<br>Collection</h3>
+                                                        <a href="#" class="btn-shop">Shop now</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- End DJI Accessories Mega Menu Desktop View -->
+                        </li><!-- End Products Mega Menu 2 -->
+
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+
+                <!-- action button -->
+                <div id="header-actions"
+                    class="navbar-action header-actions col-lg-3 d-flex align-items-center justify-content-end">
+                    <!-- Dynamic buttons will be injected here -->
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Mobile Search Form -->
+        <div class="collapse" id="mobileSearch">
+            <div class="container">
+                <form class="search-form">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search for products">
+                        <button class="btn" type="submit">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </header>
+
+
+    <main class="main">
+        <!-- Page Title -->
+        <div class="page-title light-background">
+            <div class="container d-lg-flex justify-content-between align-items-center">
+                <h3 class="mb-2 mb-lg-0">Repairs</h3>
+                <nav class="breadcrumbs">
+                    <ol>
+                        <li><a href="index.html">Home</a></li>
+                        <li class="current">Repair</li>
+                    </ol>
+                </nav>
+            </div>
+        </div><!-- End Page Title -->
+
+        <!-- Repair section starts -->
+        <section id="repairs" class="repair section">
+            <div class="container" data-aos="fade-up" data-aos-delay="100">
+                <div class="why-choose-us-slider">
+                    <h2 class="my-3">Why Choose Us?</h2>
+
+                    <div class="slider-container">
+                        <div class="slider-wrapper">
+                            <div class="slider-track">
+
+                                <!-- Card 1 -->
+                                <div class="slider-card">
+                                    <h3>🛠 Expert Technicians</h3>
+                                    <p>Our team comprises certified professionals with extensive experience repairing
+                                        all types
+                                        of drones. Whether it’s a professional camera drone or a commercial model, we
+                                        have the
+                                        knowledge and tools to fix it efficiently.</p>
+                                </div>
+
+                                <!-- Card 2 -->
+                                <div class="slider-card">
+                                    <h3>⚡ Fast Turnaround</h3>
+                                    <p>We know downtime is frustrating. Most repairs are completed within 5-7 days, so
+                                        you can
+                                        get back to flying quickly. Our process is transparent, keeping you updated at
+                                        every
+                                        step.</p>
+                                </div>
+
+                                <!-- Card 3 -->
+                                <div class="slider-card">
+                                    <h3>📈 Proven Track Record</h3>
+                                    <p>Even complicated issues like motor malfunctions, gimbal misalignments, or
+                                        connectivity
+                                        problems are solved efficiently. We make sure your drone performs like new.</p>
+                                </div>
+
+                                <!-- Card 4 -->
+                                <div class="slider-card">
+                                    <h3>🔧 Comprehensive Drone Care</h3>
+                                    <p>Beyond repairs, we also inspect your drone for potential issues, helping prevent
+                                        future
+                                        problems. This proactive approach saves time, money, and stress.</p>
+                                </div>
+
+                                <!-- Card 5 -->
+                                <div class="slider-card">
+                                    <h3>🔍 Transparent & Affordable Pricing</h3>
+                                    <p>Clear, upfront pricing with no hidden charges. You know exactly what you’re
+                                        paying for
+                                        and why - it’s all about trust.</p>
+                                </div>
+
+                                <!-- Card 6 -->
+                                <div class="slider-card">
+                                    <h3>🌟 Customer Satisfaction Focused</h3>
+                                    <p>We prioritize your experience. From friendly support to honest advice, our goal
+                                        is to
+                                        ensure you leave confident in your repair and happy with the service.</p>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="slider-dots"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Repair section end -->
+    </main>
+
+    <footer id="footer" class="footer dark-background">
+        <div class="footer-main">
+            <div class="container">
+                <div class="row gy-4">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="footer-widget footer-about">
+                            <a href="index.html" class="logo">
+                                <span class="sitename">NiceShop</span>
+                            </a>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in nibh vehicula,
+                                facilisis magna ut,
+                                consectetur lorem. Proin eget tortor risus.</p>
+
+                            <div class="social-links mt-4">
+                                <h5>Connect With Us</h5>
+                                <div class="social-icons">
+                                    <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                                    <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                                    <a href="#" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
+                                    <a href="#" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+                                    <a href="#" aria-label="Pinterest"><i class="bi bi-pinterest"></i></a>
+                                    <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-md-6 col-sm-6">
+                        <div class="footer-widget">
+                            <h4>Shop</h4>
+                            <ul class="footer-links">
+                                <li><a href="category.html">New Arrivals</a></li>
+                                <li><a href="category.html">Bestsellers</a></li>
+                                <li><a href="category.html">Women's Clothing</a></li>
+                                <li><a href="category.html">Men's Clothing</a></li>
+                                <li><a href="category.html">Accessories</a></li>
+                                <li><a href="category.html">Sale</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-md-6 col-sm-6">
+                        <div class="footer-widget">
+                            <h4>Support</h4>
+                            <ul class="footer-links">
+                                <li><a href="support.html">Help Center</a></li>
+                                <li><a href="account.html">Order Status</a></li>
+                                <li><a href="shiping-info.html">Shipping Info</a></li>
+                                <li><a href="return-policy.html">Returns &amp; Exchanges</a></li>
+                                <li><a href="#">Size Guide</a></li>
+                                <li><a href="contact.html">Contact Us</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="footer-widget">
+                            <h4>Contact Information</h4>
+                            <div class="footer-contact">
+                                <div class="contact-item">
+                                    <i class="bi bi-geo-alt"></i>
+                                    <span>123 Fashion Street, New York, NY 10001</span>
+                                </div>
+                                <div class="contact-item">
+                                    <i class="bi bi-telephone"></i>
+                                    <span>+1 (555) 123-4567</span>
+                                </div>
+                                <div class="contact-item">
+                                    <i class="bi bi-envelope"></i>
+                                    <span>hello@example.com</span>
+                                </div>
+                                <div class="contact-item">
+                                    <i class="bi bi-clock"></i>
+                                    <span>Monday-Friday: 9am-6pm<br>Saturday: 10am-4pm<br>Sunday: Closed</span>
+                                </div>
+                            </div>
+
+                            <div class="app-buttons mt-4">
+                                <a href="#" class="app-btn">
+                                    <i class="bi bi-apple"></i>
+                                    <span>App Store</span>
+                                </a>
+                                <a href="#" class="app-btn">
+                                    <i class="bi bi-google-play"></i>
+                                    <span>Google Play</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row gy-3 align-items-center">
+                    <div class="col-lg-6 col-md-12">
+                        <div class="copyright">
+                            <p>© <span>Copyright</span> <strong class="sitename">NiceShop</strong>. All Rights Reserved.
+                            </p>
+                        </div>
+                        <div class="credits mt-1">
+                            <!-- All the links in the footer should remain intact. -->
+                            <!-- You can delete the links only if you've purchased the pro version. -->
+                            <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                            <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+                            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-12">
+                        <div
+                            class="d-flex flex-wrap justify-content-lg-end justify-content-center align-items-center gap-4">
+                            <div class="payment-methods">
+                                <div class="payment-icons">
+                                    <i class="bi bi-credit-card" aria-label="Credit Card"></i>
+                                    <i class="bi bi-paypal" aria-label="PayPal"></i>
+                                    <i class="bi bi-apple" aria-label="Apple Pay"></i>
+                                    <i class="bi bi-google" aria-label="Google Pay"></i>
+                                    <i class="bi bi-shop" aria-label="Shop Pay"></i>
+                                    <i class="bi bi-cash" aria-label="Cash on Delivery"></i>
+                                </div>
+                            </div>
+
+                            <div class="legal-links">
+                                <a href="tos.html">Terms</a>
+                                <a href="privacy.html">Privacy</a>
+                                <a href="tos.html">Cookies</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Preloader -->
+    <div id="preloader"></div>
+
+
+    <!-- Vendor JS Files -->
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/php-email-form/validate.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/vendor/drift-zoom/Drift.min.js"></script>
+    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+
+    <!-- Main JS File -->
+    <script src="assets/js/main.js"></script>
+    <script t type="module" src="assets/js/index.js"></script>
+    <script src="assets/js/common.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const track = document.querySelector(".slider-track");
+            const cards = document.querySelectorAll(".slider-card");
+            const dotsContainer = document.querySelector(".slider-dots");
+
+            let index = 0;
+            const visibleCards = 3;
+            const totalCards = cards.length;
+            let autoSlideInterval;
+
+            // Clone first few cards to the end for infinite effect
+            for (let i = 0; i < visibleCards; i++) {
+                let clone = cards[i].cloneNode(true);
+                track.appendChild(clone);
+            }
+
+            // Create dots for each real card
+            for (let i = 0; i < totalCards; i++) {
+                const dot = document.createElement("span");
+                if (i === 0) dot.classList.add("active");
+                dot.addEventListener("click", () => {
+                    index = i;
+                    updateSlider();
+                });
+                dotsContainer.appendChild(dot);
+            }
+            const dots = dotsContainer.querySelectorAll("span");
+
+            function updateSlider(noTransition = false) {
+                const cardWidth = cards[0].offsetWidth + 30; // width + gap
+                track.style.transition = noTransition ? "none" : "transform 0.6s ease-in-out";
+                track.style.transform = `translateX(-${index * cardWidth}px)`;
+                dots.forEach((dot, i) => dot.classList.toggle("active", i === index % totalCards));
+            }
+
+            function autoSlide() {
+                index++;
+                updateSlider();
+                if (index === totalCards) {
+                    setTimeout(() => {
+                        index = 0;
+                        updateSlider(true);
+                    }, 650);
+                }
+            }
+
+            function startAutoSlide() {
+                autoSlideInterval = setInterval(autoSlide, 3000);
+            }
+            function stopAutoSlide() {
+                clearInterval(autoSlideInterval);
+            }
+
+            // Pause on hover
+            document.querySelectorAll(".slider-card").forEach(card => {
+                card.addEventListener("mouseenter", stopAutoSlide);
+                card.addEventListener("mouseleave", startAutoSlide);
+            });
+
+            startAutoSlide();
+            window.addEventListener("resize", () => updateSlider(true));
+        });
+    </script>
+
+</body>
+
+</html>
