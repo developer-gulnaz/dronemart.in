@@ -3,14 +3,14 @@ document.addEventListener('DOMContentLoaded', async function () {
     const searchButton = document.getElementById('searchButton');
     const sortSelect = document.getElementById('sortBy');
     const productGrid = document.getElementById('productGrid');
-    const categoryLinks = document.querySelectorAll('.category-link');
     const scrollTopButton = document.getElementById('scroll-top');
 
     let products = []; // Stores fetched products
 
     // === Detect Page Type ===
     const pageTitle = document.querySelector('.page-title h3')?.textContent || '';
-    const isSpecializedPage = pageTitle.toLowerCase().includes('specialized');
+    const isAgriculturePage = pageTitle.toLowerCase().includes('agriculture');
+    const isFPVPage = pageTitle.toLowerCase().includes('fpv');
     const isCategoryPage = pageTitle.toLowerCase().includes('dji');
 
     // === Fetch products from backend ===
@@ -25,9 +25,13 @@ document.addEventListener('DOMContentLoaded', async function () {
 
             let data = await res.json();
 
-            // Filter for DJI on category page
+            // Filter for page type
             if (isCategoryPage) {
                 data = data.filter(p => p.brand?.toLowerCase() === 'dji');
+            } else if (isAgriculturePage) {
+                data = data.filter(p => p.category?.toLowerCase().includes('agriculture'));
+            } else if (isFPVPage) {
+                data = data.filter(p => p.category?.toLowerCase().includes('fpv'));
             }
 
             products = data;
@@ -38,7 +42,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
     }
 
-    // === Render Products ===
+    // === Render Products & Accessories Below Them ===
     function renderProducts(list) {
         if (!productGrid) return;
         productGrid.innerHTML = '';
@@ -49,7 +53,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         list.forEach(p => {
             const col = document.createElement('div');
-            col.className = 'col-12 col-md-6 col-lg-4';
+            col.className = 'col-12 col-md-6 col-lg-4 mb-4';
             col.innerHTML = `
               <div class="product-card card shadow-sm border-0" 
                    data-id="${p._id}" 
@@ -58,7 +62,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                    data-price="${p.price}" 
                    data-image="${p.image}">
                 <div class="product-image">
-                  <img src="${p.image}" alt="${p.title}" class="w-100">
+                  <img src="${p.image}" alt="${p.title}">
                   <div class="product-overlay">
                     <div class="product-actions">
                       <button type="button" class="action-btn view-btn" title="Quick View"><i class="bi bi-eye"></i></button>
@@ -69,7 +73,6 @@ document.addEventListener('DOMContentLoaded', async function () {
                   ${p.badge ? `<div class="product-badge">${p.badge}</div>` : ''}
                 </div>
                 <div class="product-details">
-                  <div class="product-category">${p.category || ""}</div>
                   <h4 class="product-title"><a href="product-details.html?slug=${p.slug}">${p.title}</a></h4>
                   <div class="product-meta">
                     <div class="product-price">₹${p.price}</div>
@@ -77,11 +80,37 @@ document.addEventListener('DOMContentLoaded', async function () {
                   </div>
                 </div>
               </div>
+              <div class="product-accessories mt-2" id="accessories-${p._id}">
+                <!-- Accessories will be dynamically rendered here -->
+              </div>
             `;
             productGrid.appendChild(col);
+
+            // Fetch & render accessories for this product
+            fetchAccessories(p._id);
         });
 
         attachActionEvents();
+    }
+
+    // === Fetch Accessories for a Product ===
+    async function fetchAccessories(productId) {
+        try {
+            const res = await fetch(`/api/products/accessories?productId=${productId}`);
+            if (!res.ok) return;
+            const accessories = await res.json();
+            const container = document.getElementById(`accessories-${productId}`);
+            if (container && accessories.length) {
+                container.innerHTML = `
+                    <h6>Accessories:</h6>
+                    <ul class="list-unstyled mb-0">
+                        ${accessories.map(a => `<li>${a.title} - ₹${a.price}</li>`).join('')}
+                    </ul>
+                `;
+            }
+        } catch (err) {
+            console.error("Error fetching accessories:", err);
+        }
     }
 
     // === Attach Quick View, Cart & Wishlist Events ===
@@ -155,15 +184,6 @@ document.addEventListener('DOMContentLoaded', async function () {
         renderProducts(sorted);
     });
 
-    // === Category Filter ===
-    categoryLinks.forEach(link => {
-        link.addEventListener('click', function (e) {
-            e.preventDefault();
-            const category = this.dataset.category || this.textContent.trim();
-            fetchProducts("", category);
-        });
-    });
-
     // === Scroll-to-top ===
     window.addEventListener('scroll', function () {
         if (scrollTopButton) scrollTopButton.style.display = window.pageYOffset > 300 ? 'flex' : 'none';
@@ -174,8 +194,5 @@ document.addEventListener('DOMContentLoaded', async function () {
     });
 
     // === Initial Load ===
-    if (!isSpecializedPage) {
-        // Only load products on initial load for category page
-        fetchProducts();
-    }
+    fetchProducts(); // Fetch based on page type automatically
 });

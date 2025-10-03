@@ -270,28 +270,44 @@ exports.getRecentLeads = [
       const sevenDaysAgo = new Date();
       sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
-      // Fetch users who were modified/active in last 7 days
+      // Recent users
       const users = await User.find({
         isDeleted: { $ne: true },
-        modifiedAt: { $gte: sevenDaysAgo }
-      }).sort({ modifiedAt: -1 });
+        createdAt: { $gte: sevenDaysAgo }
+      }).sort({ createdAt: -1 });
 
-      const usersWithDetails = await Promise.all(users.map(async u => {
+      const userIds = users.map(u => u._id);
+
+      // Fetch related data in bulk
+      const orders = await Order.find({ user: { $in: userIds } }).sort({ createdAt: -1 });
+      const carts = await Cart.find({ user: { $in: userIds } });
+
+      // Group by user
+      const ordersByUser = orders.reduce((acc, o) => {
+        acc[o.user] = acc[o.user] || [];
+        acc[o.user].push(o);
+        return acc;
+      }, {});
+
+      const cartsByUser = carts.reduce((acc, c) => {
+        acc[c.user] = acc[c.user] || [];
+        acc[c.user].push(c);
+        return acc;
+      }, {});
+
+      // Attach details
+      const usersWithDetails = users.map(u => {
         const userObj = u.toObject();
 
-        const orders = await Order.find({ user: u._id });
-        const cart = await Cart.find({ user: u._id });
+        userObj.orders = ordersByUser[u._id] || [];
+        userObj.cart = cartsByUser[u._id] || [];
 
-        userObj.orders = orders;
-        userObj.cart = cart;
-
-        // Use manual status if exists, otherwise assign automatic
         if (!userObj.statusTag) {
           userObj.statusTag = assignUserStatusTag(userObj);
         }
 
         return userObj;
-      }));
+      });
 
       res.json(usersWithDetails);
     } catch (err) {

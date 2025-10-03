@@ -10,4 +10,4 @@
 #files
 /backend/createAdmin.js
 /backend/addUser.js
-/backend/addProducts.js
+/backend/addSpecialized.js

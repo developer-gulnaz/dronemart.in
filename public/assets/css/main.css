@@ -4556,16 +4556,44 @@ section,
 # Category Product List Section
 --------------------------------------------------------------*/
 .category-product-list {
-  padding-top: 30px;
-  padding-bottom: 60px;
+  padding-top: 20px;
+  /* was 30px */
+  padding-bottom: 30px;
+  /* was 60px */
 }
 
 .category-product-list .product-card {
   position: relative;
   background: var(--surface-color);
-  border-radius: 12px;
+  border-radius: 10px;
   overflow: hidden;
   transition: transform 0.3s ease;
+  padding: 10px;
+  /* reduce inside spacing */
+  margin-bottom: 15px;
+  /* tighter gap between cards */
+}
+
+.category-product-list .product-image {
+  position: relative;
+  height: 160px;
+  /* reduced from 220px */
+  background: color-mix(in srgb, var(--surface-color), transparent 97%);
+  overflow: hidden;
+  top: -15px;
+  /* reduced offset */
+}
+
+.category-product-list .product-image img {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 65%;
+  /* smaller width */
+  height: 100%;
+  object-fit: contain;
+  transition: all 0.5s ease;
 }
 
 .category-product-list .product-card:hover {
@@ -4585,24 +4613,6 @@ section,
 .category-product-list .product-card:hover .main-image {
   transform: scale(1.1);
   opacity: 0;
-}
-
-.category-product-list .product-image {
-  position: relative;
-  padding-top: 75%;
-  height: 220px;
-  background: color-mix(in srgb, var(--surface-color), transparent 97%);
-  overflow: hidden;
-}
-
-.category-product-list .product-image img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: all 0.5s ease;
 }
 
 .category-product-list .product-image .main-image {
@@ -4699,7 +4709,7 @@ section,
 }
 
 .category-product-list .product-details {
-  padding: 1.5rem;
+  padding: 0 1.5rem 1.5rem 1.5rem;
   background: var(--surface-color);
 }
 
@@ -4710,13 +4720,14 @@ section,
 }
 
 .category-product-list .product-title {
-  font-size: 1.125rem;
+  font-size: 0.85rem;
   margin-bottom: 1rem;
 }
 
 .category-product-list .product-title a {
-  color: var(--heading-color);
+  color: var(--accent-color);
   text-decoration: none;
+  font-weight: 600;
   transition: color 0.3s ease;
 }
 
@@ -4733,7 +4744,7 @@ section,
 .category-product-list .product-price {
   font-weight: 600;
   font-size: 1.125rem;
-  color: var(--accent-color);
+  color: var(--heading-color);
   display: flex;
   gap: 0.5rem;
   align-items: center;
@@ -12175,10 +12186,8 @@ section,
 
 .widget-item {
   margin-bottom: 30px;
-  background-color: color-mix(in srgb, var(--default-color), transparent 98%);
-  border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
-  padding: 30px;
-  border-radius: 5px;
+  padding: 30px 6px;
+
 }
 
 .widget-item:last-child {

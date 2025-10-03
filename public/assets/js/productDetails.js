@@ -148,76 +148,66 @@ function populateProductUI(product) {
   `;
   }
 
-  // Aircraft
-  const ac = product.specs?.aircraft || {};
-  const aircraftRows = `
-  ${renderSpecsRow("Weight", ac.weight)}
-  ${renderSpecsRow("Max Flight Time", ac.maxFlightTime)}
-  ${renderSpecsRow("Max Acceleration", ac.maxAccelerationSpeed)}
-  ${renderSpecsRow("Folded (w/o propellers)", ac.dimensions?.foldedWithoutPropellers)}
-  ${renderSpecsRow("Unfolded (w/ propellers)", ac.dimensions?.unfoldedWithPropellers)}
-`;
+  // Flatten object -> rows
+  function buildRows(obj) {
+    let rows = "";
+    if (!obj) return rows;
+    Object.entries(obj).forEach(([k, v]) => {
+      if (typeof v === "object" && !Array.isArray(v)) {
+        // nested object
+        rows += buildRows(v);
+      } else {
+        rows += renderSpecsRow(formatKey(k), v);
+      }
+    });
+    return rows;
+  }
 
-  // Camera
-  const cameras = product.specs?.camera?.cameras || [product.specs?.camera];
-  let cameraSections = "";
-  cameras.forEach((cam, idx) => {
-    if (!cam) return;
-    const camRows = `
-    ${renderSpecsRow("Type", cam.type)}
-    ${renderSpecsRow("Sensor", cam.sensor)}
-    ${renderSpecsRow("Pixels", cam.effectivePixels)}
-    ${renderSpecsRow("FOV", cam.fov)}
-    ${renderSpecsRow("Aperture", cam.aperture)}
-    ${renderSpecsRow("Focus Range", cam.focusRange)}
-    ${renderSpecsRow("Max Image Size", cam.maxImageSize)}
-    ${renderSpecsRow("Still Modes", cam.stillModes ? Object.values(cam.stillModes).join(", ") : "-")}
-  `;
-    cameraSections += renderAccordionSection(
-      cameras.length > 1 ? `camera${idx}` : "camera",
-      cameras.length > 1 ? `Camera ${idx + 1}` : "Camera Specifications",
-      camRows
-    );
+  // Format key names to human-readable
+  function formatKey(key) {
+    return key
+      .replace(/([A-Z])/g, " $1")   // add space before capitals
+      .replace(/_/g, " ")           // underscores to spaces
+      .replace(/\b\w/g, l => l.toUpperCase()); // capitalize
+  }
+
+  // Build accordion dynamically
+  let accordionHTML = "";
+
+  // Special case: camera with multiple lenses
+  if (product.specs?.camera?.cameras) {
+    product.specs.camera.cameras.forEach((cam, idx) => {
+      accordionHTML += renderAccordionSection(
+        `camera${idx}`,
+        `Camera ${idx + 1}`,
+        buildRows(cam)
+      );
+    });
+  }
+
+  // Loop all other top-level specs
+  Object.entries(product.specs || {}).forEach(([section, data]) => {
+    if (section === "camera" && data.cameras) return; // already handled
+
+    const rows = buildRows(data);
+    accordionHTML += renderAccordionSection(section, formatKey(section), rows);
   });
 
-  // Video
-  const cam = product.specs?.camera || {};
-  const videoRows = `
-  ${renderSpecsRow("Video Resolution", cam.videoResolution)}
-  ${renderSpecsRow("Max Bitrate", cam.maxVideoBitrate)}
-  ${renderSpecsRow("Image Format", cam.imageFormat)}
-`;
-
-  // Gimbal
-  const g = product.specs?.gimbal || {};
-  const gimbalRows = `
-  ${renderSpecsRow("Stabilization", g.stabilization)}
-  ${renderSpecsRow("Tilt Range", g.mechanicalRange?.tilt)}
-  ${renderSpecsRow("Roll Range", g.mechanicalRange?.roll)}
-  ${renderSpecsRow("Pan Range", g.mechanicalRange?.pan)}
-  ${renderSpecsRow("Controllable Tilt", g.controllableRange?.tilt)}
-  ${renderSpecsRow("Angular Vibration", g.angularVibrationRange)}
-`;
-
-  // Render all sections expanded
   techContainer.innerHTML = `
   <div class="accordion" id="productSpecsAccordion">
-    ${renderAccordionSection("aircraft", "Aircraft Specifications", aircraftRows)}
-    ${cameraSections}
-    ${renderAccordionSection("video", "Video", videoRows)}
-    ${renderAccordionSection("gimbal", "Gimbal", gimbalRows)}
+    ${accordionHTML}
   </div>
 `;
 
-  // Clear any previous content
-  const mainContainer = document.getElementById("product-package-container"); // wrap both sections
+  // ---------- Package / In-the-box ----------
+  const mainContainer = document.getElementById("product-package-container");
   if (mainContainer) mainContainer.innerHTML = "";
 
   const djiBrand = "DJI";
   const specialCategories = ["Agriculture", "FPV", "Accessories"];
 
   if (product.brand === djiBrand) {
-    // Create DJI container dynamically
+    // DJI style grid
     const djiContainer = document.createElement("div");
     djiContainer.innerHTML = `
     <div class="package-contents">
@@ -227,7 +217,6 @@ function populateProductUI(product) {
   `;
     mainContainer.appendChild(djiContainer);
 
-    // Populate DJI items
     const grid = djiContainer.querySelector(".in-the-box-grid");
     (product.inTheBox || []).forEach(item => {
       const div = document.createElement("div");
@@ -239,8 +228,9 @@ function populateProductUI(product) {
     `;
       grid.appendChild(div);
     });
+
   } else if (specialCategories.includes(product.category)) {
-    // Create Specialized container dynamically
+    // Agriculture/FPV/Accessories style list
     const specContainer = document.createElement("div");
     specContainer.innerHTML = `
     <div class="package-contents">
@@ -250,7 +240,6 @@ function populateProductUI(product) {
   `;
     mainContainer.appendChild(specContainer);
 
-    // Populate specialized items
     const ul = specContainer.querySelector("#package-contents-list");
     (product.inTheBox || []).forEach(item => {
       const li = document.createElement("li");
