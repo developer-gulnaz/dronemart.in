@@ -10,4 +10,6 @@
 #files
 /backend/createAdmin.js
 /backend/addUser.js
-/backend/addSpecialized.js
+/backend/addDJI.js
+/backend/addAgri.js
+/backend/addFPV.js

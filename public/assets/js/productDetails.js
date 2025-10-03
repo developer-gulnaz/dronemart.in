@@ -94,22 +94,40 @@ function populateProductUI(product) {
   const highlightsGrid = document.querySelector(".highlights-grid");
   if (highlightsGrid) {
     highlightsGrid.innerHTML = "";
-    const highlights = [
-      { icon: "bi bi-tags", title: "Brand", value: product.brand },
-      { icon: "bi bi-box", title: "Category", value: product.category },
-      { icon: "bi bi-battery-charging", title: "Max Flight Time", value: product.specs?.aircraft?.maxFlightTime },
-      { icon: "bi bi-cpu", title: "Weight", value: product.specs?.aircraft?.weight },
-    ];
 
+    // Determine drone type
+    const isAgricultureDrone = product.category?.toLowerCase().includes('agriculture');
+
+    let highlights = [];
+
+    if (isAgricultureDrone) {
+      // Agriculture drone highlights
+      highlights = [
+        { icon: "bi bi-gear", title: "Motor Type", value: product.specs?.propulsion?.motorType },
+        { icon: "bi bi-box-arrow-up", title: "Max Takeoff Weight", value: product.specs?.aircraft?.maxTakeoffWeight },
+        { icon: "bi bi-droplet-half", title: "Tank Capacity", value: product.specs?.aircraft?.tankCapacity },
+        { icon: "bi bi-layers-half", title: "Spraying Width", value: product.specs?.sprayingSystem?.sprayingWidth },
+      ];
+    } else {
+      // DJI and FPV drones keep same
+      highlights = [
+        { icon: "bi bi-tags", title: "Brand", value: product.brand },
+        { icon: "bi bi-box", title: "Category", value: product.category },
+        { icon: "bi bi-battery-charging", title: "Max Flight Time", value: product.specs?.aircraft?.maxFlightTime },
+        { icon: "bi bi-cpu", title: "Weight", value: product.specs?.aircraft?.weight },
+      ];
+    }
+
+    // Render highlights
     highlights.forEach(h => {
       if (h.value) {
         const card = document.createElement("div");
         card.className = "highlight-card";
         card.innerHTML = `
-          <i class="${h.icon}"></i>
-          <h5>${h.title}</h5>
-          <p>${h.value}</p>
-        `;
+        <i class="${h.icon}"></i>
+        <h5>${h.title}</h5>
+        <p>${h.value}</p>
+      `;
         highlightsGrid.appendChild(card);
       }
     });
