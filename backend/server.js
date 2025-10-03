@@ -54,6 +54,11 @@ app.use("/api/payments", require("./routes/payments"));
 const publicPath = path.resolve(__dirname, "../public");
 const adminPath = path.resolve(__dirname, "../admin");
 
+console.log("__dirname:", __dirname);
+console.log("publicPath:", publicPath);
+console.log("adminPath:", adminPath);
+
+
 // Serve static files
 app.use("/", express.static(publicPath));
 app.use("/admin", express.static(adminPath));
@@ -70,6 +75,10 @@ app.get(/^\/(?!api).*/, (req, res) => {
 // Debug session route (optional, remove in production)
 app.get("/api/debug-session", (req, res) => {
   res.json({ session: req.session });
+});
+
+app.get("/ping", (req, res) => {
+  res.send("pong");
 });
 
 
