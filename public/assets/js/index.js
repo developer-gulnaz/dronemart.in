@@ -49,7 +49,7 @@ const sliderData = [
             { icon: "bi bi-broadcast", label: "O4 Transmission" }
         ],
         links: {
-            learnMore: "product-details.html?slug=dji-mini-4-pro"
+            learnMore: "productDetails.html?slug=dji-mini-4-pro"
 
         }
 
@@ -79,7 +79,7 @@ const sliderData = [
 
         ],
         links: {
-            learnMore: "product-details.html?slug=dji-air-3s"
+            learnMore: "productDetails.html?slug=dji-air-3s"
         }
     },
     {
@@ -108,7 +108,7 @@ const sliderData = [
 
         ],
         links: {
-            learnMore: "product-details.html?slug=dji-mini-4-pro"
+            learnMore: "productDetails.html?slug=dji-mini-4-pro"
         }
     },
     {
@@ -137,7 +137,7 @@ const sliderData = [
 
         ],
         links: {
-            learnMore: "product-details.html?slug=dji-avata-2"
+            learnMore: "productDetails.html?slug=dji-avata-2"
         }
     },
     {
@@ -166,7 +166,7 @@ const sliderData = [
 
         ],
         links: {
-            learnMore: "product-details.html?slug=dji-flip-rc2"
+            learnMore: "productDetails.html?slug=dji-flip-rc2"
         }
     },
     {
@@ -194,7 +194,7 @@ const sliderData = [
             { icon: "bi bi-shield-check", label: "Propeller Guards & Safe Flying" }
         ],
         links: {
-            learnMore: "product-details.html?slug=dji-neo",
+            learnMore: "productDetails.html?slug=dji-neo",
         }
 
     }
@@ -456,7 +456,7 @@ async function renderBestSellers() {
             </div>
             <div class="product-info">
               <div class="product-category">${product.category}</div>
-              <h4 class="product-name"><a href="product-details.html">${product.title}</a></h4>
+              <h4 class="product-name"><a href="productDetails.html">${product.title}</a></h4>
               <div class="product-price">${product.price}</div>
             </div>
           </div>
@@ -532,7 +532,7 @@ async function loadCardProducts() {
                         ${filtered.map(product => `
                             <div class="product-card">
                                 <div class="product-image">
-                                    <a href="product-details.html?slug=${product.slug}">
+                                    <a href="productDetails.html?slug=${product.slug}">
                                         <img src="${product.image}" alt="${product.title}" class="img-fluid" style="border-radius: 8px;">
                                     </a>
                                     
@@ -544,7 +544,7 @@ async function loadCardProducts() {
                                         </div>
                                     ` : ''}
                                     <h4 class="product-name">
-                                        <a href="product-details.html?slug=${product.slug}" style="color:#1f2937;">${product.title}</a>
+                                        <a href="productDetails.html?slug=${product.slug}" style="color:#1f2937;">${product.title}</a>
                                     </h4>
                                     <div class="product-price" style="font-weight:600; color:#111;">
                                         ${product.oldPrice ? `<span class="old-price" style="text-decoration: line-through; margin-right:5px;">${product.oldPrice}</span>` : ''}

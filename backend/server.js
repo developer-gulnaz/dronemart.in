@@ -49,6 +49,7 @@ app.use("/api/orders", require("./routes/orders"));
 app.use("/api/cart", require("./routes/cart"));
 app.use("/api/wishlist", require("./routes/wishlist"));
 app.use("/api/payments", require("./routes/payments"));
+app.use("/api/accessory", require("./routes/accessory"));
 
 // Paths for static files
 const publicPath = path.resolve(__dirname, "../public");
@@ -82,7 +83,7 @@ app.get("/ping", (req, res) => {
 });
 
 
-// Use Railway port or fallback to 5000
+// Use Railway port or fallback to 5000 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`✅ Server running on port ${PORT}`);
@@ -90,7 +91,7 @@ app.listen(PORT, "0.0.0.0", () => {
 
 
 
-// Server listen
+// local server
 // const PORT = 5000;
 // app.listen(PORT, "0.0.0.0", () =>
 //   console.log(`✅ Server running on port ${PORT}`)

@@ -4,17 +4,29 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (!slug) return;
 
   try {
-    const res = await fetch(`/api/products/slug/${slug}`);
-    if (!res.ok) throw new Error("Failed to fetch product data");
-    const { product } = await res.json();
-    if (!product) throw new Error("Product not found");
+    // -------------------------------
+    // ✅ Detect product vs accessory
+    // -------------------------------
+    // Try product API first
+    let res = await fetch(`/api/products/slug/${slug}`);
+    let { product } = await res.json();
 
+    // If not found, fallback to accessory API
+    if (!product) {
+      const accRes = await fetch(`/api/accessory/slug/${slug}`);
+      if (!accRes.ok) throw new Error("Failed to fetch accessory data");
+      const { accessory } = await accRes.json();
+      product = accessory; // use same variable for UI rendering
+    }
+
+    if (!product) throw new Error("Item not found");
     populateProductUI(product);
   } catch (err) {
     console.error(err);
-    alert("Unable to load product data");
+    alert("Unable to load product or accessory data");
   }
 });
+
 
 function populateProductUI(product) {
   const formatINR = (amount) =>
@@ -222,7 +234,7 @@ function populateProductUI(product) {
   if (mainContainer) mainContainer.innerHTML = "";
 
   const djiBrand = "DJI";
-  const specialCategories = ["Agriculture", "FPV", "Accessories"];
+  const specialCategories = ["Agriculture", "FPV", "Accessories"]; // include Accessories
 
   if (product.brand === djiBrand) {
     // DJI style grid
@@ -247,7 +259,7 @@ function populateProductUI(product) {
       grid.appendChild(div);
     });
 
-  } else if (specialCategories.includes(product.category)) {
+  } else if (specialCategories.includes(product.category) || product.type === "accessory") {
     // Agriculture/FPV/Accessories style list
     const specContainer = document.createElement("div");
     specContainer.innerHTML = `
