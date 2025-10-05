@@ -11,11 +11,10 @@ document.addEventListener('DOMContentLoaded', async function () {
     const pageTitle = document.querySelector('.page-title h3')?.textContent || '';
     const isAgriculturePage = pageTitle.toLowerCase().includes('agriculture');
     const isFPVPage = pageTitle.toLowerCase().includes('fpv');
-    const isDJIPage = pageTitle.toLowerCase().includes('dji');
 
     // ============================================================== 
-    // 🟢 FETCH PRODUCTS HANDLER (DJI / Agriculture / FPV)
-    // ==============================================================
+    // 🟢 FETCH PRODUCTS HANDLER (Agriculture / FPV)
+    // ============================================================== 
     async function fetchProducts(query = "", category = "") {
         try {
             const params = new URLSearchParams();
@@ -27,9 +26,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             let data = await res.json();
 
             // Filter based on page type
-            if (isDJIPage) {
-                data = data.filter(p => p.brand?.toLowerCase() === 'dji');
-            } else if (isAgriculturePage) {
+            if (isAgriculturePage) {
                 data = data.filter(p => p.category?.toLowerCase().includes('agriculture'));
             } else if (isFPVPage) {
                 data = data.filter(p => p.category?.toLowerCase().includes('fpv'));
@@ -43,9 +40,10 @@ document.addEventListener('DOMContentLoaded', async function () {
                 productGrid.innerHTML = `<p class="text-danger">Failed to load products.</p>`;
         }
     }
+
     // ============================================================= 
     // 🧩 UNIVERSAL FETCH (for Products or Accessories)
-    // =============================================================
+    // ============================================================= 
     async function fetchItems(type = "product", query = "", category = "") {
         try {
             const params = new URLSearchParams();
@@ -61,15 +59,17 @@ document.addEventListener('DOMContentLoaded', async function () {
 
             let data = await res.json();
 
-            // === Filter logic only for products ===
-            if (type === "product") {
-                if (isDJIPage) {
-                    data = data.filter(p => p.brand?.toLowerCase() === "dji");
-                } else if (isAgriculturePage) {
-                    data = data.filter(p => p.category?.toLowerCase().includes("agriculture"));
-                } else if (isFPVPage) {
-                    data = data.filter(p => p.category?.toLowerCase().includes("fpv"));
-                }
+            // === Filter logic for both products & accessories ===
+            if (isAgriculturePage) {
+                data = data.filter(p =>
+                    (p.category?.toLowerCase().includes("agriculture") ||
+                        p.productCategory?.toLowerCase().includes("agriculture"))
+                );
+            } else if (isFPVPage) {
+                data = data.filter(p =>
+                    (p.category?.toLowerCase().includes("fpv") ||
+                        p.productCategory?.toLowerCase().includes("fpv"))
+                );
             }
 
             renderItems(data, type);
@@ -83,19 +83,12 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
     }
 
-
     // ============================================================= 
     // 🧩 UNIVERSAL RENDER FUNCTION (for both Products & Accessories)
-    // =============================================================
+    // ============================================================= 
     function renderItems(list, type = "product") {
-        const container = type === "accessory"
-            ? productGrid
-            : productGrid;
-
+        const container = productGrid;
         if (!container) return;
-
-        // If showing accessories, hide main product grid
-        // if (type === "accessory" && productGrid) productGrid.style.display = "none";
 
         container.innerHTML = "";
 
@@ -115,22 +108,22 @@ document.addEventListener('DOMContentLoaded', async function () {
                 data-price="${item.price}" 
                 data-image="${item.image}">
                 <div class="product-image">
-                <img src="${item.image}" alt="${item.title}">
-                <div class="product-overlay">
-                    <div class="product-actions">
-                    <button type="button" class="action-btn view-btn" title="Quick View"><i class="bi bi-eye"></i></button>
-                    <button type="button" class="action-btn cart-btn" title="Add to Cart"><i class="bi bi-cart-plus"></i></button>
-                    <button type="button" class="action-btn wishlist-btn" title="Add to Wishlist"><i class="bi bi-heart"></i></button>
+                    <img src="${item.image}" alt="${item.title}">
+                    <div class="product-overlay">
+                        <div class="product-actions">
+                            <button type="button" class="action-btn view-btn" title="Quick View"><i class="bi bi-eye"></i></button>
+                            <button type="button" class="action-btn cart-btn" title="Add to Cart"><i class="bi bi-cart-plus"></i></button>
+                            <button type="button" class="action-btn wishlist-btn" title="Add to Wishlist"><i class="bi bi-heart"></i></button>
+                        </div>
                     </div>
-                </div>
-                ${item.badge ? `<div class="product-badge">${item.badge}</div>` : ""}
+                    ${item.badge ? `<div class="product-badge">${item.badge}</div>` : ""}
                 </div>
                 <div class="product-details">
-                <h4 class="product-title"><a href="productDetails.html?slug=${item.slug}">${item.title}</a></h4>
-                <div class="product-meta">
-                    <div class="product-price">₹${item.price}</div>
-                    <div class="product-rating"><i class="bi bi-star-fill"></i> ${item.rating || 0}</div>
-                </div>
+                    <h4 class="product-title"><a href="productDetails.html?slug=${item.slug}">${item.title}</a></h4>
+                    <div class="product-meta">
+                        <div class="product-price">₹${item.price}</div>
+                        <div class="product-rating"><i class="bi bi-star-fill"></i> ${item.rating || 0}</div>
+                    </div>
                 </div>
             </div>
             `;
@@ -140,10 +133,9 @@ document.addEventListener('DOMContentLoaded', async function () {
         attachActionEvents();
     }
 
-
-    // ==============================================================
+    // ============================================================== 
     // 🔧 ACTION BUTTON HANDLERS
-    // ==============================================================
+    // ============================================================== 
     function attachActionEvents() {
         document.querySelectorAll(".view-btn").forEach(btn => {
             btn.addEventListener("click", function () {
@@ -179,7 +171,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     // ============================================================== 
     // 🔍 SEARCH + SORT + SCROLL
-    // ==============================================================
+    // ============================================================== 
     function performSearch() {
         const term = (searchInput?.value || '').toLowerCase();
         const filtered = products.filter(p =>
@@ -223,12 +215,12 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     // ============================================================== 
     // 🟢 INITIAL LOAD (Fetch products normally)
-    // ==============================================================
+    // ============================================================== 
     fetchProducts();
 
     // ============================================================== 
-    // 🟣 ACCESSORY CATEGORY CLICK HANDLER
-    // ==============================================================
+    // 🟣 ACCESSORY CATEGORY CLICK HANDLER (Agriculture & FPV Only)
+    // ============================================================== 
     document.querySelectorAll('.category-link').forEach(link => {
         link.addEventListener('click', e => {
             e.preventDefault();

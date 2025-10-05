@@ -33,7 +33,7 @@ app.use(
     }),
     cookie: {
       httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24, // 1 day
+      maxAge: 1000 * 60 * 60 * 1, // 1 hour
       sameSite: "lax",
       secure: process.env.NODE_ENV === "production", // only true in production
       // secure: false
