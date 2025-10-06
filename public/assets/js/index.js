@@ -565,9 +565,49 @@ async function loadCardProducts() {
     }
 }
 
+// Simple dialog popup function (replace this with your site's modal if you have one)
+window.showDialog = function (message, type = "info") {
+    const existing = document.querySelector(".dialog-box");
+    if (existing) existing.remove();
+
+    const dialog = document.createElement("div");
+    dialog.className = `dialog-box fixed top-5 right-5 z-50 p-4 rounded-lg shadow-lg text-white 
+        ${type === "error" ? "bg-red-500" : type === "success" ? "bg-green-500" : "bg-blue-500"}`;
+    dialog.textContent = message;
+
+    document.body.appendChild(dialog);
+
+    // auto hide after 3s
+    setTimeout(() => dialog.remove(), 3000);
+};
+
+// Check stock before adding to cart
+async function checkProductStock(productId) {
+    try {
+        const res = await fetch(`/api/products/${productId}`);
+        if (!res.ok) return null;
+        const productData = await res.json();
+        return productData.stock; // assume backend returns { stock: number }
+    } catch (err) {
+        console.error("Error checking stock:", err);
+        return null;
+    }
+}
 
 window.addToCart = async function (product, quantity = 1) {
+    if (!product || !product._id) return console.error("Invalid product data");
+
     try {
+        const stock = await checkProductStock(product._id);
+        if (stock === 0) {
+            window.showDialog("Unable to verify stock. Please try again.", "error");
+            return;
+        }
+        if (stock < quantity) {
+            window.showDialog("Not enough stock available.", "error");
+            return;
+        }
+
         const res = await fetch("/api/cart", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -576,28 +616,30 @@ window.addToCart = async function (product, quantity = 1) {
         });
 
         if (res.status === 401) {
-            alert("Please login to add products to cart");
+            window.showDialog("Please login to add products to cart", "error");
             window.location.href = "login.html";
             return;
         }
 
+        const data = await res.json();
+
         if (res.status === 400) {
-            const errData = await res.json();
-            alert(errData.message || "Item already in cart");
+            window.showDialog(data.message || "Item already in cart", "error");
             return;
         }
 
         if (res.ok) {
-            const cartData = await res.json();
-            window.updateCartBadge?.(cartData.items.length || 0);
+            window.showDialog(`${product.title} added to cart 🛒`, "success");
+            window.updateCartBadge?.(data.items.length || 0);
         }
     } catch (err) {
         console.error("Error adding to cart:", err);
+        window.showDialog("Something went wrong. Please try again.", "error");
     }
 };
 
 window.addToWishlist = async function (product) {
-    if (!product) return console.error("Product is undefined");
+    if (!product || !product._id) return console.error("Invalid product data");
 
     try {
         const res = await fetch("/api/wishlist", {
@@ -613,32 +655,42 @@ window.addToWishlist = async function (product) {
         });
 
         if (res.status === 401) {
-            alert("Please login to add products to wishlist");
+            window.showDialog("Please login to add to wishlist", "error");
             window.location.href = "login.html";
             return;
         }
 
+        const data = await res.json();
+
         if (res.status === 400) {
-            const errData = await res.json();
-            alert(errData.message || "Item already in wishlist");
+            window.showDialog(data.message || "Item already in wishlist", "error");
             return;
         }
 
         if (res.ok) {
-            const wishlistData = await res.json();
-            // alert(`${product.title} added to wishlist ❤️`);
-            window.updateWishlistBadge?.(wishlistData.items.length || 0);
+            window.showDialog(`${product.title} added to wishlist ❤️`, "success");
+            window.updateWishlistBadge?.(data.items.length || 0);
         }
     } catch (err) {
         console.error("Error adding to wishlist:", err);
+        window.showDialog("Something went wrong. Please try again.", "error");
     }
 };
 
-
 window.buyNow = async function (product, quantity = 1) {
-    if (!product) return console.error("Product is undefined");
+    if (!product || !product._id) return console.error("Invalid product data");
 
     try {
+        const stock = await checkProductStock(product._id);
+        if (stock === null) {
+            window.showDialog("Unable to verify stock. Please try again.", "error");
+            return;
+        }
+        if (stock < quantity) {
+            window.showDialog("Not enough stock available to buy now.", "error");
+            return;
+        }
+
         const res = await fetch("/api/cart", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -647,20 +699,23 @@ window.buyNow = async function (product, quantity = 1) {
         });
 
         if (res.status === 401) {
-            alert("Please login to proceed");
+            window.showDialog("Please login to proceed", "error");
             window.location.href = "login.html";
             return;
         }
 
+        const data = await res.json();
+
         if (res.ok) {
-            const cartData = await res.json();
-            window.updateCartBadge?.(cartData.items.length || 0);
-            // Redirect user to cart or checkout page
-            window.location.href = "/cart.html"; // change to /checkout.html if you have one
+            window.showDialog("Redirecting to checkout...", "success");
+            window.updateCartBadge?.(data.items.length || 0);
+            setTimeout(() => (window.location.href = "/checkout.html"), 1000);
         } else {
             console.error("Failed to add to cart for Buy Now", res.status);
+            window.showDialog("Failed to proceed to checkout", "error");
         }
     } catch (err) {
         console.error("Error in Buy Now:", err);
+        window.showDialog("Something went wrong. Please try again.", "error");
     }
 };

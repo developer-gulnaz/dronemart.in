@@ -68,9 +68,9 @@ document.addEventListener('DOMContentLoaded', async function () {
                   </div>
                   ${p.badge ? `<div class="product-badge">${p.badge}</div>` : ''}
                 </div>
-                <div class="product-details">
+                <div class="productDetails">
                   <div class="product-category">${p.category || ""}</div>
-                  <h4 class="product-title"><a href="product-details.html?slug=${p.slug}">${p.title}</a></h4>
+                  <h4 class="product-title"><a href="productDetails.html?slug=${p.slug}">${p.title}</a></h4>
                   <div class="product-meta">
                     <div class="product-price">₹${p.price}</div>
                     <div class="product-rating"><i class="bi bi-star-fill"></i> ${p.rating || 0}</div>
@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         document.querySelectorAll(".view-btn").forEach(btn => {
             btn.addEventListener("click", function () {
                 const slug = this.closest(".product-card").dataset.slug;
-                window.location.href = `product-details.html?slug=${slug}`;
+                window.location.href = `productDetails.html?slug=${slug}`;
             });
         });
 

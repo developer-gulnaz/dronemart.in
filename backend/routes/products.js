@@ -3,6 +3,7 @@ const router = express.Router();
 const multer = require("multer");
 const path = require("path");
 const productController = require("../controllers/productController");
+const Product = require("../models/Product.js"); 
 
 // -----------------------------
 // Middleware
@@ -66,5 +67,25 @@ router.get("/", productController.getAllProducts);
 // Get Product by Id
 router.get('/slug/:slug', productController.getProductbySlug);
 
+router.get("/:id", async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id).select("title price image stock");
+
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.json({
+      _id: product._id,
+      title: product.title,
+      price: product.price,
+      image: product.image,
+      stock: product.stock,
+    });
+  } catch (err) {
+    console.error("Error fetching product:", err);
+    res.status(500).json({ message: "Server error while fetching product" });
+  }
+});
 
 module.exports = router;

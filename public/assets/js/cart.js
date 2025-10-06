@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 <div class="product-image">
                   <img src="${item.image}" alt="${item.title}" class="img-fluid" loading="lazy">
                 </div>
-                <div class="product-details">
+                <div class="productDetails">
                   <h6 class="product-title">${item.title}</h6>
                   <button class="remove-item" data-product-id="${item.product}" type="button">
                     <i class="bi bi-trash"></i> Remove

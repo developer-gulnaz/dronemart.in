@@ -174,7 +174,7 @@
         width: 40% !important;
     }
 
-    .wishlist-item .product-details {
+    .wishlist-item .productDetails {
         width: 60% !important;
     }
 
@@ -418,4 +418,27 @@
 
 .subcategory-tree li:last-child {
     border-bottom: none;
+}
+
+.dialog-box {
+    font-family: sans-serif;
+    animation: fadeInOut 3s ease forwards;
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    10%,
+    90% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
 }

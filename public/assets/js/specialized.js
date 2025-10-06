@@ -62,13 +62,13 @@ document.addEventListener('DOMContentLoaded', async function () {
             // === Filter logic for both products & accessories ===
             if (isAgriculturePage) {
                 data = data.filter(p =>
-                    (p.category?.toLowerCase().includes("agriculture") ||
-                        p.productCategory?.toLowerCase().includes("agriculture"))
+                (p.category?.toLowerCase().includes("agriculture") ||
+                    p.productCategory?.toLowerCase().includes("agriculture"))
                 );
             } else if (isFPVPage) {
                 data = data.filter(p =>
-                    (p.category?.toLowerCase().includes("fpv") ||
-                        p.productCategory?.toLowerCase().includes("fpv"))
+                (p.category?.toLowerCase().includes("fpv") ||
+                    p.productCategory?.toLowerCase().includes("fpv"))
                 );
             }
 
@@ -97,41 +97,60 @@ document.addEventListener('DOMContentLoaded', async function () {
             return;
         }
 
-        list.forEach(item => {
-            const col = document.createElement("div");
-            col.className = "col-12 col-md-6 col-lg-4 mb-4";
-            col.innerHTML = `
-            <div class="product-card card shadow-sm border-0" 
-                data-id="${item._id}" 
-                data-slug="${item.slug}" 
-                data-title="${item.title}" 
-                data-price="${item.price}" 
-                data-image="${item.image}">
-                <div class="product-image">
-                    <img src="${item.image}" alt="${item.title}">
-                    <div class="product-overlay">
-                        <div class="product-actions">
-                            <button type="button" class="action-btn view-btn" title="Quick View"><i class="bi bi-eye"></i></button>
-                            <button type="button" class="action-btn cart-btn" title="Add to Cart"><i class="bi bi-cart-plus"></i></button>
-                            <button type="button" class="action-btn wishlist-btn" title="Add to Wishlist"><i class="bi bi-heart"></i></button>
+        // ✅ Separate active vs discontinued products
+        const activeItems = list.filter(item => item.badge?.toLowerCase() !== "discontinued");
+        const discontinuedItems = list.filter(item => item.badge?.toLowerCase() === "discontinued");
+
+        // === Function to render each section ===
+        const renderSection = (items, sectionTitle = "") => {
+            if (!items.length) return "";
+
+            const cards = items.map(item => `
+            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                <div class="product-card card shadow-sm border-0"
+                    data-id="${item._id}"
+                    data-slug="${item.slug}"
+                    data-title="${item.title}"
+                    data-price="${item.price}"
+                    data-image="${item.image}">
+                    <div class="product-image">
+                        <img src="${item.image}" alt="${item.title}">
+                        <div class="product-overlay">
+                            <div class="product-actions">
+                                <button type="button" class="action-btn view-btn" title="Quick View"><i class="bi bi-eye"></i></button>
+                                <button type="button" class="action-btn cart-btn" title="Add to Cart"><i class="bi bi-cart-plus"></i></button>
+                                <button type="button" class="action-btn wishlist-btn" title="Add to Wishlist"><i class="bi bi-heart"></i></button>
+                            </div>
                         </div>
+                        ${item.badge ? `<div class="product-badge">${item.badge}</div>` : ""}
                     </div>
-                    ${item.badge ? `<div class="product-badge">${item.badge}</div>` : ""}
-                </div>
-                <div class="product-details">
-                    <h4 class="product-title"><a href="productDetails.html?slug=${item.slug}">${item.title}</a></h4>
-                    <div class="product-meta">
-                        <div class="product-price">₹${item.price}</div>
-                        <div class="product-rating"><i class="bi bi-star-fill"></i> ${item.rating || 0}</div>
+                    <div class="productDetails">
+                        <h4 class="product-title"><a href="productDetails.html?slug=${item.slug}">${item.title}</a></h4>
+                        <div class="product-meta">
+                            <div class="product-price">₹${item.price}</div>
+                            <div class="product-rating"><i class="bi bi-star-fill"></i> ${item.rating || 0}</div>
+                        </div>
                     </div>
                 </div>
             </div>
-            `;
-            container.appendChild(col);
-        });
+        `).join("");
+
+            return `
+            ${sectionTitle ? `<h5 class="mt-4 mb-3 text-uppercase text-secondary">${sectionTitle}</h5>` : ""}
+            <div class="row">${cards}</div>
+        `;
+        };
+
+        // ✅ Combine both sections with <hr> if needed
+        container.innerHTML = `
+        ${renderSection(activeItems)}
+        ${discontinuedItems.length ? `<hr class="my-4">` : ""}
+        ${renderSection(discontinuedItems, "Discontinued Products")}
+    `;
 
         attachActionEvents();
     }
+
 
     // ============================================================== 
     // 🔧 ACTION BUTTON HANDLERS

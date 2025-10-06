@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <div class="product-image w-50">
                   <img src="${item.image}" alt="${item.title}" class="img-fluid" loading="lazy">
                 </div>
-                <div class="product-details">
+                <div class="productDetails">
                   <h6 class="product-title">${item.title}</h6>
                   <div class="product-meta">
                     <span class="product-color">Color: -</span>
