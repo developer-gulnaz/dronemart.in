@@ -35,8 +35,8 @@ app.use(
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24, // 1 day
       sameSite: "lax",
-      // secure: process.env.NODE_ENV === "production", // only true in production
-      secure: false
+      secure: process.env.NODE_ENV === "production", // only true in production
+      // secure: false
     },
   })
 );
@@ -83,16 +83,16 @@ app.get("/ping", (req, res) => {
 });
 
 
-// Use Railway port or fallback to 5000 
-// const PORT = process.env.PORT || 5000;
-// app.listen(PORT, "0.0.0.0", () => {
-//   console.log(`✅ Server running on port ${PORT}`);
-// });
+// Use live port or fallback to 5000 
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`✅ Server running on port ${PORT}`);
+});
 
 
 
 // local server
-const PORT = 5000;
-app.listen(PORT, "0.0.0.0", () =>
-  console.log(`✅ Server running on port ${PORT}`)
-);
+// const PORT = 5000;
+// app.listen(PORT, "0.0.0.0", () =>
+//   console.log(`✅ Server running on port ${PORT}`)
+// );

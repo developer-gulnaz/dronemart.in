@@ -440,7 +440,6 @@ async function renderBestSellers() {
 
         bestSellers.forEach(product => {
             const badgeHTML = product.badge ? `<div class="product-badge">${product.badge}</div>` : "";
-
             const productHTML = `
         <div class="col-lg-3 col-md-6">
           <div class="product-item" data-id="${product._id}">
@@ -571,48 +570,104 @@ window.showDialog = function (message, type = "info") {
     if (existing) existing.remove();
 
     const dialog = document.createElement("div");
-    dialog.className = `dialog-box fixed top-5 right-5 z-50 p-4 rounded-lg shadow-lg text-white 
-        ${type === "error" ? "bg-red-500" : type === "success" ? "bg-green-500" : "bg-blue-500"}`;
+    dialog.className = "dialog-box";
     dialog.textContent = message;
+
+    // Inline styles (Tailwind not required)
+    Object.assign(dialog.style, {
+        position: "fixed",
+        top: "20px",
+        right: "20px",
+        zIndex: "9999",
+        padding: "12px 18px",
+        borderRadius: "8px",
+        color: "#fff",
+        fontSize: "15px",
+        fontWeight: "500",
+        boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
+        background:
+            type === "error"
+                ? "#e53935"
+                : type === "success"
+                    ? "#43a047"
+                    : "#1e88e5",
+        opacity: "0",
+        transform: "translateY(-10px)",
+        transition: "opacity 0.3s ease, transform 0.3s ease",
+    });
 
     document.body.appendChild(dialog);
 
-    // auto hide after 3s
-    setTimeout(() => dialog.remove(), 3000);
+    // Animate in
+    setTimeout(() => {
+        dialog.style.opacity = "1";
+        dialog.style.transform = "translateY(0)";
+    }, 10);
+
+    // Auto remove after 3s with fade-out
+    setTimeout(() => {
+        dialog.style.opacity = "0";
+        dialog.style.transform = "translateY(-10px)";
+        setTimeout(() => dialog.remove(), 300);
+    }, 3000);
 };
 
-// Check stock before adding to cart
+// Check stock and status before adding to cart
 async function checkProductStock(productId) {
     try {
         const res = await fetch(`/api/products/${productId}`);
         if (!res.ok) return null;
+
         const productData = await res.json();
-        return productData.stock; // assume backend returns { stock: number }
+
+        // Return both stock and discontinued status
+        return {
+            stock: productData.stock,
+            discontinued: productData.status === "discontinued" || productData.badge === "Discontinued"
+        };
+
     } catch (err) {
         console.error("Error checking stock:", err);
         return null;
     }
 }
 
+
 window.addToCart = async function (product, quantity = 1) {
-    if (!product || !product._id) return console.error("Invalid product data");
+    if (!product || !product._id) {
+        console.error("Invalid product data");
+        return;
+    }
 
     try {
-        const stock = await checkProductStock(product._id);
-        if (stock === 0) {
-            window.showDialog("Unable to verify stock. Please try again.", "error");
-            return;
-        }
-        if (stock < quantity) {
-            window.showDialog("Not enough stock available.", "error");
+        // Fetch both stock and discontinued status
+        const productInfo = await checkProductStock(product._id);
+
+        if (!productInfo) {
+            window.showDialog("Unable to verify product information. Please try again.", "error");
             return;
         }
 
+        const { stock, discontinued } = productInfo;
+
+        // --- Check discontinued status ---
+        if (discontinued) {
+            window.showDialog("This product has been discontinued and cannot be added to cart.", "error");
+            return;
+        }
+
+        // --- Check stock ---
+        if (stock <= 0) {
+            window.showDialog("This product is currently out of stock.", "error");
+            return;
+        }
+
+        // --- Proceed with adding to cart ---
         const res = await fetch("/api/cart", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             credentials: "include",
-            body: JSON.stringify({ product: product._id, quantity })
+            body: JSON.stringify({ product: product._id, quantity }),
         });
 
         if (res.status === 401) {
@@ -632,6 +687,7 @@ window.addToCart = async function (product, quantity = 1) {
             window.showDialog(`${product.title} added to cart 🛒`, "success");
             window.updateCartBadge?.(data.items.length || 0);
         }
+
     } catch (err) {
         console.error("Error adding to cart:", err);
         window.showDialog("Something went wrong. Please try again.", "error");

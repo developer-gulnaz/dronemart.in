@@ -62,7 +62,10 @@ document.addEventListener('DOMContentLoaded', async function () {
                   <div class="product-overlay">
                     <div class="product-actions">
                       <button type="button" class="action-btn view-btn" title="Quick View"><i class="bi bi-eye"></i></button>
-                      <button type="button" class="action-btn cart-btn" title="Add to Cart"><i class="bi bi-cart-plus"></i></button>
+
+${p.badge?.toLowerCase() === "discontinued"
+                    ? `<button type="button" class="action-btn cart-btn disabled" title="Unavailable" disabled><i class="bi bi-ban"></i></button>`
+                    : `<button type="button" class="action-btn cart-btn" title="Add to Cart"><i class="bi bi-cart-plus"></i></button>`}
                       <button type="button" class="action-btn wishlist-btn" title="Add to Wishlist"><i class="bi bi-heart"></i></button>
                     </div>
                   </div>

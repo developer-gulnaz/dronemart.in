@@ -4673,6 +4673,12 @@ section,
   transform: translateY(-2px);
 }
 
+.category-product-list .product-actions .action-btn .disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 .category-product-list .product-actions .action-btn i {
   font-size: 1.25rem;
 }

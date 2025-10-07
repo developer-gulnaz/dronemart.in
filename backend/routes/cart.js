@@ -34,6 +34,7 @@ router.get("/", checkUserSession, async (req, res) => {
           title: item.product.title,
           price: item.product.price,
           image: item.product.image,
+          badge : item.product.badge,
           quantity: item.quantity || 1
         }))
     };

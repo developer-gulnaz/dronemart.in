@@ -49,8 +49,12 @@ document.addEventListener('DOMContentLoaded', async function () {
             const params = new URLSearchParams();
             if (query) params.append("q", query);
             if (category) {
-                // accessories use productCategory
                 params.append(type === "accessory" ? "productCategory" : "category", category);
+            }
+
+            // ✅ Add brand filter only for DJI Accessories Page
+            if (type === "accessory" && pageTitle.toLowerCase().includes("dji")) {
+                params.append("brand", "dji");
             }
 
             const endpoint = type === "accessory" ? "/api/accessory" : "/api/products";
@@ -58,6 +62,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             if (!res.ok) throw new Error(`Failed to fetch ${type}s`);
 
             let data = await res.json();
+            data = data.data || data; // ✅ normalize API response shape
 
             // === Filter logic for both products & accessories ===
             if (isAgriculturePage) {
@@ -118,7 +123,11 @@ document.addEventListener('DOMContentLoaded', async function () {
                         <div class="product-overlay">
                             <div class="product-actions">
                                 <button type="button" class="action-btn view-btn" title="Quick View"><i class="bi bi-eye"></i></button>
-                                <button type="button" class="action-btn cart-btn" title="Add to Cart"><i class="bi bi-cart-plus"></i></button>
+
+                                ${item.badge?.toLowerCase() === "discontinued"
+                    ? `<button type="button" class="action-btn cart-btn disabled" title="Unavailable" disabled><i class="bi bi-ban"></i></button>`
+                    : `<button type="button" class="action-btn cart-btn" title="Add to Cart"><i class="bi bi-cart-plus"></i></button>`}
+
                                 <button type="button" class="action-btn wishlist-btn" title="Add to Wishlist"><i class="bi bi-heart"></i></button>
                             </div>
                         </div>
@@ -146,7 +155,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         ${renderSection(activeItems)}
         ${discontinuedItems.length ? `<hr class="my-4">` : ""}
         ${renderSection(discontinuedItems, "Discontinued Products")}
-    `;
+        `;
 
         attachActionEvents();
     }

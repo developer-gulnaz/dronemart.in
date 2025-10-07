@@ -2,6 +2,13 @@ document.addEventListener("DOMContentLoaded", async function () {
   const cartContainer = document.querySelector(".cart-items");
   const subtotalEl = document.querySelector(".summary-item .summary-value");
   const totalEl = document.querySelector(".summary-total .summary-value");
+  const checkoutBtn = document.getElementById("confirm-payment-btn"); // added reference
+
+  const sgstEl = document.getElementById("sgst-value");
+  const cgstEl = document.getElementById("cgst-value");
+  // const discountEl = document.getElementById("discount-value");
+  const checkoutLink = document.querySelector(".checkout-button a");
+
 
   let cart = [];
 
@@ -20,6 +27,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       console.error("Error fetching cart:", err);
     }
   }
+
   function renderCart() {
     cartContainer.innerHTML = `
       <div class="cart-header d-none d-lg-block">
@@ -34,15 +42,21 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     if (cart.length === 0) {
       cartContainer.innerHTML += `<p class="text-center my-4">Your cart is empty.</p>`;
-      subtotalEl.textContent = "$0.00";
-      totalEl.textContent = "$0.00";
+      subtotalEl.textContent = "₹0.00";
+      cgstEl.textContent = "₹0.00";
+      sgstEl.textContent = "₹0.00";
+      // discountEl.textContent = "₹0.00";
+      totalEl.textContent = "₹0.00";
+      if (checkoutLink) checkoutLink.classList.add("disabled");
       return;
+    } else {
+      if (checkoutLink) checkoutLink.classList.remove("disabled");
     }
 
     let subtotal = 0;
 
     cart.forEach((item) => {
-      const itemTotal = item.price * item.quantity;
+      const itemTotal = parseFloat(item.price) * parseInt(item.quantity);
       subtotal += itemTotal;
 
       cartContainer.innerHTML += `
@@ -91,10 +105,10 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // --- Shipping logic ---
     const shippingEl = document.querySelector(".summary-item.shipping-item");
-    let shipping = 4.99; // default standard
+    let shipping = 220; // default standard numeric
     let freeShipping = false;
 
-    if (subtotal >= 300) {
+    if (subtotal >= 25000) { // corrected to match label threshold
       shipping = 0;
       freeShipping = true;
     }
@@ -105,22 +119,30 @@ document.addEventListener("DOMContentLoaded", async function () {
         <div class="shipping-options">
             <div class="form-check text-end">
                 <input class="form-check-input" type="radio" name="shipping" id="standard" ${!freeShipping ? "checked" : ""} ${freeShipping ? "disabled" : ""}>
-                <label class="form-check-label" for="standard">Standard Delivery - $4.99</label>
+                <label class="form-check-label" for="standard">Standard Delivery - ₹220</label>
             </div>
             <div class="form-check text-end">
                 <input class="form-check-input" type="radio" name="shipping" id="express" ${!freeShipping ? "" : "disabled"}>
-                <label class="form-check-label" for="express">Express Delivery - $12.99</label>
+                <label class="form-check-label" for="express">Express Delivery - ₹350</label>
             </div>
             <div class="form-check text-end">
                 <input class="form-check-input" type="radio" name="shipping" id="free" ${freeShipping ? "checked" : ""} disabled>
-                <label class="form-check-label" for="free">Free Shipping (Orders over $300)</label>
+                <label class="form-check-label" for="free">Free Shipping (Orders over ₹25000)</label>
             </div>
         </div>
     `;
 
     // --- Total calculation ---
-    const tax = subtotal * 0.10;
-    const total = subtotal + tax + shipping;
+    // --- Total calculation ---
+    const cgst = subtotal * 0.09;
+    const sgst = subtotal * 0.09;
+    const totalTax = cgst + sgst;
+    // const discount = 0;
+    const total = subtotal + totalTax + shipping ;
+
+    cgstEl.textContent = `₹${cgst.toFixed(2)}`;
+    sgstEl.textContent = `₹${sgst.toFixed(2)}`;
+    // discountEl.textContent = `₹${discount.toFixed(2)}`;
     totalEl.textContent = `₹${total.toFixed(2)}`;
 
     // --- Update shipping dynamically ---
@@ -128,12 +150,18 @@ document.addEventListener("DOMContentLoaded", async function () {
     shippingRadios.forEach(radio => {
       radio.addEventListener("change", () => {
         let newShipping = 0;
-        if (radio.id === "standard") newShipping = 4.99;
-        else if (radio.id === "express") newShipping = 12.99;
+        if (radio.id === "standard") newShipping = 220;
+        else if (radio.id === "express") newShipping = 350;
         else newShipping = 0; // free
 
-        // shippingEl.querySelector(".summary-value").textContent = `₹${newShipping.toFixed(2)}`;
-        totalEl.textContent = `₹${(subtotal + tax + newShipping).toFixed(2)}`;
+        const cgst = subtotal * 0.09;
+        const sgst = subtotal * 0.09;
+        const newTotal = subtotal + cgst + sgst + newShipping - 0;
+
+        cgstEl.textContent = `₹${cgst.toFixed(2)}`;
+        sgstEl.textContent = `₹${sgst.toFixed(2)}`;
+        totalEl.textContent = `₹${newTotal.toFixed(2)}`;
+
       });
     });
 
@@ -208,8 +236,6 @@ document.addEventListener("DOMContentLoaded", async function () {
   await fetchCart();
   renderCart();
 });
-
-
 
 
 document.addEventListener("DOMContentLoaded", async () => {
