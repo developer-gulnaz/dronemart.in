@@ -279,8 +279,6 @@
     border-radius: 8px;
 }
 
-
-
 /* repair css */
 .why-choose-us-slider {
     max-width: 1000px;
@@ -441,4 +439,114 @@
         opacity: 0;
         transform: translateY(-10px);
     }
+}
+
+.modal-specs-box {
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.modal-specs-box .specs-heading {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+}
+
+.modal-specs-box .acc-specs {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.modal-specs-box .acc-specs .data {
+    padding: 6px 0;
+    text-transform: capitalize;
+}
+
+.modal-specs-box li:last-child {
+    border-bottom: none;
+}
+
+.modal-content {
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.carousel-inner img {
+    border-radius: 10px;
+    object-fit: cover;
+    max-height: 300px;
+}
+
+.modal-title {
+    font-weight: 700;
+    font-size: 1.25rem;
+}
+
+.modal p{
+    text-align: justify;
+}
+.modal-pricing {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+}
+
+.modal-pricing .sale-price {
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.modal-pricing .regular-price {
+    font-size: 0.95rem;
+}
+
+.modal-pricing .discount-percent {
+    font-size: 0.9rem;
+}
+
+/* === In The Box & Compatibility (Matching Modal Style) === */
+
+.modal-inbox-box,
+.modal-compatibility-box {
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 15px;
+}
+
+.modal-inbox-box h6,
+.modal-compatibility-box h6 {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+}
+
+.modal-inbox-box ul,
+.modal-compatibility-box ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.modal-inbox-box li,
+.modal-compatibility-box li {
+    padding: 6px 0;
+    font-weight: 500;
+    color: #444;
+}
+
+.modal-inbox-box p.text-muted,
+.modal-compatibility-box p.text-muted {
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+/* === Make Carousel Control Icons Black === */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: invert(1) grayscale(100%) brightness(0);
 }

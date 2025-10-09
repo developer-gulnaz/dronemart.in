@@ -617,7 +617,6 @@ async function seedAccessories() {
                 ]
             },
 
-
             {
                 title: "EFT 5L Spraying System Set",
                 slug: "eft-5l-spraying-system-set",
@@ -699,7 +698,7 @@ async function seedAccessories() {
                 price: 1839,
                 salePrice: 1539,
                 productCategory: "agriculture",
-                stock: 3, // update actual stock if needed
+                stock: 3,
                 inStock: true,
                 image: "assets/img/product/specializedEFT-Prop-X6-CW.jpg",
                 thumbnails: [
@@ -753,12 +752,14 @@ async function seedAccessories() {
                     "Aerial Photography Propeller"
                 ]
             },
+
             {
                 title: "SpeedyBee Bee25 Wireless Tuning Frame",
                 slug: "speedybee-bee25-wireless-tuning-frame",
                 category: "Drone Frames",
                 brand: "SpeedyBee",
-                price: 26.99,
+                price: 2499,
+                salePrice: 2999,
                 productCategory: "fpv",
                 stock: 2,
                 inStock: true,
@@ -831,7 +832,8 @@ async function seedAccessories() {
                 slug: "speedybee-bee35-3.5-inch-frame",
                 category: "Frames",
                 brand: "SpeedyBee",
-                price: 34.99,
+                price: 3299,
+                salePrice: 3799,
                 productCategory: "fpv",
                 sku: "SB-BEE35FRM",
                 stock: 25,
@@ -915,10 +917,11 @@ async function seedAccessories() {
                 slug: "speedybee-f405-mini-bls-35a-20x20-stack",
                 category: "Flight Controller Stacks",
                 brand: "SpeedyBee",
-                price: 59.99,
+                price: 5399,
+                salePrice: 5899,
                 productCategory: "fpv",
                 sku: "SB-F4MINI-STACK",
-                stock: 30,
+                stock: 3,
                 inStock: true,
                 image: "assets/img/product/specialized/sb-mini-bls.jpg",
                 thumbnails: [
@@ -1023,7 +1026,8 @@ async function seedAccessories() {
                 slug: "speedybee-nd-uv-cpl-filter-set-o4-air-unit-pro",
                 category: "Accessories",
                 brand: "SpeedyBee",
-                price: 25.99,
+                price: 2499,
+                salePrice: 2799,
                 productCategory: "fpv",
                 sku: "SB-O4PRO-ND-5PCS",
                 stock: 50,

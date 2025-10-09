@@ -506,29 +506,48 @@
 
     <!-- === Accessories Modal === -->
     <div class="modal fade" id="accessoryModal" tabindex="-1">
-      <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-dialog  modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 id="modalTitle" class="modal-title"></h5>
+            <h5 style="font-weight: 600;">Overview</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
           <div class="modal-body">
-            <div id="accessoryCarousel" class="carousel slide" data-bs-ride="carousel">
+            <!-- Modal Body -->
+            <div id="accessoryCarousel" class="carousel slide mb-3" data-bs-ride="carousel">
               <div class="carousel-indicators" id="modalImageIndicators"></div>
               <div class="carousel-inner" id="modalImageInner"></div>
               <button class="carousel-control-prev" type="button" data-bs-target="#accessoryCarousel"
                 data-bs-slide="prev">
-                <span class="carousel-control-prev-icon"></span>
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
               </button>
               <button class="carousel-control-next" type="button" data-bs-target="#accessoryCarousel"
                 data-bs-slide="next">
-                <span class="carousel-control-next-icon"></span>
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
               </button>
             </div>
+            <h5 id="modalTitle" class="modal-title"></h5>
 
+            <div class="modal-pricing mb-3">
+              <h5 class="sale-price text-primary mb-0"></h5>
+              <span class="regular-price text-muted text-decoration-line-through ms-2"></span>
+              <span class="discount-percent text-success ms-1"></span>
+            </div>
             <p class="mt-3" id="modalDescription"></p>
-            <div id="modalSpecs" class="mt-2"></div>
-            <h5 class="text-primary mt-3" id="modalPrice"></h5>
+            <div class="modal-specs-box mt-3">
+              <h6 class="specs-heading">Specifications</h6>
+              <div id="modalSpecs"></div>
+            </div>
+            <div class="modal-inbox-box mt-3">
+              <h6>In The Box</h6>
+              <div id="modalInBox"></div>
+            </div>
+
+            <div class="modal-compatibility-box mt-3">
+              <h6>Compatibility</h6>
+              <div id="modalCompatibility"></div>
+            </div>
+
           </div>
           <div class="modal-footer">
             <button id="wishlistButton" class="btn btn-outline-danger"><i class="bi bi-heart"></i> Wishlist</button>

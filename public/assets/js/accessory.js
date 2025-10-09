@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', async function () {
           </div>
         </div>
         <div class="p-3 text-center">
-          <h5 class="mb-1">${a.title}</h5>
+          <h6 class="mb-1">${a.title}</h6>
           <p class="text-muted mb-2">${a.productCategory || ''}</p>
           <h6 class="text-primary mb-0">₹${a.price}</h6>
         </div>
@@ -89,11 +89,29 @@ document.addEventListener('DOMContentLoaded', async function () {
 
                 // Set modal content
                 modalTitle.textContent = acc.title;
-                modalPrice.textContent = `₹${acc.price}`;
+
+                // Price handling
+                const salePriceEl = document.querySelector('.sale-price');
+                const regularPriceEl = document.querySelector('.regular-price');
+                const discountPercentEl = document.querySelector('.discount-percent');
+
+                const price = parseFloat(acc.price) || 0;
+                const salePrice = parseFloat(acc.salePrice) || price;
+
+                salePriceEl.textContent = `₹${salePrice}`;
+                if (salePrice < price) {
+                    regularPriceEl.textContent = `₹${price}`;
+                    const percent = Math.round(((price - salePrice) / price) * 100);
+                    discountPercentEl.textContent = `(${percent}% off)`;
+                } else {
+                    regularPriceEl.textContent = '';
+                    discountPercentEl.textContent = '';
+                }
+
                 modalDescription.textContent = acc.description || "No description available.";
 
                 // === Image Slider (Thumbnails + Main Image) ===
-                const images = acc.images?.length ? acc.images : [acc.image];
+                const images = acc.thumbnails?.length ? acc.thumbnails : [acc.image];
                 const indicators = document.querySelector('#modalImageIndicators');
                 const inner = document.querySelector('#modalImageInner');
                 if (inner && indicators) {
@@ -101,21 +119,45 @@ document.addEventListener('DOMContentLoaded', async function () {
                     inner.innerHTML = '';
                     images.forEach((img, i) => {
                         indicators.innerHTML += `
-                      <button type="button" data-bs-target="#accessoryCarousel"
-                              data-bs-slide-to="${i}" ${i === 0 ? 'class="active"' : ''}></button>`;
+                        <button type="button" data-bs-target="#accessoryCarousel"
+                                data-bs-slide-to="${i}" ${i === 0 ? 'class="active"' : ''}></button>`;
                         inner.innerHTML += `
-                      <div class="carousel-item ${i === 0 ? 'active' : ''}">
-                        <img src="${img}" class="d-block w-100" alt="Accessory image ${i + 1}">
-                      </div>`;
+                        <div class="carousel-item ${i === 0 ? 'active' : ''}">
+                            <img src="${img}" class="d-block w-100" alt="Accessory image ${i + 1}">
+                        </div>`;
                     });
                 }
 
-                // Specs
+                // === Specs ===
                 modalSpecs.innerHTML = acc.specs
-                    ? `<ul>${Object.entries(acc.specs)
-                        .map(([k, v]) => `<li><strong>${k}:</strong> ${v}</li>`)
-                        .join('')}</ul>`
+                    ? `<div class="acc-specs">
+                    ${Object.entries(acc.specs)
+                        .map(([k, v]) => `<div class="data"><strong>${k}:</strong> ${v}</div>`)
+                        .join('')}
+                   </div>`
                     : "";
+
+                // === In The Box ===
+                const inBoxContainer = document.getElementById('modalInBox');
+                if (inBoxContainer) {
+                    inBoxContainer.innerHTML = acc.inTheBox?.length
+                        ? `<ul class="list-unstyled mb-0">
+                        ${acc.inTheBox.map(item =>
+                            `<li>• ${item.title}${item.quantity ? ` ×${item.quantity}` : ''}</li>`
+                        ).join('')}
+                       </ul>`
+                        : "<p class='text-muted mb-0'>No items listed.</p>";
+                }
+
+                // === Compatibility ===
+                const compatContainer = document.getElementById('modalCompatibility');
+                if (compatContainer) {
+                    compatContainer.innerHTML = acc.compatibility?.length
+                        ? `<ul class="list-unstyled mb-0">
+                        ${acc.compatibility.map(c => `<li>• ${c}</li>`).join('')}
+                       </ul>`
+                        : "<p class='text-muted mb-0'>Compatibility info not available.</p>";
+                }
 
                 modal.show();
             });
@@ -139,7 +181,6 @@ document.addEventListener('DOMContentLoaded', async function () {
             });
         });
     }
-
 
     // === Add to Cart / Wishlist in Modal ===
     cartButton.addEventListener('click', () => {
