@@ -5,7 +5,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     const productGrid = document.getElementById('productGrid');
     const scrollTopButton = document.getElementById('scroll-top');
 
-    let products = []; // Stores fetched products
+    let products = []; 
+    let accessories = []; // ✅ FIXED: store accessories globally for wishlist/cart
 
     // === Detect Page Type ===
     const pageTitle = document.querySelector('.page-title h3')?.textContent || '';
@@ -13,7 +14,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     const isFPVPage = pageTitle.toLowerCase().includes('fpv');
 
     // ============================================================== 
-    // 🟢 FETCH PRODUCTS HANDLER (Agriculture / FPV)
+    // 🟢 FETCH PRODUCTS HANDLER
     // ============================================================== 
     async function fetchProducts(query = "", category = "") {
         try {
@@ -33,6 +34,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             }
 
             products = data;
+            window.products = data; // ✅ FIXED: expose globally
             renderItems(products, "product");
         } catch (err) {
             console.error("Error loading products:", err);
@@ -62,19 +64,28 @@ document.addEventListener('DOMContentLoaded', async function () {
             if (!res.ok) throw new Error(`Failed to fetch ${type}s`);
 
             let data = await res.json();
-            data = data.data || data; // ✅ normalize API response shape
+            data = data.data || data;
 
             // === Filter logic for both products & accessories ===
             if (isAgriculturePage) {
                 data = data.filter(p =>
-                (p.category?.toLowerCase().includes("agriculture") ||
-                    p.productCategory?.toLowerCase().includes("agriculture"))
+                    (p.category?.toLowerCase().includes("agriculture") ||
+                        p.productCategory?.toLowerCase().includes("agriculture"))
                 );
             } else if (isFPVPage) {
                 data = data.filter(p =>
-                (p.category?.toLowerCase().includes("fpv") ||
-                    p.productCategory?.toLowerCase().includes("fpv"))
+                    (p.category?.toLowerCase().includes("fpv") ||
+                        p.productCategory?.toLowerCase().includes("fpv"))
                 );
+            }
+
+            // ✅ FIXED: store in global variable
+            if (type === "accessory") {
+                accessories = data;
+                window.accessories = data;
+            } else {
+                products = data;
+                window.products = data;
             }
 
             renderItems(data, type);
@@ -89,7 +100,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     // ============================================================= 
-    // 🧩 UNIVERSAL RENDER FUNCTION (for both Products & Accessories)
+    // 🧩 UNIVERSAL RENDER FUNCTION
     // ============================================================= 
     function renderItems(list, type = "product") {
         const container = productGrid;
@@ -102,11 +113,9 @@ document.addEventListener('DOMContentLoaded', async function () {
             return;
         }
 
-        // ✅ Separate active vs discontinued products
         const activeItems = list.filter(item => item.badge?.toLowerCase() !== "discontinued");
         const discontinuedItems = list.filter(item => item.badge?.toLowerCase() === "discontinued");
 
-        // === Function to render each section ===
         const renderSection = (items, sectionTitle = "") => {
             if (!items.length) return "";
 
@@ -150,7 +159,6 @@ document.addEventListener('DOMContentLoaded', async function () {
         `;
         };
 
-        // ✅ Combine both sections with <hr> if needed
         container.innerHTML = `
         ${renderSection(activeItems)}
         ${discontinuedItems.length ? `<hr class="my-4">` : ""}
@@ -159,7 +167,6 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         attachActionEvents();
     }
-
 
     // ============================================================== 
     // 🔧 ACTION BUTTON HANDLERS
@@ -172,27 +179,41 @@ document.addEventListener('DOMContentLoaded', async function () {
             });
         });
 
+        // ✅ FIXED: unified Add to Cart
         document.querySelectorAll(".cart-btn").forEach(btn => {
             btn.addEventListener("click", function () {
-                const card = this.closest(".product-card");
-                if (!card) return;
-                const product = {
-                    _id: card.dataset.id,
-                    title: card.dataset.title,
-                    price: card.dataset.price,
-                    image: card.dataset.image
-                };
-                window.addToCart(product);
+                const id = this.closest(".product-card").dataset.id;
+                const item =
+                    (window.products?.find?.(p => p._id === id)) ||
+                    (window.accessories?.find?.(a => a._id === id));
+                if (!item) return;
+
+                if (!item.refType) {
+                    item.refType = window.accessories?.some?.(a => a._id === id)
+                        ? "Accessory"
+                        : "Product";
+                }
+
+                window.addToCart(item);
             });
         });
 
+        // ✅ FIXED: unified Wishlist logic
         document.querySelectorAll(".wishlist-btn").forEach(btn => {
             btn.addEventListener("click", function () {
-                const card = this.closest(".product-card");
-                const id = card.dataset.id;
-                const product = products.find(p => p._id === id);
-                if (!product) return;
-                window.addToWishlist(product);
+                const id = this.closest(".product-card").dataset.id;
+                const item =
+                    (window.products?.find?.(p => p._id === id)) ||
+                    (window.accessories?.find?.(a => a._id === id));
+                if (!item) return;
+
+                if (!item.refType) {
+                    item.refType = window.accessories?.some?.(a => a._id === id)
+                        ? "Accessory"
+                        : "Product";
+                }
+
+                window.addToWishlist(item);
             });
         });
     }
@@ -242,12 +263,12 @@ document.addEventListener('DOMContentLoaded', async function () {
     });
 
     // ============================================================== 
-    // 🟢 INITIAL LOAD (Fetch products normally)
+    // 🟢 INITIAL LOAD 
     // ============================================================== 
     fetchProducts();
 
     // ============================================================== 
-    // 🟣 ACCESSORY CATEGORY CLICK HANDLER (Agriculture & FPV Only)
+    // 🟣 ACCESSORY CATEGORY CLICK HANDLER 
     // ============================================================== 
     document.querySelectorAll('.category-link').forEach(link => {
         link.addEventListener('click', e => {

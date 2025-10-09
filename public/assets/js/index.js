@@ -639,39 +639,30 @@ window.addToCart = async function (product, quantity = 1) {
         return;
     }
 
+    // 🧩 Detect refType automatically (same logic as wishlist)
+    const refType = product.refType || product.type || (
+        window.accessories?.some?.(a => a._id === product._id)
+            ? "Accessory"
+            : "Product"
+    );
+
     try {
-        // Fetch both stock and discontinued status
-        const productInfo = await checkProductStock(product._id);
-
-        if (!productInfo) {
-            window.showDialog("Unable to verify product information. Please try again.", "error");
-            return;
-        }
-
-        const { stock, discontinued } = productInfo;
-
-        // --- Check discontinued status ---
-        if (discontinued) {
-            window.showDialog("This product has been discontinued and cannot be added to cart.", "error");
-            return;
-        }
-
-        // --- Check stock ---
-        if (stock <= 0) {
-            window.showDialog("This product is currently out of stock.", "error");
-            return;
-        }
-
-        // --- Proceed with adding to cart ---
         const res = await fetch("/api/cart", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             credentials: "include",
-            body: JSON.stringify({ product: product._id, quantity }),
+            body: JSON.stringify({
+                product: product._id,
+                refType,        // ✅ Send refType properly
+                quantity,       // ✅ Default 1 if not specified
+                title: product.title,
+                image: product.image,
+                price: product.price,
+            }),
         });
 
         if (res.status === 401) {
-            window.showDialog("Please login to add products to cart", "error");
+            window.showDialog("Please login to add items to cart", "error");
             window.location.href = "login.html";
             return;
         }
@@ -685,17 +676,28 @@ window.addToCart = async function (product, quantity = 1) {
 
         if (res.ok) {
             window.showDialog(`${product.title} added to cart 🛒`, "success");
-            window.updateCartBadge?.(data.items.length || 0);
+            window.updateCartBadge?.(data.items?.length || 0);
         }
-
     } catch (err) {
         console.error("Error adding to cart:", err);
         window.showDialog("Something went wrong. Please try again.", "error");
     }
 };
 
+
+
 window.addToWishlist = async function (product) {
-    if (!product || !product._id) return console.error("Invalid product data");
+    if (!product || !product._id) {
+        console.error("Invalid product data");
+        return;
+    }
+
+    // 🧩 Detect refType automatically
+    const refType = product.refType || product.type || (
+        window.accessories?.some?.(a => a._id === product._id)
+            ? "Accessory"
+            : "Product"
+    );
 
     try {
         const res = await fetch("/api/wishlist", {
@@ -704,10 +706,11 @@ window.addToWishlist = async function (product) {
             credentials: "include",
             body: JSON.stringify({
                 product: product._id,
+                refType: product.refType,        // ✅ include this
                 title: product.title,
                 image: product.image,
-                price: product.price
-            })
+                price: product.price,
+            }),
         });
 
         if (res.status === 401) {
@@ -725,8 +728,9 @@ window.addToWishlist = async function (product) {
 
         if (res.ok) {
             window.showDialog(`${product.title} added to wishlist ❤️`, "success");
-            window.updateWishlistBadge?.(data.items.length || 0);
+            window.updateWishlistBadge?.(data.items?.length || 0);
         }
+
     } catch (err) {
         console.error("Error adding to wishlist:", err);
         window.showDialog("Something went wrong. Please try again.", "error");

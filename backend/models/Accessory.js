@@ -29,6 +29,7 @@ const AccessorySchema = new mongoose.Schema({
 
   // 🔹 In the Box section
   inTheBox: [inTheBoxSchema],
+  refType: { type: String, default: "Accessory" },
 
   rating: { type: Number, default: 0 },
   reviews: { type: Number, default: 0 },

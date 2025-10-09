@@ -1503,7 +1503,7 @@ async function seedAccessories() {
                     "assets/img/product/dji/dji-neo-propellers.jpg",
                     "assets/img/product/dji/dji-neo-propellers-1.jpg",
                     "assets/img/product/dji/dji-neo-propellers-2.jpg",
-                    "assets/img/product/dji/dji-neo-propellers-3.jpg",
+                    "assets/img/product/dji/dji-neo-propellers-3.jpg"
                 ],
                 shortDescription: "Durable, efficient propellers designed for stable DJI Neo flight performance.",
                 description: `DJI Neo Propellers provide efficient and stable propulsion for smooth flight. Each pair is precision-balanced and tested for safety, ensuring optimal performance and reduced noise.`,

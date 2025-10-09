@@ -9,11 +9,13 @@ const WishlistSchema = new mongoose.Schema(
     },
     items: [
       {
+        refType: { type: String, enum: ["Product", "Accessory"], required: true }, // ✅ Added
         product: {
           type: mongoose.Schema.Types.ObjectId,
-          ref: "Product",
+          refPath: "items.refType", // ✅ Dynamic reference
           required: true,
         },
+        quantity: { type: Number, default: 1 },
       },
     ],
   },

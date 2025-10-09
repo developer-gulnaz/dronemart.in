@@ -13,30 +13,38 @@ const checkUserSession = (req, res, next) => {
   next();
 };
 
-// Get cart with product details
+
+// -----------------------------
+// 🛒 Get Cart
+// -----------------------------
 router.get("/", checkUserSession, async (req, res) => {
   try {
-    let cart = await Cart.findOne({ user: req.session.userId }).populate("items.product");
+    // ✅ Auto-populate based on refType (Product or Accessory)
+    let cart = await Cart.findOne({ user: req.session.userId }).populate({
+      path: "items.product",
+      // Mongoose auto-detects model using refPath
+    });
 
     if (!cart) {
       cart = new Cart({ user: req.session.userId, items: [] });
       await cart.save();
     }
 
-    // Map items safely to include product info for frontend
+    // ✅ Prepare safe frontend-friendly object
     const cartWithDetails = {
       ...cart.toObject(),
       items: cart.items
-        .filter(item => item.product) // Skip null/deleted products
+        .filter(item => item.product) // skip missing/deleted refs
         .map(item => ({
           _id: item._id,
+          refType: item.refType, // "Product" or "Accessory"
           product: item.product._id,
           title: item.product.title,
           price: item.product.price,
           image: item.product.image,
-          badge : item.product.badge,
-          quantity: item.quantity || 1
-        }))
+          badge: item.product.badge,
+          quantity: item.quantity || 1,
+        })),
     };
 
     res.json(cartWithDetails);
@@ -47,21 +55,31 @@ router.get("/", checkUserSession, async (req, res) => {
 });
 
 // -----------------------------
-// Add to cart
+// ➕ Add to Cart
 // -----------------------------
 router.post("/", checkUserSession, async (req, res) => {
   try {
-    const { product } = req.body;
+    const { product, refType, quantity = 1 } = req.body;
+
     if (!product) return res.status(400).json({ message: "Product ID missing" });
+    if (!refType || !["Product", "Accessory"].includes(refType))
+      return res.status(400).json({ message: "Invalid or missing refType" });
 
     let cart = await Cart.findOne({ user: req.session.userId });
     if (!cart) cart = new Cart({ user: req.session.userId, items: [] });
 
-    const exists = cart.items.find(item => item.product.toString() === product);
+    // ✅ Prevent duplicates
+    const exists = cart.items.find(
+      item =>
+        item.product.toString() === product &&
+        item.refType === refType
+    );
     if (exists) {
       return res.status(400).json({ message: "Item already in cart" });
     }
-    cart.items.push({ product });
+
+    // ✅ Add correct refType and quantity
+    cart.items.push({ product, refType, quantity });
 
     await cart.save();
     res.status(201).json(cart);
@@ -70,6 +88,8 @@ router.post("/", checkUserSession, async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
+
 
 // Update cart item quantity
 router.put("/:productId", checkUserSession, async (req, res) => {

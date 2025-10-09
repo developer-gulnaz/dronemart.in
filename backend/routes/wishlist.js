@@ -12,31 +12,38 @@ const checkUserSession = (req, res, next) => {
   next();
 };
 
+
 // -----------------------------
 // Get wishlist
 // -----------------------------
 router.get("/", checkUserSession, async (req, res) => {
   try {
-    let wishlist = await Wishlist.findOne({ user: req.session.userId }).populate("items.product");
+    // ✅ Populate using refPath automatically
+    let wishlist = await Wishlist.findOne({ user: req.session.userId })
+      .populate({
+        path: "items.product",
+        // Mongoose will detect model (Product or Accessory) from refType
+      });
 
     if (!wishlist) {
       wishlist = new Wishlist({ user: req.session.userId, items: [] });
       await wishlist.save();
     }
 
-    // Map items safely to include product info for frontend
+    // ✅ Map items safely to include product or accessory info for frontend
     const wishlistWithDetails = {
       ...wishlist.toObject(),
       items: wishlist.items
-        .filter(item => item.product)
+        .filter(item => item.product) // skip deleted references
         .map(item => ({
           _id: item._id,
+          refType: item.refType, // Product or Accessory
           product: item.product._id,
           title: item.product.title,
           price: item.product.price,
           image: item.product.image,
-          quantity: item.quantity || 1
-        }))
+          quantity: item.quantity || 1,
+        })),
     };
 
     res.json(wishlistWithDetails);
@@ -46,23 +53,33 @@ router.get("/", checkUserSession, async (req, res) => {
   }
 });
 
+
 // -----------------------------
 // Add to wishlist
 // -----------------------------
 router.post("/", checkUserSession, async (req, res) => {
   try {
-    const { product } = req.body;
+    const { product, refType } = req.body;
+
     if (!product) return res.status(400).json({ message: "Product ID missing" });
+    if (!refType || !["Product", "Accessory"].includes(refType))
+      return res.status(400).json({ message: "Invalid or missing refType" });
 
     let wishlist = await Wishlist.findOne({ user: req.session.userId });
     if (!wishlist) wishlist = new Wishlist({ user: req.session.userId, items: [] });
 
-    const exists = wishlist.items.find(item => item.product.toString() === product);
+    // ✅ Check duplicates based on product + refType
+    const exists = wishlist.items.find(
+      item =>
+        item.product.toString() === product &&
+        item.refType === refType
+    );
     if (exists) {
       return res.status(400).json({ message: "Item already in wishlist" });
     }
 
-    wishlist.items.push({ product });
+    // ✅ Add correct refType
+    wishlist.items.push({ product, refType });
 
     await wishlist.save();
     res.status(201).json(wishlist);
@@ -71,6 +88,7 @@ router.post("/", checkUserSession, async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
 
 // -----------------------------
 // Remove from wishlist

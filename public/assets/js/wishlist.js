@@ -95,15 +95,30 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (!productId) return;
 
         try {
-          // Add to cart
-          await window.addToCart({ _id: productId }, 1);
+          // ✅ Find the full item data from the wishlist JSON (already loaded above)
+          const wishlistItem = wishlist.items.find(item => item.product === productId);
 
-          // Then remove from wishlist using the same global fn
+          // ✅ Build product object for addToCart
+          const product = wishlistItem
+            ? {
+              _id: wishlistItem.product,
+              title: wishlistItem.title,
+              image: wishlistItem.image,
+              price: wishlistItem.price,
+              refType: wishlistItem.refType || "Product"
+            }
+            : { _id: productId };
+
+          // ✅ Add to cart
+          await window.addToCart(product, 1);
+
+          // ✅ Remove from wishlist after adding to cart
           window.removeFromWishlist(productId, addCartBtn);
         } catch (err) {
           console.error("Add to cart from wishlist error:", err);
         }
       }
+
     });
 
   } catch (err) {
