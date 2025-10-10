@@ -609,33 +609,107 @@
 
 
 #brands {
-  overflow: hidden;
+    overflow: hidden;
 }
 
 #brands .brand-logo {
-  object-fit: contain;
-  transition: all 0.3s ease;
+    object-fit: contain;
+    transition: all 0.3s ease;
 }
 
 #brands .brand-logo:hover {
-  filter: none;
-  opacity: 1;
-  transform: scale(1.05);
+    filter: none;
+    opacity: 1;
+    transform: scale(1.15);
 }
-.swiper-slide{
+
+.brand-slider .swiper-slide {
     text-align: center;
 }
-.swiper {
-  padding: 10px 0;
+
+.brands .swiper {
+    padding: 10px 0;
 }
 
-.swiper-pagination-bullet {
-  background: #333;
-  opacity: 0.4;
+.brands .swiper-pagination-bullet {
+    display: none;
 }
 
-.swiper-pagination-bullet-active {
-  background: #000;
-  opacity: 0.7;
+/* Banner Section */
+#repair-banner {
+    position: relative;
+    overflow: hidden;
 }
 
+#repair-banner .overlay {
+    background: rgba(0, 0, 0, 0.35);
+    text-align: center;
+    padding: 100px 20px;
+}
+
+#repair-banner h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    font-family: "Orbitron", sans-serif;
+    color: #f4f3f3;
+    background: rgba(0, 0, 0, 0.35);
+    padding: 0 9px;
+}
+
+#repair-banner p {
+    background: rgba(0, 0, 0, 0.35);
+    padding: 0 9px;
+}
+
+/* Gallery Section */
+.repair-item {
+    position: relative;
+    cursor: pointer;
+}
+
+.repair-item .after-overlay {
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.repair-item:hover .after-overlay {
+    opacity: 1;
+}
+
+/* Form */
+#repair-form form {
+    border: 1px solid #eaeaea;
+}
+
+#repair-form .btn {
+    border-radius: 50px;
+    font-weight: 500;
+}
+
+#repair-form .btn:hover {
+    background-color: #0855ad !important;
+    /* change color on hover */
+    transform: scale(1.05);
+    /* slightly enlarges the button */
+    transition: all 0.2s ease-in-out;
+}
+
+#confirmModal .modal-content {
+    border-radius: 15px;
+}
+
+.before-after-container {
+    background: #000;
+    border-radius: 12px;
+}
+
+
+.repair-gallery .repair-item .img-fluid {
+    height: 550px;
+    width: 400px;
+    object-fit: cover;
+}
+
+.repair-gallery .repair-item video{
+    align-items: center;
+}
