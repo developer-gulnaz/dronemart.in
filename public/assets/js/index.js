@@ -685,7 +685,6 @@ window.addToCart = async function (product, quantity = 1) {
 };
 
 
-
 window.addToWishlist = async function (product) {
     if (!product || !product._id) {
         console.error("Invalid product data");

@@ -1,4 +1,35 @@
 document.addEventListener('DOMContentLoaded', async function () {
+    const sidebar = document.querySelector(".sidebar");
+    const btn = document.getElementById("mobileSidebarBtn");
+
+    if (!sidebar || !btn) return;
+
+    // 🔹 Toggle sidebar open/close
+    btn.addEventListener("click", () => {
+        sidebar.classList.toggle("active");
+        document.body.classList.toggle("sidebar-open");
+    });
+
+    // 🔹 Close sidebar when clicking outside
+    document.addEventListener("click", (e) => {
+        if (
+            sidebar.classList.contains("active") &&
+            !sidebar.contains(e.target) &&
+            !btn.contains(e.target)
+        ) {
+            sidebar.classList.remove("active");
+            document.body.classList.remove("sidebar-open");
+        }
+    });
+
+    // 🔹 Close when a category link is clicked
+    document.querySelectorAll(".category-link").forEach(link => {
+        link.addEventListener("click", () => {
+            sidebar.classList.remove("active");
+            document.body.classList.remove("sidebar-open");
+        });
+    });
+
     const searchInput = document.getElementById('productSearch');
     const searchButton = document.getElementById('searchButton');
     const sortSelect = document.getElementById('sortBy');
@@ -223,15 +254,53 @@ document.addEventListener('DOMContentLoaded', async function () {
     });
 
     // === Category Filter ===
-    categoryLinks.forEach(link => {
-        link.addEventListener('click', function (e) {
-            e.preventDefault();
-            const category = this.dataset.category;
-            fetchAccessories("", category);
-            categoryLinks.forEach(l => l.classList.remove("active"));
-            this.classList.add("active");
+
+
+    // === Category Filter ===
+    // === Load category from hash (used on page load or hash change) ===
+    function loadCategoryFromHash() {
+        const hash = window.location.hash.substring(1); // remove '#'
+        if (hash) {
+            const activeLink = document.querySelector(`.category-link[data-category="${hash}"]`);
+
+            // Highlight correct category
+            categoryLinks.forEach(l => l.classList.remove('active'));
+            if (activeLink) activeLink.classList.add('active');
+
+            // Fetch matching category
+            fetchAccessories("", hash);
+        } else {
+            // Load default (optional)
+            fetchAccessories("", "");
+        }
+    }
+
+    if (categoryLinks.length) {
+        categoryLinks.forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const category = this.dataset.category;
+
+                // ✅ Update URL hash without reload
+                history.pushState(null, "", `#${category}`);
+
+                // ✅ Fetch data
+                fetchAccessories("", category);
+
+                // ✅ Update active link
+                categoryLinks.forEach(l => l.classList.remove("active"));
+                this.classList.add("active");
+            });
         });
-    });
+
+        // ✅ Load correct category when page first opens
+        loadCategoryFromHash();
+
+        // ✅ Handle navbar clicks or back/forward navigation
+        window.addEventListener('hashchange', loadCategoryFromHash);
+    }
+
 
     // === Scroll to Top ===
     window.addEventListener('scroll', () => {

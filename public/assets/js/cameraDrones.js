@@ -1,4 +1,36 @@
 document.addEventListener('DOMContentLoaded', async function () {
+
+    const sidebar = document.querySelector(".sidebar");
+    const btn = document.getElementById("mobileSidebarBtn");
+
+    if (!sidebar || !btn) return;
+
+    // 🔹 Toggle sidebar open/close
+    btn.addEventListener("click", () => {
+        sidebar.classList.toggle("active");
+        document.body.classList.toggle("sidebar-open");
+    });
+
+    // 🔹 Close sidebar when clicking outside
+    document.addEventListener("click", (e) => {
+        if (
+            sidebar.classList.contains("active") &&
+            !sidebar.contains(e.target) &&
+            !btn.contains(e.target)
+        ) {
+            sidebar.classList.remove("active");
+            document.body.classList.remove("sidebar-open");
+        }
+    });
+
+    // 🔹 Close when a category link is clicked
+    document.querySelectorAll(".category-link").forEach(link => {
+        link.addEventListener("click", () => {
+            sidebar.classList.remove("active");
+            document.body.classList.remove("sidebar-open");
+        });
+    });
+
     const searchInput = document.getElementById('productSearch');
     const searchButton = document.getElementById('searchButton');
     const sortSelect = document.getElementById('sortBy');
@@ -162,10 +194,15 @@ ${p.badge?.toLowerCase() === "discontinued"
     categoryLinks.forEach(link => {
         link.addEventListener('click', function (e) {
             e.preventDefault();
-            const category = this.dataset.category || this.textContent.trim();
-            fetchProducts("", category);
+
+            const categoryId = this.dataset.id || this.textContent.trim().toLowerCase().replace(/\s+/g, '-');
+            window.location.hash = categoryId;
+
+            // ✅ Fetch products instantly
+            fetchProducts("", categoryId);
         });
     });
+
 
     // === Scroll-to-top ===
     window.addEventListener('scroll', function () {
@@ -177,8 +214,20 @@ ${p.badge?.toLowerCase() === "discontinued"
     });
 
     // === Initial Load ===
-    if (!isSpecializedPage) {
-        // Only load products on initial load for category page
+    const hashCategory = window.location.hash.replace('#', '');
+
+    if (hashCategory) {
+        // ✅ Load products from hash when page opens
+        fetchProducts("", hashCategory);
+    } else if (!isSpecializedPage) {
         fetchProducts();
     }
+
+    // ✅ Handle when hash changes (e.g. user clicks category again)
+    window.addEventListener('hashchange', () => {
+        const newCategory = window.location.hash.replace('#', '');
+        if (newCategory) fetchProducts("", newCategory);
+    });
+
+
 });

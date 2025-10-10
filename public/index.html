@@ -498,7 +498,6 @@
 
     <!-- Best Sellers Section -->
     <section id="best-sellers" class="best-sellers section">
-
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <h2>Best Sellers</h2>
@@ -521,6 +520,7 @@
 
 
     <!-- Call To Action Section -->
+
     <!-- <section id="call-to-action" class="call-to-action section">
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -569,7 +569,48 @@
       </div>
 
     </section> -->
-    <!-- /Call To Action Section -->
+
+    <!-- Call To Action Section -->
+
+    <!-- ======= Brands Section ======= -->
+    <section id="brands" class="brands section bg-light py-5">
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="section-title text-center mb-0 pb-0">
+          <h2 data-aos="fade-up" data-aos-delay="200">Brands We Deal In</h2>
+          <p class="text-muted" data-aos="fade-up" data-aos-delay="250">
+            We provide premium drones, accessories, and components from trusted global brands.
+          </p>
+        </div>
+
+        <div class="swiper brand-slider" data-aos="zoom-in" data-aos-delay="300">
+          <div class="swiper-wrapper align-items-center">
+
+            <div class="swiper-slide"><img src="assets/img/brands/dji.svg" class="img-fluid brand-logo" alt="DJI"></div>
+            <div class="swiper-slide"><img src="assets/img/brands/sunnysky.png" class="img-fluid brand-logo"
+                alt="SunnySky"></div>
+            <div class="swiper-slide"><img src="assets/img/brands/pgytech.avif" class="img-fluid brand-logo"
+                alt="PGYTECH"></div>
+            <div class="swiper-slide"><img src="assets/img/brands/autel.svg" class="img-fluid brand-logo" alt="Autel">
+            </div>
+            <div class="swiper-slide"><img src="assets/img/brands/speedybee.webp" class="img-fluid brand-logo"
+                alt="SpeedyBee"></div>
+            <div class="swiper-slide"><img src="assets/img/brands/betafpv.avif" class="img-fluid brand-logo"
+                alt="BetaFPV"></div>
+            <div class="swiper-slide"><img src="assets/img/brands/turnigy.svg" class="img-fluid brand-logo bg-dark p-2"
+                alt="Turnigy"></div>
+            <div class="swiper-slide"><img src="assets/img/brands/tmotor.webp" class="img-fluid brand-logo "
+                alt="Turnigy"></div>
+
+          </div>
+
+          <!-- Optional pagination -->
+          <div class="swiper-pagination mt-4"></div>
+        </div>
+      </div>
+    </section>
+    <!-- End Brands Section -->
+
 
   </main>
 
@@ -730,7 +771,31 @@
   <script src="assets/js/common.js"></script>
   <script src="assets/js/slider.js"></script>
   <script src="assets/js/products.js"></script>
-
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const swiper = new Swiper(".brand-slider", {
+        loop: true,
+        speed: 1500,
+        slidesPerView: 2,
+        spaceBetween: 30,
+        autoplay: {
+          delay: 1800,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        },
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        breakpoints: {
+          576: { slidesPerView: 3, spaceBetween: 30 },
+          768: { slidesPerView: 4, spaceBetween: 40 },
+          992: { slidesPerView: 5, spaceBetween: 40 },
+          1200: { slidesPerView: 6, spaceBetween: 50 },
+        },
+      });
+    });
+  </script>
 
 </body>
 

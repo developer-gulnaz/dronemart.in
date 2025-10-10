@@ -413,7 +413,7 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-lg-2 sidebar">
+        <div class="col-lg-3 sidebar">
           <div class="widgets-container">
             <!-- Product Categories Widget -->
             <div class="product-categories-widget widget-item">
@@ -421,39 +421,44 @@
               <ul class="category-tree list-unstyled mb-0">
                 <li class="category-item">
                   <div class="d-flex justify-content-between align-items-center category-header">
-                    <a href="#" class="category-link">Mavic Series</a>
+                    <a href="#" class="category-link" data-id="mavic-series">Mavic Series</a>
                   </div>
                 </li>
                 <li class="category-item">
                   <div class="d-flex justify-content-between align-items-center category-header">
-                    <a href="#" class="category-link">Mini Series</a>
+                    <a href="#" class="category-link" data-id="mini-series">Mini Series</a>
                   </div>
                 </li>
                 <li class="category-item">
                   <div class="d-flex justify-content-between align-items-center category-header">
-                    <a href="#" class="category-link">Air Series</a>
+                    <a href="#" class="category-link" data-id="air-series">Air Series</a>
                   </div>
                 </li>
                 <li class="category-item">
                   <div class="d-flex justify-content-between align-items-center category-header">
-                    <a href="#" class="category-link">Avata Series</a>
+                    <a href="#" class="category-link" data-id="avata-series">Avata Series</a>
                   </div>
                 </li>
                 <li class="category-item">
                   <div class="d-flex justify-content-between align-items-center category-header">
-                    <a href="#" class="category-link">Flip Series</a>
+                    <a href="#" class="category-link" data-id="flip-series">Flip Series</a>
                   </div>
                 </li>
                 <li class="category-item">
                   <div class="d-flex justify-content-between align-items-center category-header">
-                    <a href="#" class="category-link">Neo Series</a>
+                    <a href="#" class="category-link" data-id="neo-series">Neo Series</a>
                   </div>
                 </li>
               </ul>
             </div><!--/Product Categories Widget -->
           </div>
         </div>
-
+        <!-- 🔹 Mobile Sidebar Toggle -->
+        <div class="filter-toggle-btn d-lg-none text-end">
+          <button class="btn btn-outline-dark" id="mobileSidebarBtn">
+            <i class="bi bi-filter"></i> Categories
+          </button>
+        </div>
         <div class="col-lg-9">
           <!-- Category Header Section -->
           <section id="category-header" class="category-header p-0">
@@ -503,7 +508,7 @@
         </div>
       </div>
     </div>
-    
+
   </main>
 
   <footer id="footer" class="footer dark-background">
