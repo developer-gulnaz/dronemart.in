@@ -702,7 +702,9 @@
     background: #000;
     border-radius: 12px;
 }
-
+.repair-gallery .repair-item  img{
+    object-fit: contain;
+}
 
 .repair-gallery .repair-item .img-fluid {
     height: 550px;
