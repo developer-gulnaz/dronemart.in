@@ -41,14 +41,28 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("pincode").value = profile.pincode || "";
     document.getElementById("country").value = "INDIA";
 
-    // ---------------- Load cart ----------------
+    // ---------------- Load cart or buy-now session ----------------
+    // Detect Buy Now checkout
+    const isBuyNow = new URLSearchParams(window.location.search).get("buyNow") === "true";
     let cart = [];
+
     try {
-        const cartRes = await fetch("/api/cart", { credentials: "include" });
-        if (!cartRes.ok) throw new Error("Cart fetch failed");
-        cart = (await cartRes.json()).items || [];
+        let res;
+        if (isBuyNow) {
+            res = await fetch("/api/checkout", { credentials: "include" });
+            if (!res.ok) throw new Error("Failed to load Buy Now session");
+            const data = await res.json();
+            cart = data.items || [];
+        } else {
+            res = await fetch("/api/cart", { credentials: "include" });
+            if (!res.ok) throw new Error("Cart fetch failed");
+            const data = await res.json();
+            cart = data.items || [];
+        }
+
+        if (!cart.length) throw new Error("No items to checkout");
     } catch (err) {
-        alert("Cart is empty or fetch failed");
+        alert(err.message);
         return;
     }
 
@@ -109,7 +123,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 });
                 const codData = await codRes.json();
                 if (codData.orderId) {
-                    window.location.href = `/order-details.html?orderId=${codData.orderId}`;
+                    window.location.href = `/orderDetails.html?orderId=${codData.orderId}`;
                 }
                 return;
             }

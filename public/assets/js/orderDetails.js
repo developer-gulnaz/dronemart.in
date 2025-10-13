@@ -45,6 +45,35 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.querySelector("[data-phone]").textContent = shipping.phone || "N/A";
     document.querySelector("[data-billing-address]").textContent = order.billingAddress || "Same as shipping address";
 
+    // ================== ORDER STATUS ====================
+    const stepperItems = document.querySelectorAll(".stepper-item");
+
+    // Define your status flow order
+    const statusMap = ["initiated", "pending", "confirmed", "processing", "shipped", "delivered"];
+    const currentStatus = (order.status || "initiated").toLowerCase();
+    const currentIndex = statusMap.indexOf(currentStatus);
+
+    // Reset all states
+    stepperItems.forEach((step, index) => {
+      step.classList.remove("completed", "current");
+
+      if (index < currentIndex) {
+        step.classList.add("completed");
+      } else if (index === currentIndex) {
+        step.classList.add("current");
+      }
+    });
+
+    // Optional: Change the text on top of the stepper based on status
+    const successIcon = document.querySelector(".success-animation i");
+    if (currentStatus === "pending") {
+      successIcon.className = "bi bi-exclamation-circle text-warning";
+    } else if (currentStatus === "initiated") {
+      successIcon.className = "bi bi-hourglass-split text-secondary";
+    } else {
+      successIcon.className = "bi bi-check-lg text-success";
+    }
+
     // ================== PAYMENT DETAILS ====================
     const paymentTypeEl = document.querySelector("[data-card-type]");
     const paymentNumberEl = document.querySelector("[data-card-number]");

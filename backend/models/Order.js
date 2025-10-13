@@ -6,6 +6,7 @@ const OrderSchema = new mongoose.Schema({
   items: [
     {
       product: { type: mongoose.Schema.Types.ObjectId, ref: "Product", required: true },
+      refType: { type: String, enum: ["Product", "Accessory"], required: true }, // ✅ NEW
       title: { type: String, required: true },
       price: { type: Number, required: true },
       image: { type: String },
@@ -19,8 +20,8 @@ const OrderSchema = new mongoose.Schema({
 
   status: {
     type: String,
-    enum: ["pending", "cod-pending", "confirmed", "processing", "shipped", "delivered", "cancelled", "payment-failed", "initiated"],
-    default: "pending",
+    enum: ["pending","confirmed", "processing", "shipped", "delivered", "cancelled", "payment-failed", "initiated"],
+    default: "initiated",
   },
 
   paymentStatus: { type: String, enum: ["initiated", "cod-pending", "pending", "completed", "not paid(cancelled)", "paid"] },

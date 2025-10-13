@@ -613,24 +613,32 @@ window.showDialog = function (message, type = "info") {
 };
 
 // Check stock and status before adding to cart
-async function checkProductStock(productId) {
+async function checkProductStock(itemId, refType) {
     try {
-        const res = await fetch(`/api/products/${productId}`);
+        // Determine correct endpoint
+        const endpoint =
+            refType === "accessory"
+                ? `/api/accessories/${itemId}`
+                : `/api/products/${itemId}`;
+
+        const res = await fetch(endpoint);
         if (!res.ok) return null;
 
-        const productData = await res.json();
+        const itemData = await res.json();
 
-        // Return both stock and discontinued status
+        // Return stock, status, and refType
         return {
-            stock: productData.stock,
-            discontinued: productData.status === "discontinued" || productData.badge === "Discontinued"
+            stock: itemData.stock,
+            discontinued:
+                itemData.status === "discontinued" || itemData.badge === "Discontinued",
+            refType, // keep track for debugging or logic
         };
-
     } catch (err) {
         console.error("Error checking stock:", err);
         return null;
     }
 }
+
 
 
 window.addToCart = async function (product, quantity = 1) {
@@ -736,25 +744,31 @@ window.addToWishlist = async function (product) {
     }
 };
 
-window.buyNow = async function (product, quantity = 1) {
-    if (!product || !product._id) return console.error("Invalid product data");
+
+window.buyNow = async function (item, quantity = 1) {
+    if (!item || !item._id || !item.refType)
+        return console.error("Invalid item data");
 
     try {
-        const stock = await checkProductStock(product._id);
+        const stock = await checkProductStock(item._id, item.refType);
         if (stock === null) {
             window.showDialog("Unable to verify stock. Please try again.", "error");
             return;
         }
         if (stock < quantity) {
-            window.showDialog("Not enough stock available to buy now.", "error");
+            window.showDialog("Not enough stock available.", "error");
             return;
         }
 
-        const res = await fetch("/api/cart", {
+        const res = await fetch("/api/checkout", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             credentials: "include",
-            body: JSON.stringify({ product: product._id, quantity })
+            body: JSON.stringify({
+                itemId: item._id,
+                refType: item.refType, // <-- product or accessory
+                quantity,
+            }),
         });
 
         if (res.status === 401) {
@@ -764,13 +778,10 @@ window.buyNow = async function (product, quantity = 1) {
         }
 
         const data = await res.json();
-
-        if (res.ok) {
+        if (res.ok && data.success) {
             window.showDialog("Redirecting to checkout...", "success");
-            window.updateCartBadge?.(data.items.length || 0);
-            setTimeout(() => (window.location.href = "/checkout.html"), 1000);
+            setTimeout(() => (window.location.href = "/checkout.html?buyNow=true"), 1000);
         } else {
-            console.error("Failed to add to cart for Buy Now", res.status);
             window.showDialog("Failed to proceed to checkout", "error");
         }
     } catch (err) {
@@ -778,3 +789,4 @@ window.buyNow = async function (product, quantity = 1) {
         window.showDialog("Something went wrong. Please try again.", "error");
     }
 };
+

@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("firstName").value = profile.firstName || "";
     document.getElementById("lastName").value = profile.lastName || "";
     document.getElementById("email").value = profile.email || "";
-    document.getElementById("phone").value = profile.phone || "";
+    document.getElementById("phone").value = profile.mobile || "";
 
     // Load all sections with individual error handling
     await loadOrders();
@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const orderCard = document.createElement("div");
         orderCard.classList.add("order-card");
         orderCard.innerHTML = `
-                <a href="order-details.html?orderId=${order._id}" class="order-link" style="text-decoration: none; color: inherit;">
+                <a href="orderDetails.html?orderId=${order._id}" class="order-link" style="text-decoration: none; color: inherit;">
                     <div class="order-header">
                         <div class="order-id"><span class="label">Order ID:</span> ${order._id}</div>
                         <div class="order-date">${new Date(order.createdAt).toLocaleString()}</div>

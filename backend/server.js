@@ -34,7 +34,6 @@ async function startServer() {
     console.log("⚙️ Development mode: sessions are preserved between restarts (nodemon safe)");
   }
 
-
   // 3) Create session store with 1 hour TTL (seconds)
   const sessionStore = MongoStore.create({
     mongoUrl: process.env.MONGO_URI,
@@ -72,6 +71,8 @@ async function startServer() {
   app.use("/api/wishlist", require("./routes/wishlist"));
   app.use("/api/payments", require("./routes/payments"));
   app.use("/api/accessory", require("./routes/accessory"));
+  app.use("/api/checkout", require("./routes/checkout"));
+  app.use('/api/repairs', require('./routes/repairs'));
 
   const publicPath = path.resolve(__dirname, "../public");
   const adminPath = path.resolve(__dirname, "../admin");

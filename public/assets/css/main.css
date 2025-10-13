@@ -1667,7 +1667,7 @@ h6 {
     transform: translateX(-50%);
   }
 
-  
+
 
   .footer .footer-main .footer-links li {
     padding-left: 0;
@@ -6181,10 +6181,25 @@ section,
   position: absolute;
   top: 20px;
   left: 14px;
-  width: 2px;
+  width: 3px;
   height: calc(100% - 10px);
-  background-color: rgba(255, 255, 255, 0.3);
+  background: linear-gradient(to bottom, #cfcfcf, #9e9e9e);
+  border-radius: 3px;
+  box-shadow:
+    inset 1px 1px 2px rgba(255, 255, 255, 0.6),
+    inset -1px -1px 2px rgba(0, 0, 0, 0.2),
+    0 0 6px rgba(0, 0, 0, 0.15);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
   z-index: 1;
+}
+
+.order-details .sidebar .order-progress .stepper-item.completed::after,
+.order-details .sidebar .order-progress .stepper-item.current::after {
+  background: linear-gradient(to bottom, #066229, #0f8513);
+  box-shadow:
+    0 0 8px rgba(166, 191, 246, 0.872),
+    inset 1px 1px 2px rgba(255, 255, 255, 0.5),
+    inset -1px -1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .order-details .sidebar .order-progress .stepper-item .stepper-icon {

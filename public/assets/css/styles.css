@@ -31,6 +31,7 @@
 .hero-slider-container {
     position: relative;
     overflow: hidden;
+    width: 100%;
 }
 
 .hero-slider-wrapper {
@@ -702,16 +703,24 @@
     background: #000;
     border-radius: 12px;
 }
-.repair-gallery .repair-item  img{
+
+.repair-gallery .repair-item img {
     object-fit: contain;
 }
 
 .repair-gallery .repair-item .img-fluid {
-    height: 550px;
-    width: 400px;
-    object-fit: cover;
+    object-fit: contain;
 }
 
-.repair-gallery .repair-item video{
+.repair-gallery .repair-item video {
     align-items: center;
+}
+
+#attachmentsCarousel .carousel-item img {
+    height: 300px !important;
+    /* Change this value as needed */
+    object-fit: contain;
+    /* 'cover' crops, 'contain' fits inside */
+    width: 100%;
+    /* Full width of carousel */
 }

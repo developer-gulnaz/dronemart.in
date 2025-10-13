@@ -21,7 +21,7 @@ const checkAdminSession = (req, res, next) => {
 // Multer setup for images
 // =============================
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, "public/uploads/"),
+  destination: (req, file, cb) => cb(null, "public/img/product"),
   filename: (req, file, cb) => {
     const ext = path.extname(file.originalname);
     cb(null, Date.now() + "-" + file.fieldname + ext);

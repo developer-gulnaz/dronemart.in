@@ -44,10 +44,11 @@ exports.createOrder = async (req, res) => {
                 image: p.image,
                 price: p.price,
                 quantity: p.quantity || 1,
+                refType: p.refType
             })),
             payment: { method: paymentMethod },
             total,
-            status: "pending",
+            status: "initiated",
             paymentStatus: paymentMethod === "cod" ? "cod-pending" : "pending",
         });
 
@@ -77,11 +78,12 @@ exports.createCodOrder = async (req, res) => {
                 image: p.image,
                 price: p.price,
                 quantity: p.quantity || 1,
+                refType: p.refType
             })),
 
             paymentMethod: "COD",
             total: totalAmount,
-            status: "pending",
+            status: "initiated",
             paymentStatus: "cod-pending",
         });
 
@@ -99,58 +101,59 @@ exports.createCodOrder = async (req, res) => {
 
 // ---------------- PayU Initiate ----------------
 exports.initiatePayuPayment = async (req, res) => {
-  try {
-    const { items, totalAmount, productinfo, firstname, email, phone } = req.body;
-    const userId = req.session.userId;
-    if (!userId) return res.status(401).json({ message: "Unauthorized" });
+    try {
+        const { items, totalAmount, productinfo, firstname, email, phone } = req.body;
+        const userId = req.session.userId;
+        if (!userId) return res.status(401).json({ message: "Unauthorized" });
 
-    const txnid = "txn" + Date.now();
-    const payuKey = process.env.PAYU_KEY;
-    const payuSalt = process.env.PAYU_SALT;
-    const amount = totalAmount.toFixed(2);
+        const txnid = "txn" + Date.now();
+        const payuKey = process.env.PAYU_KEY;
+        const payuSalt = process.env.PAYU_SALT;
+        const amount = totalAmount.toFixed(2);
 
-    // 1️⃣ Create order in DB
-    const order = new Order({
-      user: userId,
-      items: items.map((p) => ({
-        product: p.product,
-        title: p.title,
-        image: p.image,
-        price: p.price,
-        quantity: p.quantity || 1,
-      })),
-      paymentMethod: "PayU",
-      total: totalAmount,
-      status: "initiated",
-      paymentStatus: "initiated",
-    });
-    await order.save();
+        // 1️⃣ Create order in DB
+        const order = new Order({
+            user: userId,
+            items: items.map((p) => ({
+                product: p.product,
+                title: p.title,
+                image: p.image,
+                price: p.price,
+                quantity: p.quantity || 1,
+                refType: p.refType
+            })),
+            paymentMethod: "PayU",
+            total: totalAmount,
+            status: "initiated",
+            paymentStatus: "initiated",
+        });
+        await order.save();
 
-    // 2️⃣ Create payment record
-    const payment = new Payment({
-      order: order._id,
-      user: userId,
-      method: "PayU",
-      status: "initiated",
-      amount: totalAmount,
-      txnid,
-      productinfo
-    });
-    await payment.save();
+        // 2️⃣ Create payment record
+        const payment = new Payment({
+            order: order._id,
+            user: userId,
+            method: "PayU",
+            status: "initiated",
+            amount: totalAmount,
+            txnid,
+            productinfo
+        });
+        await payment.save();
 
-    // 3️⃣ Hash calculation
-    const udf1 = order._id.toString();
-    const udf2 = "";
-    const udf3 = "";
-    const udf4 = "";
-    const udf5 = "";
+        // 3️⃣ Hash calculation
+        const udf1 = order._id.toString();
+        const udf2 = "";
+        const udf3 = "";
+        const udf4 = "";
+        const udf5 = "";
 
-    // ✅ Correct formula
-    const hashString = `${payuKey}|${txnid}|${amount}|${productinfo}|${firstname}|${email}|${udf1}|${udf2}|${udf3}|${udf4}|${udf5}||||||${payuSalt}`;
-    const hash = crypto.createHash("sha512").update(hashString).digest("hex");
+        // ✅ Correct formula
+        const hashString = `${payuKey}|${txnid}|${amount}|${productinfo}|${firstname}|${email}|${udf1}|${udf2}|${udf3}|${udf4}|${udf5}||||||${payuSalt}`;
+        const hash = crypto.createHash("sha512").update(hashString).digest("hex");
 
-    // 4️⃣ PayU form
-    const payuForm = `
+        // 4️⃣ PayU form
+        const payuForm = `
       <form id="payuForm" method="post" action="https://test.payu.in/_payment">
         <input type="hidden" name="key" value="${payuKey}" />
         <input type="hidden" name="txnid" value="${txnid}" />
@@ -170,11 +173,11 @@ exports.initiatePayuPayment = async (req, res) => {
       </form>
     `;
 
-    res.json({ payuForm });
-  } catch (err) {
-    console.error("PayU Initiate Error:", err);
-    res.status(500).json({ message: "PayU initiation failed" });
-  }
+        res.json({ payuForm });
+    } catch (err) {
+        console.error("PayU Initiate Error:", err);
+        res.status(500).json({ message: "PayU initiation failed" });
+    }
 };
 
 
@@ -192,7 +195,7 @@ exports.payuSuccess = async (req, res) => {
 
         // Update Order
         order.paymentStatus = status === "success" ? "paid" : "failed";
-        order.status = status === "success" ? "processing" : "pending";
+        order.status = status === "success" ? "confirmed" : "pending";
         await order.save();
 
         // Update Payment
@@ -211,7 +214,7 @@ exports.payuSuccess = async (req, res) => {
             await removePurchasedItems(order.user, order.items);
         }
 
-        res.redirect(`/order-details.html?orderId=${order._id}`);
+        res.redirect(`/orderDetails.html?orderId=${order._id}`);
     } catch (err) {
         console.error("PayU Success Error:", err);
         res.status(500).send("PayU success handling failed");
@@ -243,7 +246,7 @@ exports.payuFailure = async (req, res) => {
             await payment.save();
         }
 
-        res.redirect(`/order-details.html?orderId=${orderId}`);
+        res.redirect(`/orderDetails.html?orderId=${orderId}`);
     } catch (err) {
         console.error("PayU Failure Error:", err);
         res.status(500).send("PayU failure handling failed");

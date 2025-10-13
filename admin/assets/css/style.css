@@ -316,8 +316,14 @@ body {
     background: white;
     text-align: center;
     border-radius: 10px;
-    overflow: hidden;
+    /* overflow: hidden; */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+@media (min-width: 768px) {
+    #attachmentsCarousel .carousel-item img {
+        height: 400px;  /* taller images on larger screens */
+    }
 }
 
 .usersTable thead th {
