@@ -39,6 +39,15 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/all', async (req, res) => {
+    try {
+        const accessory = await Accessory.find().sort({ createdAt: -1 });
+        res.json(accessory);
+    } catch (err) {
+        console.error("Error fetching accessories:", err);
+        res.status(500).json({ message: "Server error while fetching accessories" });
+    }
+});
 
 // GET accessory by slug
 router.get('/slug/:slug', async (req, res) => {

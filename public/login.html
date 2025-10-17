@@ -164,14 +164,14 @@
                     <i class="bi bi-arrow-right"></i>
                   </button>
 
-                  <div class="divider">
+                  <!-- <div class="divider">
                     <span>or</span>
                   </div>
 
                   <button type="button" class="auth-btn social-btn">
                     <i class="bi bi-google"></i>
                     Continue with Google
-                  </button>
+                  </button> -->
 
                   <div class="switch-form">
                     <span>Don't have an account?</span>
@@ -181,90 +181,6 @@
                   </div>
                 </form>
               </div>
-
-              <!-- Register Form -->
-              <div class="auth-form register-form">
-                <div class="form-header">
-                  <h3>Create Account</h3>
-                  <p>Join us today and get started</p>
-                </div>
-
-                <form class="auth-form-content">
-                  <div class="name-row">
-                    <div class="input-group">
-                      <span class="input-icon">
-                        <i class="bi bi-person"></i>
-                      </span>
-                      <input type="text" class="form-control" placeholder="First name" required=""
-                        autocomplete="given-name">
-                    </div>
-                    <div class="input-group">
-                      <span class="input-icon">
-                        <i class="bi bi-person"></i>
-                      </span>
-                      <input type="text" class="form-control" placeholder="Last name" required=""
-                        autocomplete="family-name">
-                    </div>
-                  </div>
-
-                  <div class="input-group mb-3">
-                    <span class="input-icon">
-                      <i class="bi bi-envelope"></i>
-                    </span>
-                    <input type="email" class="form-control" placeholder="Email address" required=""
-                      autocomplete="email">
-                  </div>
-
-                  <div class="input-group mb-3">
-                    <span class="input-icon">
-                      <i class="bi bi-lock"></i>
-                    </span>
-                    <input type="password" class="form-control" placeholder="Create password" required=""
-                      autocomplete="new-password">
-                    <span class="password-toggle">
-                      <i class="bi bi-eye"></i>
-                    </span>
-                  </div>
-
-                  <div class="input-group mb-3">
-                    <span class="input-icon">
-                      <i class="bi bi-lock-fill"></i>
-                    </span>
-                    <input type="password" class="form-control" placeholder="Confirm password" required=""
-                      autocomplete="new-password">
-                    <span class="password-toggle">
-                      <i class="bi bi-eye"></i>
-                    </span>
-                  </div>
-
-                  <div class="terms-check mb-4">
-                    <input type="checkbox" id="termsRegister" required="">
-                    <label for="termsRegister">
-                      I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
-                    </label>
-                  </div>
-
-                  <button type="submit" class="auth-btn primary-btn mb-3">
-                    Create Account
-                    <i class="bi bi-arrow-right"></i>
-                  </button>
-
-                  <div class="divider">
-                    <span>or</span>
-                  </div>
-
-                  <button type="button" class="auth-btn social-btn">
-                    <i class="bi bi-google"></i>
-                    Sign up with Google
-                  </button>
-
-                  <div class="switch-form">
-                    <span>Already have an account?</span>
-                    <button type="button" class="switch-btn" data-target="login">Sign in</button>
-                  </div>
-                </form>
-              </div>
-
             </div>
           </div>
         </div>
@@ -273,9 +189,38 @@
 
     </section><!-- /Login Section -->
 
+    <!-- Forgot Password Modal -->
+    <div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content p-4">
+          <h5 class="mb-3">Reset Password</h5>
+
+          <!-- Step 1: Enter Email -->
+          <div id="stepEmail">
+            <input type="email" class="form-control mb-2" id="resetEmail" placeholder="Enter your email" required>
+            <button class="btn btn-primary w-100" id="sendOtpBtn">Send OTP</button>
+          </div>
+
+          <!-- Step 2: Enter OTP -->
+          <div id="stepOtp" style="display: none;">
+            <input type="text" class="form-control mb-2" id="resetOtp" placeholder="Enter OTP" required>
+            <button class="btn btn-success w-100" id="verifyOtpBtn">Verify OTP</button>
+          </div>
+
+          <!-- Step 3: New Password -->
+          <div id="stepNewPass" style="display: none;">
+            <input type="password" class="form-control mb-2" id="newPassword" placeholder="New password" required>
+            <button class="btn btn-success w-100" id="resetPassBtn">Reset Password</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
   </main>
 
- <footer id="footer" class="footer dark-background">
+  <footer id="footer" class="footer dark-background">
     <div class="footer-main">
       <div class="container">
         <div class="row gy-4">
@@ -383,12 +328,13 @@
             <div class="footer-contact social-links mt-4 footer-widget">
               <h4>Connect With Us</h4>
               <div class="social-icons">
-                <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
-                <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-                <a href="#" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
-                <a href="#" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
-                <a href="#" aria-label="Pinterest"><i class="bi bi-pinterest"></i></a>
-                <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+                <a href="https://www.facebook.com/people/DroneMart/61579675953199/" aria-label="Facebook"><i
+                    class="bi bi-facebook"></i></a>
+                <a href="https://www.instagram.com/dronemart/" aria-label="Instagram"><i
+                    class="bi bi-instagram"></i></a>
+                <a href="https://api.whatsapp.com/send?phone=919284818057" aria-label="WhatsApp"><i
+                    class="bi bi-whatsapp"></i></a>
+                <!-- <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a> -->
               </div>
             </div>
           </div>
@@ -457,6 +403,7 @@
 
         if (!emailInput || !passwordInput) {
           console.error("Email or password input not found!");
+          window.showDialog(`Email or password input not found!`, "error");
           return;
         }
 
@@ -474,17 +421,110 @@
           const data = await res.json();
           if (!res.ok) throw new Error(data.message || "Login failed");
           // alert("login successful!");
+          window.showDialog(`login successful!`, "success");
+
           window.location.href = "account.html";
         } catch (err) {
           console.error("Login error:", err);
-          alert(err.message);
+          window.showDialog(err.message, "error");
+          // alert(err.message);
         }
       });
+
+
+
     });
   </script>
 
 
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const forgotBtn = document.querySelector(".forgot-password");
+      const modal = new bootstrap.Modal(document.getElementById("forgotPasswordModal"));
 
+      const emailStep = document.getElementById("stepEmail");
+      const otpStep = document.getElementById("stepOtp");
+      const passStep = document.getElementById("stepNewPass");
+
+      const emailInput = document.getElementById("resetEmail");
+      const otpInput = document.getElementById("resetOtp");
+      const newPassInput = document.getElementById("newPassword");
+
+      const sendOtpBtn = document.getElementById("sendOtpBtn");
+      const verifyOtpBtn = document.getElementById("verifyOtpBtn");
+      const resetPassBtn = document.getElementById("resetPassBtn");
+
+      let currentEmail = "";
+
+      forgotBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        modal.show();
+      });
+
+      // Step 1: Send OTP
+      sendOtpBtn.addEventListener("click", async () => {
+        currentEmail = emailInput.value.trim();
+        if (!currentEmail) return window.showDialog("Enter your email!", "error");
+
+        const res = await fetch("/api/auth/requestReset", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: currentEmail }),
+        });
+
+        const data = await res.json();
+        if (data.success) {
+          window.showDialog("OTP sent to your email!", "success");
+          emailStep.style.display = "none";
+          otpStep.style.display = "block";
+        } else {
+          window.showDialog(data.message, "error");
+        }
+      });
+
+      // Step 2: Verify OTP
+      verifyOtpBtn.addEventListener("click", async () => {
+        const otp = otpInput.value.trim();
+        if (!otp) return window.showDialog("Enter the OTP!", "error");
+
+        const res = await fetch("/api/auth/verifyReset", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: currentEmail, otp }),
+        });
+
+        const data = await res.json();
+        if (data.success) {
+          window.showDialog("OTP verified!", "success");
+          otpStep.style.display = "none";
+          passStep.style.display = "block";
+        } else {
+          window.showDialog(data.message, "error");
+        }
+      });
+
+      // Step 3: Reset Password
+      resetPassBtn.addEventListener("click", async () => {
+        const newPassword = newPassInput.value.trim();
+        if (!newPassword) return window.showDialog("Enter a new password!", "error");
+
+        const res = await fetch("/api/auth/resetPassword", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: currentEmail, newPassword }),
+        });
+
+        const data = await res.json();
+        if (data.success) {
+          window.showDialog("Password reset successfully!", "success");
+          modal.hide();
+        } else {
+          window.showDialog(data.message, "error");
+        }
+      });
+    });
+
+  </script>
 </body>
 
 </html>

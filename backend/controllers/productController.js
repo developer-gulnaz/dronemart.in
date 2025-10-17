@@ -4,90 +4,288 @@ const Product = require("../models/Product");
 // -----------------------------
 // Middleware
 // -----------------------------
-const checkUserSession = (req, res, next) => {
-    if (!req.session.userId) {
-        return res.status(401).json({ message: "Unauthorized - Please login" });
-    }
-    next();
-};
 
 const checkAdminSession = (req, res, next) => {
     if (!req.session.adminId) {
-        return res.status(401).json({ message: "Unauthorized - Admin login required" });
+        return res.redirect('/admin?error=Login+required');
+        // return res.status(401).json({ message: "Unauthorized - Admin login required" });
     }
     next();
 };
 
 // =============================
 // Add Product
-// =============================
+// =============================F
+
 exports.addProduct = [checkAdminSession, async (req, res) => {
     try {
-        const { title, category, price, stock, badge, rating, description, featured, specs } = req.body;
+        const {
+            title, slug, category, brand, price, salePrice = 0, badge = "",
+            stock = 0, description, shortDescription, specs, inTheBox, features
+        } = req.body;
 
-        const productData = {
-            title,
-            category,
-            price,
-            stock: parseInt(stock),
-            badge,
-            rating: parseFloat(rating),
-            description,
-            featured: featured === "true",
-            specs: specs ? JSON.parse(specs) : {}
-        };
+        const inStock = Number(stock) > 0;
 
-        // Images
-        if (req.files) {
-            if (req.files.mainImage) productData.image = "/uploads/" + req.files.mainImage[0].filename;
-            if (req.files.thumbnails) productData.thumbnails = req.files.thumbnails.map(f => "/uploads/" + f.filename);
-            if (req.files.boxImages) productData.boxImages = req.files.boxImages.map(f => "/uploads/" + f.filename);
+        // -----------------------
+        // Handle images
+        // -----------------------
+        let mainImagePath = "";
+        const thumbnailPaths = [];
+        const boxImagesPaths = [];
+
+        if (req.files['image'] && req.files['image'][0]) {
+            mainImagePath = "/assets/img/product/" + req.files['image'][0].filename;
         }
 
-        const newProduct = new Product(productData);
-        await newProduct.save();
+        if (req.files['thumbnails']) {
+            req.files['thumbnails'].forEach(f => {
+                thumbnailPaths.push("/assets/img/product/" + f.filename);
+            });
+        }
 
-        res.status(201).json({ message: "Product added successfully", product: newProduct });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "Failed to add product" });
+        if (req.files['inTheBoxImage']) {
+            req.files['inTheBoxImage'].forEach(f => {
+                boxImagesPaths.push("/assets/img/product/in-the-box/" + f.filename);
+            });
+        }
+
+        // -----------------------
+        // Parse dynamic fields
+        // -----------------------
+        const specsJson = specs ? JSON.parse(specs) : {};
+        const inTheBoxJson = inTheBox ? JSON.parse(inTheBox) : [];
+        const featuresArray = features ? JSON.parse(features) : [];
+
+        // -----------------------
+        // Assign box images based on brand/category
+        // -----------------------
+        if (brand === "DJI") {
+            inTheBoxJson.forEach((item, i) => {
+                if (boxImagesPaths[i]) item.image = boxImagesPaths[i];
+            });
+        } else {
+            inTheBoxJson.forEach(item => delete item.image);
+        }
+
+        // -----------------------
+        // Save Product
+        // -----------------------
+        const newProduct = new Product({
+            title,
+            slug,
+            category,
+            brand,
+            price: Number(price),
+            salePrice: Number(salePrice),
+            badge,
+            stock: Number(stock),
+            inStock,
+            image: mainImagePath,
+            thumbnails: thumbnailPaths,
+            description,
+            shortDescription,
+            specs: specsJson,
+            inTheBox: inTheBoxJson,
+            features: featuresArray
+        });
+
+        const savedProduct = await newProduct.save();
+        res.status(201).json({ message: "Product added successfully", product: savedProduct });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Failed to add product", error });
     }
 }];
+
 
 // =============================
 // Update Product
 // =============================
-exports.updateProduct = [checkAdminSession, async (req, res) => {
-    try {
-        const product = await Product.findById(req.params.id);
-        if (!product) return res.status(404).json({ message: "Product not found" });
+exports.updateProduct = [
+    checkAdminSession,
+    async (req, res) => {
+        try {
+            const productId = req.params.id;
+            const product = await Product.findById(productId);
+            if (!product) return res.status(404).json({ message: "Product not found" });
 
-        const { title, category, price, stock, badge, rating, description, featured, specs } = req.body;
+            const {
+                title,
+                slug,
+                category,
+                brand,
+                price,
+                salePrice = 0,
+                badge = "",
+                stock = 0,
+                description,
+                shortDescription,
+                specs,
+                inTheBox,
+                features
+            } = req.body;
 
-        product.title = title || product.title;
-        product.category = category || product.category;
-        product.price = price ? parseFloat(price) : product.price;
-        product.stock = stock ? parseInt(stock) : product.stock;
-        product.badge = badge || product.badge;
-        product.rating = rating ? parseFloat(rating) : product.rating;
-        product.description = description || product.description;
-        product.featured = featured !== undefined ? featured === "true" : product.featured;
-        product.specs = specs ? JSON.parse(specs) : product.specs;
+            const inStock = Number(stock) > 0;
 
-        // Update images if new ones uploaded
-        if (req.files) {
-            if (req.files.mainImage) product.image = "/uploads/" + req.files.mainImage[0].filename;
-            if (req.files.thumbnails) product.thumbnails = req.files.thumbnails.map(f => "/uploads/" + f.filename);
-            if (req.files.boxImages) product.boxImages = req.files.boxImages.map(f => "/uploads/" + f.filename);
+            // -----------------------
+            // 🖼️ Handle Main Image
+            // -----------------------
+            let mainImagePath = product.image;
+            if (req.files?.image?.[0]) {
+                mainImagePath = "/assets/img/product/" + req.files.image[0].filename;
+            } else if (req.body.image_existing) {
+                mainImagePath = Array.isArray(req.body.image_existing)
+                    ? req.body.image_existing[0]
+                    : req.body.image_existing;
+            }
+
+            // -----------------------
+            // 🖼️ Handle Thumbnails
+            // -----------------------
+            let thumbnailPaths = [];
+
+            // Existing thumbnail URLs from form
+            if (req.body["thumbnails_existing[]"]) {
+                const existingThumbs = Array.isArray(req.body["thumbnails_existing[]"])
+                    ? req.body["thumbnails_existing[]"]
+                    : [req.body["thumbnails_existing[]"]];
+                thumbnailPaths.push(...existingThumbs);
+            }
+
+            // Newly uploaded thumbnails
+            if (req.files?.thumbnails?.length) {
+                const uploadedThumbs = req.files.thumbnails.map(
+                    (file) => "/assets/img/product/" + file.filename
+                );
+                thumbnailPaths.push(...uploadedThumbs);
+            }
+
+            // If no thumbnails exist, fallback to previous ones
+            if (thumbnailPaths.length === 0 && Array.isArray(product.thumbnails)) {
+                thumbnailPaths = product.thumbnails;
+            }
+
+            // -----------------------
+            // 📦 Handle In-The-Box Items
+            // -----------------------
+            let inTheBoxJson =
+                inTheBox
+                    ? typeof inTheBox === "string"
+                        ? JSON.parse(inTheBox)
+                        : inTheBox
+                    : product.inTheBox || [];
+
+            // Existing images
+            if (req.body["inTheBoxImage_existing[]"]) {
+                const existingBoxImages = Array.isArray(req.body["inTheBoxImage_existing[]"])
+                    ? req.body["inTheBoxImage_existing[]"]
+                    : [req.body["inTheBoxImage_existing[]"]];
+                existingBoxImages.forEach((img, i) => {
+                    if (inTheBoxJson[i]) inTheBoxJson[i].image = img;
+                });
+            }
+
+            // New uploaded images
+            if (req.files?.inTheBoxImage?.length) {
+                req.files.inTheBoxImage.forEach((f, i) => {
+                    if (inTheBoxJson[i])
+                        inTheBoxJson[i].image = "/assets/img/product/in-the-box/" + f.filename;
+                });
+            }
+
+            // -----------------------
+            // ⚙️ Handle Specs
+            // -----------------------
+            const defaultSpecs = {
+                aircraft: {
+                    weight: "",
+                    dimensions: { length: "", width: "", height: "" },
+                    maxAccelerationSpeed: "",
+                    maxFlightTime: "",
+                    sensorType: ""
+                },
+                camera: {
+                    sensor: "",
+                    fov: "",
+                    aperture: "",
+                    focusRange: "",
+                    maxImageSize: "",
+                    stillModes: { singleShot: "", burst: "" },
+                    videoResolution: "",
+                    maxVideoBitrate: "",
+                    digitalZoom: "",
+                    imageFormat: ""
+                },
+                gimbal: {
+                    stabilization: "",
+                    mechanicalRange: "",
+                    controllableRange: "",
+                    angularVibrationRange: ""
+                }
+            };
+
+            let specsJson =
+                specs
+                    ? typeof specs === "string"
+                        ? JSON.parse(specs)
+                        : specs
+                    : product.specs || {};
+
+            const mergedSpecs = { ...defaultSpecs, ...specsJson };
+
+            // -----------------------
+            // ✳️ Handle Features
+            // -----------------------
+            let featuresArray =
+                features
+                    ? typeof features === "string"
+                        ? JSON.parse(features)
+                        : features
+                    : product.features || [];
+
+            // -----------------------
+            // 🧩 Ensure inTheBox fallback
+            // -----------------------
+            const defaultInTheBox =
+                inTheBoxJson.length > 0
+                    ? inTheBoxJson
+                    : [{ title: "", quantity: "", image: "" }];
+
+            // -----------------------
+            // 📝 Update Product Fields
+            // -----------------------
+            Object.assign(product, {
+                title,
+                slug,
+                category,
+                brand,
+                price: Number(price),
+                salePrice: Number(salePrice),
+                badge,
+                stock: Number(stock),
+                inStock,
+                image: mainImagePath,
+                thumbnails: thumbnailPaths,
+                description,
+                shortDescription,
+                specs: mergedSpecs,
+                inTheBox: defaultInTheBox,
+                features: featuresArray
+            });
+
+            const updatedProduct = await product.save();
+            res.json({
+                message: "✅ Product updated successfully",
+                product: updatedProduct
+            });
+        } catch (error) {
+            console.error("❌ Error updating product:", error);
+            res.status(500).json({ message: "Failed to update product", error: error.message });
         }
-
-        await product.save();
-        res.json({ message: "Product updated successfully", product });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "Failed to update product" });
     }
-}];
+];
+
 
 // =============================
 // Delete Product

@@ -564,52 +564,92 @@ async function loadCardProducts() {
     }
 }
 
-// Simple dialog popup function (replace this with your site's modal if you have one)
-window.showDialog = function (message, type = "info") {
-    const existing = document.querySelector(".dialog-box");
-    if (existing) existing.remove();
 
+// 🧩 Modern Center Dialog Box
+window.showDialog = function (message, type = "info") {
+    // Overlay background
+    const overlay = document.createElement("div");
+    overlay.className = "dialog-overlay";
+    Object.assign(overlay.style, {
+        position: "fixed",
+        top: "0",
+        left: "0",
+        width: "100vw",
+        height: "100vh",
+        background: "rgba(0,0,0,0.4)",
+        zIndex: "9998",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        opacity: "0",
+        transition: "opacity 0.3s ease",
+    });
+
+    // Dialog box
     const dialog = document.createElement("div");
     dialog.className = "dialog-box";
     dialog.textContent = message;
 
-    // Inline styles (Tailwind not required)
+    const colors = {
+        success: "#4caf50",
+        error: "#f44336",
+        info: "#2196f3",
+    };
+
     Object.assign(dialog.style, {
-        position: "fixed",
-        top: "20px",
-        right: "20px",
-        zIndex: "9999",
-        padding: "12px 18px",
-        borderRadius: "8px",
-        color: "#fff",
-        fontSize: "15px",
+        background: "#fff",
+        borderRadius: "12px",
+        padding: "24px 28px",
+        color: "#333",
+        fontSize: "16px",
         fontWeight: "500",
-        boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
-        background:
-            type === "error"
-                ? "#e53935"
-                : type === "success"
-                    ? "#43a047"
-                    : "#1e88e5",
+        maxWidth: "400px",
+        width: "90%",
+        textAlign: "center",
+        boxShadow: "0 8px 24px rgba(0,0,0,0.25)",
+        transform: "scale(0.9)",
         opacity: "0",
-        transform: "translateY(-10px)",
-        transition: "opacity 0.3s ease, transform 0.3s ease",
+        transition: "all 0.25s ease",
+        borderTop: `6px solid ${colors[type] || colors.info}`,
     });
 
-    document.body.appendChild(dialog);
+    // ✅ Add icon or color line
+    const icon = document.createElement("div");
+    icon.innerHTML =
+        type === "success"
+            ? "✅"
+            : type === "error"
+                ? "❌"
+                : "ℹ️";
+    Object.assign(icon.style, {
+        fontSize: "28px",
+        marginBottom: "10px",
+    });
 
-    // Animate in
+    const msg = document.createElement("div");
+    msg.textContent = message;
+
+    dialog.textContent = "";
+    dialog.appendChild(icon);
+    dialog.appendChild(msg);
+
+    overlay.appendChild(dialog);
+    document.body.appendChild(overlay);
+
+    // Fade in
     setTimeout(() => {
+        overlay.style.opacity = "1";
         dialog.style.opacity = "1";
-        dialog.style.transform = "translateY(0)";
+        dialog.style.transform = "scale(1)";
     }, 10);
 
-    // Auto remove after 3s with fade-out
+    // Auto close after 2.5s
     setTimeout(() => {
         dialog.style.opacity = "0";
-        dialog.style.transform = "translateY(-10px)";
-        setTimeout(() => dialog.remove(), 300);
-    }, 3000);
+        dialog.style.transform = "scale(0.9)";
+        overlay.style.opacity = "0";
+        setTimeout(() => overlay.remove(), 300);
+    }, 1500);
 };
 
 // Check stock and status before adding to cart

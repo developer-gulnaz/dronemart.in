@@ -21,13 +21,13 @@ async function seedAccessories() {
                 sku: "DJI-PWR500-M3",
                 stock: 4,
                 inStock: true,
-                image: "assets/img/product/dji/dji-power-500.jpg",
+                image: "/assets/img/product/dji/dji-power-500.jpg",
                 thumbnails: [
-                    "assets/img/product/dji/dji-power-500.jpg",
-                    "assets/img/product/dji/dji-power-500-1.jpg",
-                    "assets/img/product/dji/dji-power-500-2.jpg",
-                    "assets/img/product/dji/dji-power-500-3.jpg",
-                    "assets/img/product/dji/dji-power-500-4.jpg",
+                    "/assets/img/product/dji/dji-power-500.jpg",
+                    "/assets/img/product/dji/dji-power-500-1.jpg",
+                    "/assets/img/product/dji/dji-power-500-2.jpg",
+                    "/assets/img/product/dji/dji-power-500-3.jpg",
+                    "/assets/img/product/dji/dji-power-500-4.jpg",
                 ],
                 shortDescription:
                     "Portable 512 Wh power station capable of delivering up to 1000 W output, designed to fast-charge DJI Mavic 3 series batteries using the included 150 W SDC cable.",
@@ -77,13 +77,13 @@ async function seedAccessories() {
                 sku: "DJI-PWR1000-M3",
                 stock: 3,
                 inStock: true,
-                image: "assets/img/product/dji/dji-power-1000.jpg",
+                image: "/assets/img/product/dji/dji-power-1000.jpg",
                 thumbnails: [
-                    "assets/img/product/dji/dji-power-1000.jpg",
-                    "assets/img/product/dji/dji-power-1000-1.jpg",
-                    "assets/img/product/dji/dji-power-1000-2.jpg",
-                    "assets/img/product/dji/dji-power-1000-3.jpg",
-                    "assets/img/product/dji/dji-power-1000-4.jpg"
+                    "/assets/img/product/dji/dji-power-1000.jpg",
+                    "/assets/img/product/dji/dji-power-1000-1.jpg",
+                    "/assets/img/product/dji/dji-power-1000-2.jpg",
+                    "/assets/img/product/dji/dji-power-1000-3.jpg",
+                    "/assets/img/product/dji/dji-power-1000-4.jpg"
                 ],
                 shortDescription:
                     "High-capacity 1024 Wh power station delivering up to 2600 W of output, capable of fast-charging DJI Mavic 3 series batteries with the 150 W SDC cable.",
@@ -133,11 +133,11 @@ async function seedAccessories() {
                 sku: "DJI-SDC-M3",
                 stock: 10,
                 inStock: true,
-                image: "assets/img/product/dji/dji-sdc-mavic3-cable.jpg",
+                image: "/assets/img/product/dji/dji-sdc-mavic3-cable.jpg",
                 thumbnails: [
-                    "assets/img/product/dji/dji-sdc-mavic3-cable.jpg",
-                    "assets/img/product/dji/dji-power-500-4.jpg",
-                    "assets/img/product/dji/dji-sdc-mavic3-cable.jpg"
+                    "/assets/img/product/dji/dji-sdc-mavic3-cable.jpg",
+                    "/assets/img/product/dji/dji-power-500-4.jpg",
+                    "/assets/img/product/dji/dji-sdc-mavic3-cable.jpg"
                 ],
                 shortDescription:
                     "150 W fast charge cable for connecting DJI Power Stations to Mavic 3 series batteries.",
@@ -176,13 +176,13 @@ async function seedAccessories() {
                 sku: "DJI-M3PRO-NDSET",
                 stock: 40,
                 inStock: true,
-                image: "assets/img/product/dji/mavic3pro-nd-filters.jpg",
+                image: "/assets/img/product/dji/mavic3pro-nd-filters.jpg",
                 thumbnails: [
-                    "assets/img/product/dji/mavic3pro-nd-filters.jpg",
-                    "assets/img/product/dji/mavic3pro-nd-filters-1.jpg",
-                    "assets/img/product/dji/mavic3pro-nd-filters-2.jpg",
-                    "assets/img/product/dji/mavic3pro-nd-filters-3.jpg",
-                    "assets/img/product/dji/mavic3pro-nd-filters-4.jpg"
+                    "/assets/img/product/dji/mavic3pro-nd-filters.jpg",
+                    "/assets/img/product/dji/mavic3pro-nd-filters-1.jpg",
+                    "/assets/img/product/dji/mavic3pro-nd-filters-2.jpg",
+                    "/assets/img/product/dji/mavic3pro-nd-filters-3.jpg",
+                    "/assets/img/product/dji/mavic3pro-nd-filters-4.jpg"
                 ],
                 shortDescription:
                     "Professional ND filter set (ND8, ND16, ND32, ND64) for DJI Mavic 3 Pro and Pro Cine, designed for smooth long-exposure and cinematic shooting.",
@@ -223,12 +223,12 @@ async function seedAccessories() {
                 sku: "DJI-M3-BATT",
                 stock: 50,
                 inStock: true,
-                image: "assets/img/product/dji/mavic3-battery.jpg",
+                image: "/assets/img/product/dji/mavic3-battery.jpg",
                 thumbnails: [
-                    "assets/img/product/dji/mavic3-battery.jpg",
-                    "assets/img/product/dji/mavic3-battery-1.jpg",
-                    "assets/img/product/dji/mavic3-battery-2.jpg",
-                    "assets/img/product/dji/mavic3-battery-3.jpg"
+                    "/assets/img/product/dji/mavic3-battery.jpg",
+                    "/assets/img/product/dji/mavic3-battery-1.jpg",
+                    "/assets/img/product/dji/mavic3-battery-2.jpg",
+                    "/assets/img/product/dji/mavic3-battery-3.jpg"
                 ],
                 shortDescription:
                     "High-capacity Intelligent Flight Battery offering up to 46 minutes of flight time for Mavic 3 and 43 minutes for Mavic 3 Pro.",
@@ -271,10 +271,10 @@ async function seedAccessories() {
                 sku: "DJI-100W-ADAPTER",
                 stock: 5,
                 inStock: true,
-                image: "assets/img/product/dji/dji-100w-usbc-adapter.jpg",
+                image: "/assets/img/product/dji/dji-100w-usbc-adapter.jpg",
                 thumbnails: [
-                    "assets/img/product/dji/dji-100w-usbc-adapter.jpg",
-                    "assets/img/product/dji/dji-100w-usbc-adapter-2.jpg"
+                    "/assets/img/product/dji/dji-100w-usbc-adapter.jpg",
+                    "/assets/img/product/dji/dji-100w-usbc-adapter-2.jpg"
                 ],
                 shortDescription:
                     "Dual-port 100W USB-C power adapter for fast charging DJI drone batteries, remote controllers, and mobile devices.",
@@ -331,11 +331,11 @@ async function seedAccessories() {
                 sku: "DJI-M3-HUB-100W",
                 stock: 6,
                 inStock: true,
-                image: "assets/img/product/dji/mavic3-100w-charging-hub.jpg",
+                image: "/assets/img/product/dji/mavic3-100w-charging-hub.jpg",
                 thumbnails: [
-                    "assets/img/product/dji/mavic3-100w-charging-hub.jpg",
-                    "assets/img/product/dji/mavic3-100w-charging-hub-2.jpg",
-                    "assets/img/product/dji/mavic3-100w-charging-hub-3.jpg"
+                    "/assets/img/product/dji/mavic3-100w-charging-hub.jpg",
+                    "/assets/img/product/dji/mavic3-100w-charging-hub-2.jpg",
+                    "/assets/img/product/dji/mavic3-100w-charging-hub-3.jpg"
                 ],
                 shortDescription:
                     "Charge up to three Mavic 3 Intelligent Flight Batteries in sequence when connected to a 100W power adapter.",
@@ -375,10 +375,10 @@ async function seedAccessories() {
                 sku: "DJI-65W-CHARGER",
                 stock: 2,
                 inStock: true,
-                image: "assets/img/product/dji/dji-65w-portable-charger.jpg",
+                image: "/assets/img/product/dji/dji-65w-portable-charger.jpg",
                 thumbnails: [
-                    "assets/img/product/dji/dji-65w-portable-charger.jpg",
-                    "assets/img/product/dji/dji-65w-portable-charger-2.jpg"
+                    "/assets/img/product/dji/dji-65w-portable-charger.jpg",
+                    "/assets/img/product/dji/dji-65w-portable-charger-2.jpg"
                 ],
                 shortDescription:
                     "Compact 65W GaN charger with USB-C and USB-A ports for charging DJI drone batteries, controllers, and mobile devices.",
@@ -438,11 +438,11 @@ async function seedAccessories() {
                 sku: "DJI-M3-PROPELLER",
                 stock: 5,
                 inStock: true,
-                image: "assets/img/product/dji/mavic3-low-noise-propellers.jpg",
+                image: "/assets/img/product/dji/mavic3-low-noise-propellers.jpg",
                 thumbnails: [
-                    "assets/img/product/dji/mavic3-low-noise-propellers.jpg",
-                    "assets/img/product/dji/mavic3-low-noise-propellers-2.jpg",
-                    "assets/img/product/dji/mavic3-low-noise-propellers-3.jpg"
+                    "/assets/img/product/dji/mavic3-low-noise-propellers.jpg",
+                    "/assets/img/product/dji/mavic3-low-noise-propellers-2.jpg",
+                    "/assets/img/product/dji/mavic3-low-noise-propellers-3.jpg"
                 ],
                 shortDescription:
                     "Precisely balanced low-noise propellers that enhance aerodynamic efficiency and reduce flight noise for the Mavic 3 Series.",
@@ -483,13 +483,13 @@ async function seedAccessories() {
                 sku: "DJI-RC",
                 stock: 4,
                 inStock: true,
-                image: "assets/img/product/dji/dji-rc.jpg",
+                image: "/assets/img/product/dji/dji-rc.jpg",
                 thumbnails: [
-                    "assets/img/product/dji/dji-rc.jpg",
-                    "assets/img/product/dji/dji-rc-1.jpg",
-                    "assets/img/product/dji/dji-rc-2.jpg",
-                    "assets/img/product/dji/dji-rc-3.jpg",
-                    "assets/img/product/dji/dji-rc-4.jpg"
+                    "/assets/img/product/dji/dji-rc.jpg",
+                    "/assets/img/product/dji/dji-rc-1.jpg",
+                    "/assets/img/product/dji/dji-rc-2.jpg",
+                    "/assets/img/product/dji/dji-rc-3.jpg",
+                    "/assets/img/product/dji/dji-rc-4.jpg"
                 ],
                 shortDescription:
                     "Lightweight 390g remote controller with 5.5-inch FHD display, 15km O3+ video transmission, and 4-hour battery life.",
@@ -539,10 +539,10 @@ async function seedAccessories() {
                 sku: "DJI-RC-PRO",
                 stock: 2,
                 inStock: true,
-                image: "assets/img/product/dji/dji-rc-pro.jpg",
+                image: "/assets/img/product/dji/dji-rc-pro.jpg",
                 thumbnails: [
-                    "assets/img/product/dji/dji-rc-pro.jpg",
-                    "assets/img/product/dji/dji-rc-pro-2.jpg"
+                    "/assets/img/product/dji/dji-rc-pro.jpg",
+                    "/assets/img/product/dji/dji-rc-pro-2.jpg"
                 ],
                 shortDescription:
                     "Professional-grade controller with 1000-nit 5.5-inch display, 15 km range, 120 ms latency, and advanced audio-video capabilities.",
@@ -591,13 +591,13 @@ async function seedAccessories() {
                 sku: "DJI-AIR3S-BATTERY",
                 stock: 5,
                 inStock: true,
-                image: "assets/img/product/dji/air3s-battery.jpg",
+                image: "/assets/img/product/dji/air3s-battery.jpg",
                 thumbnails: [
-                    "assets/img/product/dji/air3s-battery.jpg",
-                    "assets/img/product/dji/air3s-battery-1.jpg",
-                    "assets/img/product/dji/air3s-battery-2.jpg",
-                    "assets/img/product/dji/air3s-battery-3.jpg",
-                    "assets/img/product/dji/air3s-battery-4.jpg"
+                    "/assets/img/product/dji/air3s-battery.jpg",
+                    "/assets/img/product/dji/air3s-battery-1.jpg",
+                    "/assets/img/product/dji/air3s-battery-2.jpg",
+                    "/assets/img/product/dji/air3s-battery-3.jpg",
+                    "/assets/img/product/dji/air3s-battery-4.jpg"
                 ],
                 shortDescription:
                     "Provides up to 45 minutes of flight time and supports Off-State QuickTransfer for high-speed file transfer.",
@@ -633,12 +633,12 @@ async function seedAccessories() {
                 sku: "DJI-AIR3S-ND-FILTER",
                 stock: 5,
                 inStock: true,
-                image: "assets/img/product/dji/air3s-nd-filter.jpg",
+                image: "/assets/img/product/dji/air3s-nd-filter.jpg",
                 thumbnails: [
-                    "assets/img/product/dji/air3s-nd-filter.jpg",
-                    "assets/img/product/dji/air3s-nd-filter-1.jpg",
-                    "assets/img/product/dji/air3s-nd-filter-2.jpg",
-                    "assets/img/product/dji/air3s-nd-filter-3.jpg",
+                    "/assets/img/product/dji/air3s-nd-filter.jpg",
+                    "/assets/img/product/dji/air3s-nd-filter-1.jpg",
+                    "/assets/img/product/dji/air3s-nd-filter-2.jpg",
+                    "/assets/img/product/dji/air3s-nd-filter-3.jpg",
                 ],
                 shortDescription:
                     "Set of ND8, ND32, and ND128 filters for precise shutter control and smooth footage in bright conditions.",
@@ -677,12 +677,12 @@ async function seedAccessories() {
                 sku: "DJI-AIR3S-WIDE-LENS",
                 stock: 4,
                 inStock: true,
-                image: "assets/img/product/dji/air3s-wide-angle-lens.jpg",
+                image: "/assets/img/product/dji/air3s-wide-angle-lens.jpg",
                 thumbnails: [
-                    "assets/img/product/dji/air3s-wide-angle-lens.jpg",
-                    "assets/img/product/dji/air3s-wide-angle-lens-1.jpg",
-                    "assets/img/product/dji/air3s-wide-angle-lens-2.jpg",
-                    "assets/img/product/dji/air3s-wide-angle-lens-3.jpg"
+                    "/assets/img/product/dji/air3s-wide-angle-lens.jpg",
+                    "/assets/img/product/dji/air3s-wide-angle-lens-1.jpg",
+                    "/assets/img/product/dji/air3s-wide-angle-lens-2.jpg",
+                    "/assets/img/product/dji/air3s-wide-angle-lens-3.jpg"
                 ],
                 shortDescription:
                     "Expands the FOV of the Air 3S wide-angle camera to 114° for immersive aerial perspectives.",
@@ -716,12 +716,12 @@ async function seedAccessories() {
                 sku: "DJI-AIR3-BATTERY",
                 stock: 4,
                 inStock: true,
-                image: "assets/img/product/dji/air3-battery.jpg",
+                image: "/assets/img/product/dji/air3-battery.jpg",
                 thumbnails: [
-                    "assets/img/product/dji/air3-battery.jpg",
-                    "assets/img/product/dji/air3-battery-1.jpg",
-                    "assets/img/product/dji/air3-battery-2.jpg",
-                    "assets/img/product/dji/air3-battery-3.jpg"
+                    "/assets/img/product/dji/air3-battery.jpg",
+                    "/assets/img/product/dji/air3-battery-1.jpg",
+                    "/assets/img/product/dji/air3-battery-2.jpg",
+                    "/assets/img/product/dji/air3-battery-3.jpg"
                 ],
                 shortDescription:
                     "Provides up to 46 minutes of flight time for the DJI Air 3 and Air 3S.",
@@ -759,12 +759,12 @@ async function seedAccessories() {
                 sku: "DJI-AIR3-CHARGING-HUB",
                 stock: 5,
                 inStock: true,
-                image: "assets/img/product/dji/air3-charging-hub.jpg",
+                image: "/assets/img/product/dji/air3-charging-hub.jpg",
                 thumbnails: [
-                    "assets/img/product/dji/air3-charging-hub.jpg",
-                    "assets/img/product/dji/air3-charging-hub1.jpg",
-                    "assets/img/product/dji/air3-charging-hub2.jpg",
-                    "assets/img/product/dji/air3-charging-hub3.jpg",
+                    "/assets/img/product/dji/air3-charging-hub.jpg",
+                    "/assets/img/product/dji/air3-charging-hub1.jpg",
+                    "/assets/img/product/dji/air3-charging-hub2.jpg",
+                    "/assets/img/product/dji/air3-charging-hub3.jpg",
                 ],
                 shortDescription:
                     "Three-battery charging hub with power accumulation and quick device charging support.",
@@ -800,13 +800,13 @@ async function seedAccessories() {
                 sku: "DJI-AIR3-PROPELLER",
                 stock: 10,
                 inStock: true,
-                image: "assets/img/product/dji/air3-propellers.jpg",
+                image: "/assets/img/product/dji/air3-propellers.jpg",
                 thumbnails: [
-                    "assets/img/product/dji/air3-propellers.jpg",
-                    "assets/img/product/dji/air3-propellers1.jpg",
-                    "assets/img/product/dji/air3-propellers2.jpg",
-                    "assets/img/product/dji/air3-propellers3.jpg",
-                    "assets/img/product/dji/air3-propellers4.jpg",
+                    "/assets/img/product/dji/air3-propellers.jpg",
+                    "/assets/img/product/dji/air3-propellers1.jpg",
+                    "/assets/img/product/dji/air3-propellers2.jpg",
+                    "/assets/img/product/dji/air3-propellers3.jpg",
+                    "/assets/img/product/dji/air3-propellers4.jpg",
                 ],
                 shortDescription:
                     "Low-noise propellers tested for aerodynamic efficiency and quieter flight.",
@@ -842,10 +842,10 @@ async function seedAccessories() {
                 sku: "DJI-65W-CAR-CHARGER",
                 stock: 8,
                 inStock: true,
-                image: "assets/img/product/dji/65w-car-charger.jpg",
+                image: "/assets/img/product/dji/65w-car-charger.jpg",
                 thumbnails: [
-                    "assets/img/product/dji/65w-car-charger.jpg",
-                    "assets/img/product/dji/65w-car-charger2.jpg"
+                    "/assets/img/product/dji/65w-car-charger.jpg",
+                    "/assets/img/product/dji/65w-car-charger2.jpg"
                 ],
                 shortDescription:
                     "Compact dual-port car charger supporting 65W output and PD/PPS protocols for multiple DJI devices.",
@@ -895,13 +895,13 @@ async function seedAccessories() {
                 sku: "DJI-RC-MOTION3",
                 stock: 5,
                 inStock: true,
-                image: "assets/img/product/dji/dji-rc-motion-3.jpg",
+                image: "/assets/img/product/dji/dji-rc-motion-3.jpg",
                 thumbnails: [
-                    "assets/img/product/dji/dji-rc-motion-3.jpg",
-                    "assets/img/product/dji/dji-rc-motion-3-1.jpg",
-                    "assets/img/product/dji/dji-rc-motion-3-2.jpg",
-                    "assets/img/product/dji/dji-rc-motion-3-3.jpg",
-                    "assets/img/product/dji/dji-rc-motion-3-4.jpg",
+                    "/assets/img/product/dji/dji-rc-motion-3.jpg",
+                    "/assets/img/product/dji/dji-rc-motion-3-1.jpg",
+                    "/assets/img/product/dji/dji-rc-motion-3-2.jpg",
+                    "/assets/img/product/dji/dji-rc-motion-3-3.jpg",
+                    "/assets/img/product/dji/dji-rc-motion-3-4.jpg",
                 ],
                 shortDescription:
                     "Immersive motion control when paired with DJI Goggles 3, enabling precise and intuitive ‘point-to-fly’ flight.",
@@ -939,13 +939,13 @@ async function seedAccessories() {
                 sku: "DJI-MINI4-BATT",
                 stock: 80,
                 inStock: true,
-                image: "assets/img/product/dji/dji-mini4-battery.jpg",
+                image: "/assets/img/product/dji/dji-mini4-battery.jpg",
                 thumbnails: [
-                    "assets/img/product/dji/dji-mini4-battery.jpg",
-                    "assets/img/product/dji/dji-mini4-battery-2.jpg",
-                    "assets/img/product/dji/dji-mini4-battery-3.jpg",
-                    "assets/img/product/dji/dji-mini4-battery-4.jpg",
-                    "assets/img/product/dji/dji-mini4-battery-5.jpg"
+                    "/assets/img/product/dji/dji-mini4-battery.jpg",
+                    "/assets/img/product/dji/dji-mini4-battery-2.jpg",
+                    "/assets/img/product/dji/dji-mini4-battery-3.jpg",
+                    "/assets/img/product/dji/dji-mini4-battery-4.jpg",
+                    "/assets/img/product/dji/dji-mini4-battery-5.jpg"
                 ],
                 shortDescription:
                     "Provides up to 34 minutes of flight time, allowing you to fly and create freely with peace of mind.",
@@ -992,11 +992,11 @@ async function seedAccessories() {
                 sku: "DJI-MINI3-NDSET",
                 stock: 70,
                 inStock: true,
-                image: "assets/img/product/dji/dji-mini3-ndfilter-set.jpg",
+                image: "/assets/img/product/dji/dji-mini3-ndfilter-set.jpg",
                 thumbnails: [
-                    "assets/img/product/dji/dji-mini3-ndfilter-set.jpg",
-                    "assets/img/product/dji/dji-mini3-ndfilter-set-2.jpg",
-                    "assets/img/product/dji/dji-mini3-ndfilter-set-3.jpg"
+                    "/assets/img/product/dji/dji-mini3-ndfilter-set.jpg",
+                    "/assets/img/product/dji/dji-mini3-ndfilter-set-2.jpg",
+                    "/assets/img/product/dji/dji-mini3-ndfilter-set-3.jpg"
                 ],
                 shortDescription:
                     "Adapt to strong lighting conditions with ND16, ND64, and ND256 filters for consistently clear and balanced shots.",
@@ -1034,11 +1034,11 @@ async function seedAccessories() {
                 sku: "DJI-MINI4-PROPELLERS",
                 stock: 100,
                 inStock: true,
-                image: "assets/img/product/dji/dji-mini4-propellers.jpg",
+                image: "/assets/img/product/dji/dji-mini4-propellers.jpg",
                 thumbnails: [
-                    "assets/img/product/dji/dji-mini4-propellers.jpg",
-                    "assets/img/product/dji/dji-mini4-propellers-2.jpg",
-                    "assets/img/product/dji/dji-mini4-propellers-3.jpg"
+                    "/assets/img/product/dji/dji-mini4-propellers.jpg",
+                    "/assets/img/product/dji/dji-mini4-propellers-2.jpg",
+                    "/assets/img/product/dji/dji-mini4-propellers-3.jpg"
                 ],
                 shortDescription:
                     "Low-noise, high-efficiency propellers designed for DJI Mini 4 Pro and Mini 3 Pro, providing smooth and stable flight.",
@@ -1078,12 +1078,12 @@ async function seedAccessories() {
                 sku: "DJI-MINI4-HUB",
                 stock: 50,
                 inStock: true,
-                image: "assets/img/product/dji/dji-mini4-charging-hub.jpg",
+                image: "/assets/img/product/dji/dji-mini4-charging-hub.jpg",
                 thumbnails: [
-                    "assets/img/product/dji/dji-mini4-charging-hub.jpg",
-                    "assets/img/product/dji/dji-mini4-charging-hub-2.jpg",
-                    "assets/img/product/dji/dji-mini4-charging-hub-3.jpg",
-                    "assets/img/product/dji/dji-mini4-charging-hub-4.jpg",
+                    "/assets/img/product/dji/dji-mini4-charging-hub.jpg",
+                    "/assets/img/product/dji/dji-mini4-charging-hub-2.jpg",
+                    "/assets/img/product/dji/dji-mini4-charging-hub-3.jpg",
+                    "/assets/img/product/dji/dji-mini4-charging-hub-4.jpg",
                 ],
                 shortDescription:
                     "Charges up to three DJI Mini 4 Pro/Mini 3 Pro batteries in sequence and can also serve as a power bank.",
@@ -1126,13 +1126,13 @@ async function seedAccessories() {
                 sku: "DJI-MINI4-ND-FILTER",
                 stock: 60,
                 inStock: true,
-                image: "assets/img/product/dji/dji-mini4-ndfilter.jpg",
+                image: "/assets/img/product/dji/dji-mini4-ndfilter.jpg",
                 thumbnails: [
-                    "assets/img/product/dji/dji-mini4-ndfilter.jpg",
-                    "assets/img/product/dji/dji-mini4-ndfilter-1.jpg",
-                    "assets/img/product/dji/dji-mini4-ndfilter-2.jpg",
-                    "assets/img/product/dji/dji-mini4-ndfilter-3.jpg",
-                    "assets/img/product/dji/dji-mini4-ndfilter-4.jpg",
+                    "/assets/img/product/dji/dji-mini4-ndfilter.jpg",
+                    "/assets/img/product/dji/dji-mini4-ndfilter-1.jpg",
+                    "/assets/img/product/dji/dji-mini4-ndfilter-2.jpg",
+                    "/assets/img/product/dji/dji-mini4-ndfilter-3.jpg",
+                    "/assets/img/product/dji/dji-mini4-ndfilter-4.jpg",
                 ],
                 shortDescription:
                     "ND16/64/256 filters for DJI Mini 4 Pro reduce light in bright conditions, ideal for long exposure and timelapse shots.",
@@ -1173,13 +1173,13 @@ async function seedAccessories() {
                 sku: "DJI-MINI4-WIDE-LENS",
                 stock: 5,
                 inStock: true,
-                image: "assets/img/product/dji/dji-mini4-wide-lens.jpg",
+                image: "/assets/img/product/dji/dji-mini4-wide-lens.jpg",
                 thumbnails: [
-                    "assets/img/product/dji/dji-mini4-wide-lens.jpg",
-                    "assets/img/product/dji/dji-mini4-wide-lens-1.jpg",
-                    "assets/img/product/dji/dji-mini4-wide-lens-2.jpg",
-                    "assets/img/product/dji/dji-mini4-wide-lens-3.jpg",
-                    "assets/img/product/dji/dji-mini4-wide-lens-4.jpg",
+                    "/assets/img/product/dji/dji-mini4-wide-lens.jpg",
+                    "/assets/img/product/dji/dji-mini4-wide-lens-1.jpg",
+                    "/assets/img/product/dji/dji-mini4-wide-lens-2.jpg",
+                    "/assets/img/product/dji/dji-mini4-wide-lens-3.jpg",
+                    "/assets/img/product/dji/dji-mini4-wide-lens-4.jpg",
                 ],
                 shortDescription:
                     "Expand your view — the DJI Mini 4 Pro Wide-Angle Lens increases the photo FOV to 114° and video FOV to 100° (16:9).",
@@ -1217,13 +1217,13 @@ async function seedAccessories() {
                 sku: "DJI-FLIP-BATT",
                 stock: 80,
                 inStock: true,
-                image: "assets/img/product/dji/dji-flip-battery.webp",
+                image: "/assets/img/product/dji/dji-flip-battery.webp",
                 thumbnails: [
-                    "assets/img/product/dji/dji-flip-battery.webp",
-                    "assets/img/product/dji/dji-flip-battery-1.webp",
-                    "assets/img/product/dji/dji-flip-battery-2.webp",
-                    "assets/img/product/dji/dji-flip-battery-3.webp",
-                    "assets/img/product/dji/dji-flip-battery-4.webp"
+                    "/assets/img/product/dji/dji-flip-battery.webp",
+                    "/assets/img/product/dji/dji-flip-battery-1.webp",
+                    "/assets/img/product/dji/dji-flip-battery-2.webp",
+                    "/assets/img/product/dji/dji-flip-battery-3.webp",
+                    "/assets/img/product/dji/dji-flip-battery-4.webp"
                 ],
                 shortDescription:
                     "31-min max flight time. Be prepared and fly freely with peace of mind.",
@@ -1270,12 +1270,12 @@ async function seedAccessories() {
                 sku: "DJI-FLIP-HUB",
                 stock: 5,
                 inStock: true,
-                image: "assets/img/product/dji/dji-flip-charging-hub.webp",
+                image: "/assets/img/product/dji/dji-flip-charging-hub.webp",
                 thumbnails: [
-                    "assets/img/product/dji/dji-flip-charging-hub.webp",
-                    "assets/img/product/dji/dji-flip-charging-hub-1.webp",
-                    "assets/img/product/dji/dji-flip-charging-hub-2.webp",
-                    "assets/img/product/dji/dji-flip-charging-hub-2.webp",
+                    "/assets/img/product/dji/dji-flip-charging-hub.webp",
+                    "/assets/img/product/dji/dji-flip-charging-hub-1.webp",
+                    "/assets/img/product/dji/dji-flip-charging-hub-2.webp",
+                    "/assets/img/product/dji/dji-flip-charging-hub-2.webp",
                 ],
                 shortDescription:
                     "Charge 2 DJI Flip batteries simultaneously in as little as 70 minutes. Can also serve as a power bank.",
@@ -1318,12 +1318,12 @@ async function seedAccessories() {
                 sku: "DJI-FLIP-PROPELLERS",
                 stock: 10,
                 inStock: true,
-                image: "assets/img/product/dji/dji-flip-propellers.webp",
+                image: "/assets/img/product/dji/dji-flip-propellers.webp",
                 thumbnails: [
-                    "assets/img/product/dji/dji-flip-propellers.webp",
-                    "assets/img/product/dji/dji-flip-propellers-1.webp",
-                    "assets/img/product/dji/dji-flip-propellers-2.webp",
-                    "assets/img/product/dji/dji-flip-propellers-3.webp",
+                    "/assets/img/product/dji/dji-flip-propellers.webp",
+                    "/assets/img/product/dji/dji-flip-propellers-1.webp",
+                    "/assets/img/product/dji/dji-flip-propellers-2.webp",
+                    "/assets/img/product/dji/dji-flip-propellers-3.webp",
                 ],
                 shortDescription:
                     "Low-noise propellers designed for DJI Flip, offering higher efficiency and powerful thrust.",
@@ -1362,14 +1362,14 @@ async function seedAccessories() {
                 sku: "DJI-MIC-MINI-BLACK",
                 stock: 80,
                 inStock: true,
-                image: "assets/img/product/dji/dji-mic-mini-black.webp",
+                image: "/assets/img/product/dji/dji-mic-mini-black.webp",
                 thumbnails: [
-                    "assets/img/product/dji/dji-mic-mini-black.webp",
-                    "assets/img/product/dji/dji-mic-mini-black1.webp",
-                    "assets/img/product/dji/dji-mic-mini-black2.webp",
-                    "assets/img/product/dji/dji-mic-mini-black3.webp",
-                    "assets/img/product/dji/dji-mic-mini-black4.webp",
-                    "assets/img/product/dji/dji-mic-mini-black5.webp",
+                    "/assets/img/product/dji/dji-mic-mini-black.webp",
+                    "/assets/img/product/dji/dji-mic-mini-black1.webp",
+                    "/assets/img/product/dji/dji-mic-mini-black2.webp",
+                    "/assets/img/product/dji/dji-mic-mini-black3.webp",
+                    "/assets/img/product/dji/dji-mic-mini-black4.webp",
+                    "/assets/img/product/dji/dji-mic-mini-black5.webp",
                 ],
                 shortDescription:
                     "Small, ultralight, and discreet wireless transmitter with premium sound, active noise cancelling, and 8-hour battery life.",
@@ -1424,13 +1424,13 @@ async function seedAccessories() {
                 sku: "DJI-NEO-BAT",
                 stock: 10,
                 inStock: true,
-                image: "assets/img/product/dji/dji-neo-battery.jpg",
+                image: "/assets/img/product/dji/dji-neo-battery.jpg",
                 thumbnails: [
-                    "assets/img/product/dji/dji-neo-battery.jpg",
-                    "assets/img/product/dji/dji-neo-battery-1.jpg",
-                    "assets/img/product/dji/dji-neo-battery-2.jpg",
-                    "assets/img/product/dji/dji-neo-battery-3.jpg",
-                    "assets/img/product/dji/dji-neo-battery-4.jpg",
+                    "/assets/img/product/dji/dji-neo-battery.jpg",
+                    "/assets/img/product/dji/dji-neo-battery-1.jpg",
+                    "/assets/img/product/dji/dji-neo-battery-2.jpg",
+                    "/assets/img/product/dji/dji-neo-battery-3.jpg",
+                    "/assets/img/product/dji/dji-neo-battery-4.jpg",
                 ],
                 shortDescription: "Lightweight Li-ion battery offering up to 18 minutes of flight time for DJI Neo.",
                 description: `The DJI Neo Intelligent Flight Battery provides up to 18 minutes of flight time, allowing the drone to perform multiple palm takeoff and landing sequences. Its compact and lightweight design maintains optimal power and reliability for extended flights.`,
@@ -1463,13 +1463,13 @@ async function seedAccessories() {
                 sku: "DJI-NEO-HUB",
                 stock: 8,
                 inStock: true,
-                image: "assets/img/product/dji/dji-neo-charging-hub.jpg",
+                image: "/assets/img/product/dji/dji-neo-charging-hub.jpg",
                 thumbnails: [
-                    "assets/img/product/dji/dji-neo-charging-hub.jpg",
-                    "assets/img/product/dji/dji-neo-charging-hub-1.jpg",
-                    "assets/img/product/dji/dji-neo-charging-hub-2.jpg",
-                    "assets/img/product/dji/dji-neo-charging-hub-3.jpg",
-                    "assets/img/product/dji/dji-neo-charging-hub-4.jpg",
+                    "/assets/img/product/dji/dji-neo-charging-hub.jpg",
+                    "/assets/img/product/dji/dji-neo-charging-hub-1.jpg",
+                    "/assets/img/product/dji/dji-neo-charging-hub-2.jpg",
+                    "/assets/img/product/dji/dji-neo-charging-hub-3.jpg",
+                    "/assets/img/product/dji/dji-neo-charging-hub-4.jpg",
                 ],
                 shortDescription: "Charge three DJI Neo batteries simultaneously and use as a power bank.",
                 description: `The DJI Neo Two-Way Charging Hub stores and charges up to three batteries simultaneously when used with a 65W charger. It also doubles as a power bank to charge devices such as smartphones and goggles, ensuring you stay powered on the go.`,
@@ -1498,12 +1498,12 @@ async function seedAccessories() {
                 sku: "DJI-NEO-PROPS",
                 stock: 10,
                 inStock: true,
-                image: "assets/img/product/dji/dji-neo-propellers.jpg",
+                image: "/assets/img/product/dji/dji-neo-propellers.jpg",
                 thumbnails: [
-                    "assets/img/product/dji/dji-neo-propellers.jpg",
-                    "assets/img/product/dji/dji-neo-propellers-1.jpg",
-                    "assets/img/product/dji/dji-neo-propellers-2.jpg",
-                    "assets/img/product/dji/dji-neo-propellers-3.jpg"
+                    "/assets/img/product/dji/dji-neo-propellers.jpg",
+                    "/assets/img/product/dji/dji-neo-propellers-1.jpg",
+                    "/assets/img/product/dji/dji-neo-propellers-2.jpg",
+                    "/assets/img/product/dji/dji-neo-propellers-3.jpg"
                 ],
                 shortDescription: "Durable, efficient propellers designed for stable DJI Neo flight performance.",
                 description: `DJI Neo Propellers provide efficient and stable propulsion for smooth flight. Each pair is precision-balanced and tested for safety, ensuring optimal performance and reduced noise.`,
@@ -1532,11 +1532,11 @@ async function seedAccessories() {
                 productCategory: "neo",
                 stock: 5,
                 inStock: true,
-                image: "assets/img/product/dji/dji-fpv-rc3.jpg",
+                image: "/assets/img/product/dji/dji-fpv-rc3.jpg",
                 thumbnails: [
-                    "assets/img/product/dji/dji-fpv-rc3.jpg",
-                    "assets/img/product/dji/dji-fpv-rc3-2.jpg",
-                    "assets/img/product/dji/dji-fpv-rc3-3.jpg",
+                    "/assets/img/product/dji/dji-fpv-rc3.jpg",
+                    "/assets/img/product/dji/dji-fpv-rc3-2.jpg",
+                    "/assets/img/product/dji/dji-fpv-rc3-3.jpg",
                 ],
                 shortDescription: "Advanced FPV controller supporting manual mode and extended control options.",
                 description: `The DJI FPV Remote Controller 3 is engineered for DJI O4 video transmission with integrated antennas and lightweight design. It supports Manual, Sport, and Normal modes, allowing advanced users to practice precision control and flight maneuvers.`,
@@ -1574,13 +1574,13 @@ async function seedAccessories() {
                 sku: "DJI-GOGGLES-N3",
                 stock: 4,
                 inStock: true,
-                image: "assets/img/product/dji/dji-goggles-n3.jpg",
+                image: "/assets/img/product/dji/dji-goggles-n3.jpg",
                 thumbnails: [
-                    "assets/img/product/dji/dji-goggles-n3.jpg",
-                    "assets/img/product/dji/dji-goggles-n3-1.jpg",
-                    "assets/img/product/dji/dji-goggles-n3-2.jpg",
-                    "assets/img/product/dji/dji-goggles-n3-3.jpg",
-                    "assets/img/product/dji/dji-goggles-n3-4.jpg",
+                    "/assets/img/product/dji/dji-goggles-n3.jpg",
+                    "/assets/img/product/dji/dji-goggles-n3-1.jpg",
+                    "/assets/img/product/dji/dji-goggles-n3-2.jpg",
+                    "/assets/img/product/dji/dji-goggles-n3-3.jpg",
+                    "/assets/img/product/dji/dji-goggles-n3-4.jpg",
                 ],
                 shortDescription: "Immersive 1080p FPV goggles with O4 FHD transmission and head tracking.",
                 description: `Pair the DJI Goggles N3 with DJI Neo or Avata 2 for an immersive FPV flight experience. Featuring a 1080p ultra-wide display, O4 FHD transmission, head tracking, and 2.7-hour operating time, these goggles deliver comfort and performance for both creators and racers.`,
@@ -1613,12 +1613,12 @@ async function seedAccessories() {
                 sku: "DJI-NEO-GUARD",
                 stock: 10,
                 inStock: true,
-                image: "assets/img/product/dji/dji-neo-propellers-guard.jpg",
+                image: "/assets/img/product/dji/dji-neo-propellers-guard.jpg",
                 thumbnails: [
-                    "assets/img/product/dji/dji-neo-propellers-guard.jpg",
-                    "assets/img/product/dji/dji-neo-propellers-guard-1.jpg",
-                    "assets/img/product/dji/dji-neo-propellers-guard-2.jpg",
-                    "assets/img/product/dji/dji-neo-propellers-guard-3.jpg",
+                    "/assets/img/product/dji/dji-neo-propellers-guard.jpg",
+                    "/assets/img/product/dji/dji-neo-propellers-guard-1.jpg",
+                    "/assets/img/product/dji/dji-neo-propellers-guard-2.jpg",
+                    "/assets/img/product/dji/dji-neo-propellers-guard-3.jpg",
                 ],
                 shortDescription: "Protective guards that enclose propellers for safe and secure DJI Neo flights.",
                 description: `The DJI Neo Propeller Guard fully encloses the propellers, preventing contact with external objects to enhance flight safety — perfect for beginners or indoor flying.`,
@@ -1646,12 +1646,12 @@ async function seedAccessories() {
                 sku: "DJI-AVATA2-BAT",
                 stock: 8,
                 inStock: true,
-                image: "assets/img/product/dji/dji-avata2-battery.jpg",
+                image: "/assets/img/product/dji/dji-avata2-battery.jpg",
                 thumbnails: [
-                    "assets/img/product/dji/dji-avata2-battery.jpg",
-                    "assets/img/product/dji/dji-avata2-battery-1.jpg",
-                    "assets/img/product/dji/dji-avata2-battery-2.jpg",
-                    "assets/img/product/dji/dji-avata2-battery-3.jpg",
+                    "/assets/img/product/dji/dji-avata2-battery.jpg",
+                    "/assets/img/product/dji/dji-avata2-battery-1.jpg",
+                    "/assets/img/product/dji/dji-avata2-battery-2.jpg",
+                    "/assets/img/product/dji/dji-avata2-battery-3.jpg",
                 ],
                 shortDescription: "2150 mAh Li-ion battery delivering approx. 23 min flight time for DJI Avata 2.",
                 description: `The DJI Avata 2 Intelligent Flight Battery provides approximately 23 minutes of flight time, empowering immersive FPV flights with confidence and stability. A must-have spare for extended sessions and creative freedom.`,
@@ -1682,12 +1682,12 @@ async function seedAccessories() {
                 sku: "DJI-AVATA2-HUB",
                 stock: 100,
                 inStock: true,
-                image: "assets/img/product/dji/dji-avata2-hub.jpg",
+                image: "/assets/img/product/dji/dji-avata2-hub.jpg",
                 thumbnails: [
-                    "assets/img/product/dji/dji-avata2-hub.jpg",
-                    "assets/img/product/dji/dji-avata2-hub-1.jpg",
-                    "assets/img/product/dji/dji-avata2-hub-2.jpg",
-                    "assets/img/product/dji/dji-avata2-hub-3.jpg",
+                    "/assets/img/product/dji/dji-avata2-hub.jpg",
+                    "/assets/img/product/dji/dji-avata2-hub-1.jpg",
+                    "/assets/img/product/dji/dji-avata2-hub-2.jpg",
+                    "/assets/img/product/dji/dji-avata2-hub-3.jpg",
                 ],
                 shortDescription: "Charge three Avata 2 batteries sequentially and use as a power bank.",
                 description: `The DJI Avata 2 Two-Way Charging Hub stores, charges, and accumulates power for multiple batteries. Paired with a 65 W charger, it fully charges a battery in 45 minutes and can also power devices like goggles or phones.`,
@@ -1717,12 +1717,12 @@ async function seedAccessories() {
                 sku: "DJI-AVATA2-ND",
                 stock: 6,
                 inStock: true,
-                image: "assets/img/product/dji/dji-avata2-nd-filters.jpg",
+                image: "/assets/img/product/dji/dji-avata2-nd-filters.jpg",
                 thumbnails: [
-                    "assets/img/product/dji/dji-avata2-nd-filters.jpg",
-                    "assets/img/product/dji/dji-avata2-nd-filters1.jpg",
-                    "assets/img/product/dji/dji-avata2-nd-filters2.jpg",
-                    "assets/img/product/dji/dji-avata2-nd-filters3.jpg",
+                    "/assets/img/product/dji/dji-avata2-nd-filters.jpg",
+                    "/assets/img/product/dji/dji-avata2-nd-filters1.jpg",
+                    "/assets/img/product/dji/dji-avata2-nd-filters2.jpg",
+                    "/assets/img/product/dji/dji-avata2-nd-filters3.jpg",
                 ],
                 shortDescription: "Set of ND8, ND16 & ND32 filters for precise exposure control.",
                 description: `The DJI Avata 2 ND Filter Set (ND8/16/32) helps you control aperture and shutter speed for cinematic results. Capture motion blur or bright-light shots with perfect exposure and color balance.`,
@@ -1750,12 +1750,12 @@ async function seedAccessories() {
                 sku: "DJI-AVATA2-PROPS",
                 stock: 150,
                 inStock: true,
-                image: "assets/img/product/dji/dji-avata2-propellers.jpg",
+                image: "/assets/img/product/dji/dji-avata2-propellers.jpg",
                 thumbnails: [
-                    "assets/img/product/dji/dji-avata2-propellers.jpg",
-                    "assets/img/product/dji/dji-avata2-propellers1.jpg",
-                    "assets/img/product/dji/dji-avata2-propellers2.jpg",
-                    "assets/img/product/dji/dji-avata2-propellers3.jpg",
+                    "/assets/img/product/dji/dji-avata2-propellers.jpg",
+                    "/assets/img/product/dji/dji-avata2-propellers1.jpg",
+                    "/assets/img/product/dji/dji-avata2-propellers2.jpg",
+                    "/assets/img/product/dji/dji-avata2-propellers3.jpg",
                 ],
                 shortDescription: "Efficient, balanced propellers designed for stable Avata 2 flight.",
                 description: `The DJI Avata 2 Propellers are optimized for quiet, stable, and efficient flight. Each pair is dynamically balanced and includes replacement screws for safe installation and top-tier performance.`,

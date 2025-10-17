@@ -73,6 +73,7 @@ async function startServer() {
   app.use("/api/accessory", require("./routes/accessory"));
   app.use("/api/checkout", require("./routes/checkout"));
   app.use('/api/repairs', require('./routes/repairs'));
+  app.use('/api/contacts', require('./routes/contacts'));
 
   const publicPath = path.resolve(__dirname, "../public");
   const adminPath = path.resolve(__dirname, "../admin");

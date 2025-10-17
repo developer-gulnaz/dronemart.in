@@ -38,6 +38,7 @@ const productSchema = new mongoose.Schema({
   metaTitle: { type: String },   // SEO fields
   metaDescription: { type: String },
   keywords: [{ type: String }],
+  features: [{ type: String }],
 
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now }

@@ -7,7 +7,8 @@
     <title>DroneMart Admin Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
 
 </head>
 
@@ -25,43 +26,63 @@
         <ul class="sidebar-menu">
             <li>
                 <a href="dashboard.html" class="active">
-                    <i class="bi bi-speedometer2"></i>
+                    <i class="fa-solid fa-gauge"></i>
                     <span class="menu-text">Dashboard</span>
                 </a>
             </li>
+
             <li>
                 <a href="users.html">
-                    <i class="bi bi-people"></i>
+                    <i class="fa-solid fa-user-group"></i>
                     <span class="menu-text">Users</span>
                 </a>
             </li>
+
             <li>
                 <a href="leads.html">
-                    <i class="bi bi-people-fill"></i>
+                    <i class="fa-solid fa-address-card"></i>
                     <span class="menu-text">Leads</span>
                 </a>
             </li>
+
+            <li>
+                <a href="repairs.html">
+                    <i class="fa-solid fa-screwdriver-wrench"></i>
+                    <span class="menu-text">Repair Requests</span>
+                </a>
+            </li>
+
             <li>
                 <a href="products.html">
-                    <i class="bi bi-cart"></i>
+                    <i class="fa-solid fa-box-open"></i>
                     <span class="menu-text">Products</span>
                 </a>
             </li>
+
+            <li>
+                <a href="accessories.html">
+                    <i class="fa-solid fa-puzzle-piece"></i>
+                    <span class="menu-text">Accessories</span>
+                </a>
+            </li>
+
             <li>
                 <a href="orders.html">
-                    <i class="bi bi-cart"></i>
+                    <i class="fa-solid fa-receipt"></i>
                     <span class="menu-text">Orders</span>
                 </a>
             </li>
+
             <li>
                 <a href="#">
-                    <i class="bi bi-graph-up"></i>
+                    <i class="fa-solid fa-chart-line"></i>
                     <span class="menu-text">Analytics</span>
                 </a>
             </li>
+
             <li>
                 <a href="#">
-                    <i class="bi bi-gear"></i>
+                    <i class="fa-solid fa-gear"></i>
                     <span class="menu-text">Settings</span>
                 </a>
             </li>
@@ -108,145 +129,7 @@
 
         <div class="container my-4">
             <form id="productForm" enctype="multipart/form-data">
-                <div class="row g-3">
 
-                    <!-- Product Name -->
-                    <div class="col-md-6">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="title" name="title" placeholder="Product Name"
-                                required>
-                            <label for="title">Product Name</label>
-                        </div>
-                    </div>
-
-                    <!-- Category -->
-                    <div class="col-md-6">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="category" name="category" placeholder="Category"
-                                required>
-                            <label for="category">Category</label>
-                        </div>
-                    </div>
-
-                    <!-- Price -->
-                    <div class="col-md-6">
-                        <div class="form-floating">
-                            <input type="number" class="form-control" id="price" name="price" placeholder="Price"
-                                required>
-                            <label for="price">Price ($)</label>
-                        </div>
-                    </div>
-
-                    <!-- Stock -->
-                    <div class="col-md-6">
-                        <div class="form-floating">
-                            <input type="number" class="form-control" id="stock" name="stock" placeholder="Stock"
-                                required>
-                            <label for="stock">Stock</label>
-                        </div>
-                    </div>
-
-                    <!-- Badge -->
-                    <div class="col-md-6">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="badge" name="badge" placeholder="Badge">
-                            <label for="badge">Badge</label>
-                        </div>
-                    </div>
-
-                    <!-- Rating -->
-                    <div class="col-md-6">
-                        <div class="form-floating">
-                            <input type="number" step="0.1" max="5" class="form-control" id="rating" name="rating"
-                                placeholder="Rating">
-                            <label for="rating">Rating</label>
-                        </div>
-                    </div>
-
-                    <!-- Description -->
-                    <div class="col-12">
-                        <div class="form-floating">
-                            <textarea class="form-control" id="description" name="description" placeholder="Description"
-                                style="height:120px" required></textarea>
-                            <label for="description">Description</label>
-                        </div>
-                    </div>
-
-                    <!-- Specifications -->
-                    <h5 class="mt-3">Specifications</h5>
-
-                    <div class="col-md-4">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="weight" name="specs[weight]"
-                                placeholder="Weight">
-                            <label for="weight">Weight</label>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="dimensions" name="specs[dimensions]"
-                                placeholder="Dimensions">
-                            <label for="dimensions">Dimensions</label>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="flightTime" name="specs[maxFlightTime]"
-                                placeholder="Max Flight Time">
-                            <label for="flightTime">Max Flight Time</label>
-                        </div>
-                    </div>
-
-                    <!-- Camera Specs -->
-                    <div class="col-12 mt-2"><strong>Camera Specs:</strong></div>
-                    <div class="col-md-4">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="cameraType" name="specs[cameraType]"
-                                placeholder="Camera Type">
-                            <label for="cameraType">Camera Type</label>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="sensor" name="specs[sensor]"
-                                placeholder="Sensor">
-                            <label for="sensor">Sensor</label>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="videoRes" name="specs[maxVideoResolution]"
-                                placeholder="Max Video Resolution">
-                            <label for="videoRes">Max Video Resolution</label>
-                        </div>
-                    </div>
-
-                    <!-- Images -->
-                    <div class="col-md-4">
-                        <label for="mainImage" class="form-label">Main Product Image</label>
-                        <input type="file" class="form-control" id="mainImage" name="mainImage" accept="image/*"
-                            required>
-                    </div>
-
-                    <div class="col-md-4">
-                        <label for="thumbnails" class="form-label">Thumbnail Images (5–8)</label>
-                        <input type="file" class="form-control" id="thumbnails" name="thumbnails" accept="image/*"
-                            multiple required>
-                    </div>
-
-                    <div class="col-md-4">
-                        <label for="boxImages" class="form-label">In-Box Images (12)</label>
-                        <input type="file" class="form-control" id="boxImages" name="boxImages" accept="image/*"
-                            multiple required>
-                    </div>
-
-                    <!-- Submit -->
-                    <div class="col-12 mt-3">
-                        <button type="submit" class="btn btn-primary w-100">Save Product</button>
-                    </div>
-                </div>
             </form>
         </div>
 
@@ -257,7 +140,6 @@
     </div>
     <script src="assets/js/common.js"></script>
     <script src="assets/js/main.js"></script>
-    <script src="assets/js/products.js"></script>
 
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
@@ -267,77 +149,363 @@
                 return;
             }
 
-            const titleInput = document.getElementById("title");
-            const categoryInput = document.getElementById("category");
-            const priceInput = document.getElementById("price");
-            const stockInput = document.getElementById("stock");
-            const badgeInput = document.getElementById("badge");
-            const ratingInput = document.getElementById("rating");
-            const descriptionInput = document.getElementById("description");
-            const specsInput = document.getElementById("specs");
-            const featuredCheckbox = document.getElementById("featured");
+            const form = document.getElementById("productForm");
+            if (!form) {
+                console.error("Form not found");
+                return;
+            }
 
-            // =============================
-            // ✅ Load Product Data
-            // =============================
+            // ✅ Fetch product
             async function loadProductData() {
                 try {
-                    const res = await fetch(`/api/products/${productId}`, {
-                        credentials: "include"
-                    });
-
+                    const res = await fetch(`/api/products/${productId}`, { credentials: "include" });
                     if (!res.ok) throw new Error("Failed to fetch product data");
-
                     const product = await res.json();
 
-                    // Populate form fields
-                    titleInput.value = product.title || "";
-                    categoryInput.value = product.category || "";
-                    priceInput.value = product.price || 0;
-                    stockInput.value = product.stock || 0;
-                    badgeInput.value = product.badge || "";
-                    ratingInput.value = product.rating || "";
-                    descriptionInput.value = product.description || "";
-                    specsInput.value = product.specs ? JSON.stringify(product.specs, null, 2) : "";
-                    featuredCheckbox.checked = product.featured || false;
+                    form.innerHTML = "";
+                    generateFieldsFromObject(product, form);
+                    addSubmitButton();
+
+                    // ============================
+                    // Handle existing images
+                    // ============================
+
+                    // Main Image
+                    const mainImgField = form.querySelector('input[name="image"]');
+                    if (product.image && mainImgField) {
+                        const preview = document.createElement("div");
+                        preview.className = "image-preview";
+                        preview.innerHTML = `<img src="${product.image}" style="max-width:150px">`;
+                        mainImgField.parentNode.insertBefore(preview, mainImgField.nextSibling);
+
+                        // hidden input to preserve existing image
+                        const hidden = document.createElement("input");
+                        hidden.type = "hidden";
+                        hidden.name = "image_existing";
+                        hidden.value = product.image;
+                        mainImgField.parentNode.insertBefore(hidden, preview.nextSibling);
+                    }
+
+                    // Thumbnails
+                    // ============================
+                    // ✅ Thumbnails Handling (simple + synced with preview)
+                    // ============================
+                    const thumbInput = form.querySelector('input[name="thumbnails"]');
+                    const thumbPreview = document.createElement("div");
+                    thumbPreview.className = "thumbnail-preview";
+                    thumbPreview.style.display = "flex";
+                    thumbPreview.style.flexWrap = "wrap";
+                    thumbPreview.style.gap = "6px";
+                    thumbInput.parentNode.insertBefore(thumbPreview, thumbInput.nextSibling);
+
+                    // Keep track of current thumbnails (URLs or local files)
+                    let currentThumbnails = [];
+
+                    // 🔹 Load existing thumbnails
+                    if (product.thumbnails && Array.isArray(product.thumbnails)) {
+                        currentThumbnails = [...product.thumbnails];
+                        renderThumbnails();
+                    }
+
+                    // 🔹 Render preview box
+                    function renderThumbnails() {
+                        thumbPreview.innerHTML = "";
+
+                        currentThumbnails.forEach((thumb, i) => {
+                            const wrapper = document.createElement("div");
+                            wrapper.style.position = "relative";
+                            wrapper.style.width = "100px";
+                            wrapper.style.height = "100px";
+
+                            const img = document.createElement("img");
+                            img.src = typeof thumb === "string" ? thumb : URL.createObjectURL(thumb);
+                            img.style.width = "100%";
+                            img.style.height = "100%";
+                            img.style.objectFit = "cover";
+                            img.style.borderRadius = "6px";
+                            img.style.border = "1px solid #ccc";
+                            wrapper.appendChild(img);
+
+                            // ❌ Remove Button
+                            const delBtn = document.createElement("button");
+                            delBtn.textContent = "×";
+                            delBtn.type = "button";
+                            delBtn.style.position = "absolute";
+                            delBtn.style.top = "2px";
+                            delBtn.style.right = "2px";
+                            delBtn.style.background = "rgba(0,0,0,0.6)";
+                            delBtn.style.color = "#fff";
+                            delBtn.style.border = "none";
+                            delBtn.style.borderRadius = "50%";
+                            delBtn.style.width = "20px";
+                            delBtn.style.height = "20px";
+                            delBtn.style.cursor = "pointer";
+                            delBtn.addEventListener("click", () => {
+                                currentThumbnails.splice(i, 1);
+                                renderThumbnails();
+                            });
+
+                            wrapper.appendChild(delBtn);
+                            thumbPreview.appendChild(wrapper);
+                        });
+                    }
+
+                    // 🔹 When new files are added
+                    thumbInput.addEventListener("change", (e) => {
+                        const newFiles = Array.from(e.target.files);
+                        if (newFiles.length > 0) {
+                            currentThumbnails.push(...newFiles);
+                            renderThumbnails();
+                        }
+                    });
+
+                    // 🔹 On form submit
+                    form.addEventListener("submit", async (e) => {
+                        e.preventDefault();
+                        const formData = new FormData(form);
+
+                        // Clear old thumbnail fields
+                        formData.delete("thumbnails");
+                        formData.delete("thumbnails_existing[]");
+
+                        // Separate URLs and Files
+                        currentThumbnails.forEach(item => {
+                            if (typeof item === "string") {
+                                formData.append("thumbnails_existing[]", item);
+                            } else {
+                                formData.append("thumbnails", item);
+                            }
+                        });
+
+                        // Submit to backend
+                        try {
+                            const res = await fetch(`/api/products/${productId}`, {
+                                method: "PATCH",
+                                body: formData,
+                                credentials: "include",
+                            });
+
+                            if (!res.ok) throw new Error("Failed to update product");
+                            alert("✅ Product updated successfully!");
+                            window.location.href = "products.html";
+                        } catch (err) {
+                            console.error(err);
+                            alert("Error updating product");
+                        }
+                    });
+
+                    // InTheBox images
+                    const inTheBoxItems = form.querySelectorAll('.box-item input[name*="inTheBoxImage"]');
+                    if (product.inTheBox && Array.isArray(product.inTheBox)) {
+                        product.inTheBox.forEach((item, idx) => {
+                            const boxDiv = inTheBoxItems[idx]?.parentNode;
+                            if (boxDiv && item.image) {
+                                const preview = document.createElement("div");
+                                preview.className = "image-preview";
+                                preview.innerHTML = `<img src="${item.image}" style="max-width:100px">`;
+                                boxDiv.insertBefore(preview, boxDiv.querySelector('input[type="file"]'));
+
+                                const hidden = document.createElement("input");
+                                hidden.type = "hidden";
+                                hidden.name = "inTheBoxImage_existing[]";
+                                hidden.value = item.image;
+                                boxDiv.appendChild(hidden);
+                            }
+                        });
+                    }
 
                 } catch (err) {
                     console.error(err);
-                    alert("Error loading product data. Check console.");
+                    alert("Error loading product data");
                 }
+            }
+
+            // 🧩 Recursive Field Generator (2-column applied everywhere)
+            function generateFieldsFromObject(obj, container, parentKey = "") {
+                Object.entries(obj).forEach(([key, value]) => {
+                    const fullKey = parentKey ? `${parentKey}.${key}` : key;
+
+                    if (["_id", "__v", "createdAt", "updatedAt"].includes(key)) return;
+
+                    // ========== OBJECTS ==========
+                    if (typeof value === "object" && !Array.isArray(value) && value !== null) {
+                        const block = document.createElement("div");
+                        block.classList.add("section-block");
+
+                        const title = document.createElement("h6");
+                        title.textContent = key.replace(/([A-Z])/g, " $1").toUpperCase();
+                        block.appendChild(title);
+
+                        const innerGrid = document.createElement("div");
+                        innerGrid.classList.add("nested-grid");
+                        generateFieldsFromObject(value, innerGrid, fullKey);
+
+                        block.appendChild(innerGrid);
+                        container.appendChild(block);
+                    }
+
+                    // ========== ARRAYS ==========
+                    else if (Array.isArray(value)) {
+                        const block = document.createElement("div");
+                        block.classList.add("section-block");
+
+                        const title = document.createElement("h6");
+                        title.textContent = key.replace(/([A-Z])/g, " $1").toUpperCase();
+                        block.appendChild(title);
+
+                        if (key.toLowerCase().includes("image") || key.toLowerCase().includes("thumbnail")) {
+                            const fileInput = document.createElement("input");
+                            fileInput.type = "file";
+                            fileInput.name = fullKey;
+                            fileInput.multiple = true;
+                            fileInput.accept = "image/*";
+                            fileInput.className = "form-control mt-2";
+                            block.appendChild(fileInput);
+                        } else {
+                            const arrayGrid = document.createElement("div");
+                            arrayGrid.classList.add("nested-grid");
+                            value.forEach((item, i) => {
+                                if (typeof item === "object") {
+                                    const subBlock = document.createElement("div");
+                                    subBlock.classList.add("section-subblock");
+                                    generateFieldsFromObject(item, subBlock, `${fullKey}[${i}]`);
+                                    arrayGrid.appendChild(subBlock);
+                                } else {
+                                    const input = createInputField(`${fullKey}[${i}]`, item, `Item ${i + 1}`);
+                                    arrayGrid.appendChild(input);
+                                }
+                            });
+                            block.appendChild(arrayGrid);
+                        }
+
+                        container.appendChild(block);
+                    }
+
+                    // ========== PRIMITIVE ==========
+                    else {
+                        if (key.toLowerCase().includes("image") && typeof value === "string" && /\.(jpg|png|jpeg|webp)$/i.test(value)) {
+                            const block = document.createElement("div");
+                            block.classList.add("section-block");
+
+                            const label = document.createElement("h6");
+                            label.textContent = key.toUpperCase();
+                            block.appendChild(label);
+
+                            const fileInput = document.createElement("input");
+                            fileInput.type = "file";
+                            fileInput.name = fullKey;
+                            fileInput.accept = "image/*";
+                            fileInput.className = "form-control mt-2";
+                            block.appendChild(fileInput);
+
+                            container.appendChild(block);
+                        } else {
+                            container.appendChild(createInputField(fullKey, value, key));
+                        }
+                    }
+                });
+            }
+
+            function createInputField(name, value, labelText) {
+                const wrapper = document.createElement("div");
+                wrapper.classList.add("form-floating");
+
+                const input = document.createElement("input");
+                input.type = typeof value === "number" ? "number" : "text";
+                input.name = name;
+                input.id = name;
+                input.value = value ?? "";
+                input.className = "form-control";
+                input.placeholder = labelText;
+
+                const label = document.createElement("label");
+                label.setAttribute("for", name);
+                label.textContent = labelText.replace(/([A-Z])/g, " $1");
+
+                wrapper.appendChild(input);
+                wrapper.appendChild(label);
+                return wrapper;
+            }
+
+            function addSubmitButton() {
+                const btnDiv = document.createElement("div");
+                btnDiv.classList.add("col-12");
+                const submit = document.createElement("button");
+                submit.type = "submit";
+                submit.className = "btn btn-primary w-100";
+                submit.textContent = "Save Product";
+                btnDiv.appendChild(submit);
+                form.appendChild(btnDiv);
             }
 
             await loadProductData();
 
-            // =============================
-            // ✅ Update Product Submission
-            // =============================
-            const productForm = document.getElementById("productForm") || document.getElementById("updateProductForm");
-            productForm.addEventListener("submit", async (e) => {
+            form.addEventListener("submit", async (e) => {
                 e.preventDefault();
 
-                const formData = new FormData(productForm);
+                const formData = new FormData(form);
+
+                // -------------------
+                // Main Image
+                // -------------------
+                const mainFileInput = form.querySelector('input[name="image"]');
+                const mainExisting = form.querySelector('input[name="image_existing"]')?.value;
+                if (!mainFileInput.files.length && mainExisting) {
+                    // preserve existing image
+                    formData.delete("image");
+                    formData.append("image_existing", mainExisting);
+                }
+
+                // -------------------
+                // Thumbnails: gather all images in preview box
+                // -------------------
+                const thumbnailsArray = [];
+                document.querySelectorAll(".thumbnail-preview img").forEach(img => {
+                    thumbnailsArray.push(img.src); // keep all preview images
+                });
+                // Remove old FormData keys
+                formData.delete("thumbnails");
+                thumbnailsArray.forEach(t => formData.append("thumbnails[]", t));
+                // -------------------
+                // InTheBox images
+                // -------------------
+                const boxFiles = form.querySelectorAll('input[name*="inTheBoxImage"]');
+                boxFiles.forEach((input, idx) => {
+                    if (!input.files.length) {
+                        const existing = form.querySelectorAll('input[name="inTheBoxImage_existing[]"]')[idx]?.value;
+                        formData.append("inTheBoxImage_existing[]", existing || "");
+                    }
+                });
 
                 try {
                     const res = await fetch(`/api/products/${productId}`, {
                         method: "PATCH",
-                        body: formData,
-                        credentials: "include"
+                        body: formData, // send FormData directly
+                        credentials: "include",
                     });
-
                     if (!res.ok) throw new Error("Failed to update product");
-
-                    alert("Product updated successfully!");
-                    window.location.href = "products.html"; // redirect back to products page
-
+                    alert("✅ Product updated successfully!");
+                    window.location.href = "products.html";
                 } catch (err) {
                     console.error(err);
-                    alert("Error updating product. Check console.");
+                    alert("Error updating product.");
                 }
             });
-        });
 
+            function assignNestedValue(obj, path, value) {
+                const keys = path.replace(/\[(\d+)\]/g, ".$1").split(".");
+                let current = obj;
+                keys.forEach((key, i) => {
+                    if (i === keys.length - 1) current[key] = value;
+                    else {
+                        if (!current[key]) current[key] = isNaN(keys[i + 1]) ? {} : [];
+                        current = current[key];
+                    }
+                });
+            }
+        });
     </script>
+
 </body>
 
 </html>

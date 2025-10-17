@@ -248,16 +248,23 @@ function populateProductUI(product) {
     mainContainer.appendChild(djiContainer);
 
     const grid = djiContainer.querySelector(".in-the-box-grid");
+
     (product.inTheBox || []).forEach(item => {
       const div = document.createElement("div");
       div.classList.add("in-the-box-item");
+
+      // Check if image exists
+      const imgHTML = item.image ? `<img src="${item.image}" alt="${item.title}">` : "";
+
       div.innerHTML = `
-      <img src="${item.image}" alt="${item.title}">
-      <div><strong>${item.title}</strong></div>
-      <div>× ${item.quantity}</div>
-    `;
+    ${imgHTML}
+    <div><strong>${item.title}</strong></div>
+    <div>× ${item.quantity}</div>
+  `;
+
       grid.appendChild(div);
     });
+
 
   } else if (specialCategories.includes(product.category) || product.type === "accessory") {
     // Agriculture/FPV/Accessories style list
@@ -278,7 +285,26 @@ function populateProductUI(product) {
     });
   }
 
+  const featuresGrid = document.querySelector(".features-grid");
+  if (Array.isArray(product.features) && product.features.length > 0) {
+    featuresGrid.innerHTML = `
+    <div class="package-contents">
+      <h4>Features</h4>
+      <ul class="contents-list"></ul>
+    </div>
+  `;
+    mainContainer.appendChild(featuresGrid);
+
+    const ul = featuresGrid.querySelector(".contents-list");
+    product.features.forEach(feature => {
+      const li = document.createElement("li");
+      li.innerHTML = `<i class="bi bi-shield-check text-warning"></i> ${feature}`;
+      ul.appendChild(li);
+    });
+  }
+
 }
+
 
 // ---------- Thumbnail Click ----------
 document.addEventListener("click", function (e) {

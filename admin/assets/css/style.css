@@ -322,7 +322,8 @@ body {
 
 @media (min-width: 768px) {
     #attachmentsCarousel .carousel-item img {
-        height: 400px;  /* taller images on larger screens */
+        height: 400px;
+        /* taller images on larger screens */
     }
 }
 
@@ -396,6 +397,115 @@ tr.show {
     border-radius: 0.2rem;
 }
 
-.update-order-status{
+.update-order-status {
     font-size: 13px !important;
+}
+
+
+#AccessoriesTable td button {
+    font-size: 12px;
+}
+
+#productForm {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 1rem;
+}
+
+.section-block {
+    grid-column: span 2;
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.section-block h6 {
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: #333;
+}
+
+.nested-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 0.75rem;
+}
+
+.section-subblock {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 0.75rem;
+    background: #fff;
+    padding: 0.75rem;
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+
+.image-preview {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.image-preview img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.col {
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 10px;
+}
+
+.img-preview,
+.thumb-preview img,
+.box-preview img {
+    max-width: 100px;
+    margin: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.spec-item,
+.box-item {
+    margin-bottom: 10px;
+    padding-left: 10px;
+    border-left: 2px dashed #ccc;
+}
+
+.spec-item.collapsed>.nested-specs {
+    display: none;
+}
+
+.spec-key,
+.spec-value {
+    margin: 3px;
+}
+
+.btn-add,
+.btn-submit {
+    margin-top: 10px;
+    padding: 6px 12px;
+    border-radius: 5px;
+    background: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-add:hover,
+.btn-submit:hover {
+    background: #0056b3;
 }

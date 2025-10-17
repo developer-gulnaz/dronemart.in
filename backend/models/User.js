@@ -17,6 +17,10 @@ const userSchema = mongoose.Schema(
     // Added fields
     statusTag: { type: String, default: "New" },
     modifiedAt: { type: Date },
+
+    resetOTP: String,
+    resetOTPExpires: Date,
+
   },
   { timestamps: true }
 );

@@ -45,6 +45,7 @@ async function loadDashboardStatus() {
     document.getElementById("totalUsers").textContent = data.totalUsers || "0";
     document.getElementById("newLeads").textContent = data.newLeads || "0";
     document.getElementById("newOrders").textContent = data.newOrders || "0";
+    document.getElementById("repairRequets").textContent = data.repairRequets || "0";
     document.getElementById("revenue").textContent = `₹${data.revenue || "0"}`;
   } catch (err) {
     console.error("Error loading dashboard status:", err);
@@ -62,7 +63,7 @@ async function loadUsers() {
       return;
     }
 
-    console.log("Recent Users from DB:", users);
+    // console.log("Recent Users from DB:", users);
     const tbody = document.querySelector("#usersTable tbody");
     tbody.innerHTML = "";
 

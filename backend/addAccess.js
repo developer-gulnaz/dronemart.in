@@ -19,12 +19,12 @@ async function seedAccessories() {
                 productCategory: "agriculture",
                 stock: 5,
                 inStock: true,
-                image: "assets/img/product/specialized/hobbywing-motor-X9.webp",
+                image: "/assets/img/product/specialized/hobbywing-motor-X9.webp",
                 thumbnails: [
-                    "assets/img/product/specialized/hobbywing-motor-X9.webp",
-                    "assets/img/product/specialized/hobbywing-motor-X92.webp",
-                    "assets/img/product/specialized/hobbywing-motor-X93.webp",
-                    "assets/img/product/specialized/hobbywing-motor-X94.webp"
+                    "/assets/img/product/specialized/hobbywing-motor-X9.webp",
+                    "/assets/img/product/specialized/hobbywing-motor-X92.webp",
+                    "/assets/img/product/specialized/hobbywing-motor-X93.webp",
+                    "/assets/img/product/specialized/hobbywing-motor-X94.webp"
                 ],
                 description: `The Hobbywing XROTOR X9 Motor Combo is a high-performance brushless motor set designed for heavy-lift drones.
                             It comes with a built-in 80A FOC ESC and an optimized propeller for smooth, efficient flight.
@@ -63,11 +63,11 @@ async function seedAccessories() {
                 productCategory: "agriculture",
                 stock: 2,
                 inStock: true,
-                image: "assets/img/product/specialized/agroWingz_AW6_10L_Frame.jpg",
+                image: "/assets/img/product/specialized/agroWingz_AW6_10L_Frame.jpg",
                 thumbnails: [
-                    "assets/img/product/specialized/agroWingz_AW6_10L_Frame.jpg",
-                    "assets/img/product/specialized/agroWingz_AW6_10L_Frame1.jpg",
-                    "assets/img/product/specialized/agroWingz_AW6_10L_Frame2.jpg"
+                    "/assets/img/product/specialized/agroWingz_AW6_10L_Frame.jpg",
+                    "/assets/img/product/specialized/agroWingz_AW6_10L_Frame1.jpg",
+                    "/assets/img/product/specialized/agroWingz_AW6_10L_Frame2.jpg"
                 ],
                 description: `The EFT 6A10L 6-Axis Agricultural Drone Frame is a sturdy, ultra-lightweight, and highly precise frame, designed for heavy-duty agricultural use. 
                         Made from advanced engineering materials, it is super strong, smooth, and easy to assemble/disassemble. Foldable propellers and durable construction ensure resilience in harsh environments.`,
@@ -108,10 +108,10 @@ async function seedAccessories() {
                 productCategory: "agriculture",
                 stock: 2,
                 inStock: true,
-                image: "assets/img/product/specialized/agroWingz_AW6_16L_Frame.jpg",
+                image: "/assets/img/product/specialized/agroWingz_AW6_16L_Frame.jpg",
                 thumbnails: [
-                    "assets/img/product/specialized/agroWingz_AW6_16L_Frame.jpg",
-                    "assets/img/product/specialized/agroWingz_AW6_16L_Frame2.jpg",
+                    "/assets/img/product/specialized/agroWingz_AW6_16L_Frame.jpg",
+                    "/assets/img/product/specialized/agroWingz_AW6_16L_Frame2.jpg",
                 ],
                 description: `The 6A16L 16L 6-Axis Agricultural Drone Frame is a sturdy, ultra-lightweight, and highly precise frame designed for heavy-duty agricultural use. 
                             Made from advanced engineering materials, it is super strong, smooth, and easy to assemble/disassemble. Foldable propellers and durable construction ensure resilience in harsh environments. Ideal for spraying and other agricultural tasks with high efficiency.`,
@@ -154,11 +154,11 @@ async function seedAccessories() {
                 productCategory: "agriculture",
                 stock: 5,
                 inStock: true,
-                image: "assets/img/product/specialized/agroWingz_AW4_10L_Frame1.jpg",
+                image: "/assets/img/product/specialized/agroWingz_AW4_10L_Frame1.jpg",
                 thumbnails: [
-                    "assets/img/product/specialized/agroWingz_AW4_10L_Frame1.jpg",
-                    "assets/img/product/specialized/agroWingz_AW4_10L_Frame.jpg",
-                    "assets/img/product/specialized/agroWingz_AW4_10L_Frame2.jpg"
+                    "/assets/img/product/specialized/agroWingz_AW4_10L_Frame1.jpg",
+                    "/assets/img/product/specialized/agroWingz_AW4_10L_Frame.jpg",
+                    "/assets/img/product/specialized/agroWingz_AW4_10L_Frame2.jpg"
                 ],
                 description: `The 4A10L 10L 4-Axis Agricultural Drone Frame is a sturdy, ultra-lightweight, and highly precise frame designed for heavy-duty agricultural use. 
         Made from advanced engineering materials, it is super strong, smooth, and easy to assemble/disassemble. Foldable propellers and durable construction ensure resilience in harsh environments. Ideal for spraying and other agricultural tasks with high efficiency.`,
@@ -201,12 +201,12 @@ async function seedAccessories() {
                 productCategory: "agriculture",
                 stock: 2,
                 inStock: true,
-                image: "assets/img/product/specialized/agroWingz_AW4_16L_Frame2.jpg",
+                image: "/assets/img/product/specialized/agroWingz_AW4_16L_Frame2.jpg",
                 thumbnails: [
-                    "assets/img/product/specialized/agroWingz_AW4_16L_Frame1.jpg",
-                    "assets/img/product/specialized/agroWingz_AW4_16L_Frame2.jpg",
-                    "assets/img/product/specialized/agroWingz_AW4_16L_Frame3.jpg",
-                    "assets/img/product/specialized/agroWingz_AW4_16L_Frame4.jpg"
+                    "/assets/img/product/specialized/agroWingz_AW4_16L_Frame1.jpg",
+                    "/assets/img/product/specialized/agroWingz_AW4_16L_Frame2.jpg",
+                    "/assets/img/product/specialized/agroWingz_AW4_16L_Frame3.jpg",
+                    "/assets/img/product/specialized/agroWingz_AW4_16L_Frame4.jpg"
                 ],
                 description: `The 4A16L 16L 4-Axis Agricultural Drone Frame is a sturdy, ultra-lightweight, and highly precise frame designed for heavy-duty agricultural use. 
         Made from advanced engineering materials, it is super strong, smooth, and easy to assemble/disassemble. Comes with folding propellers and durable construction, ensuring resilience in harsh environments. Ideal for spraying and other agricultural tasks efficiently.`,
@@ -249,11 +249,11 @@ async function seedAccessories() {
                 productCategory: "agriculture",
                 stock: 8,
                 inStock: true,
-                image: "assets/img/product/specialized/AW10Ltank1.png",
+                image: "/assets/img/product/specialized/AW10Ltank1.png",
                 thumbnails: [
-                    "assets/img/product/specialized/AW10Ltank.png",
-                    "assets/img/product/specialized/AW10Ltank1.png",
-                    "assets/img/product/specialized/AW10Ltank2.png",
+                    "/assets/img/product/specialized/AW10Ltank.png",
+                    "/assets/img/product/specialized/AW10Ltank1.png",
+                    "/assets/img/product/specialized/AW10Ltank2.png",
                 ],
                 shortDescription: "10L high-density plastic tank with integrated battery plate for agricultural drones — lightweight, durable, and easy to install.",
                 description: `The EFT E Series 10L Tank with Battery Plate is engineered for agricultural drone applications, offering an optimal balance of capacity, durability, and ease of installation. Made from chemical-resistant HDPE plastic, this translucent tank allows easy liquid level checks. Designed to fit EFT G and E series frames, it ensures perfect weight balance and reliable mounting. Ideal for spraying, fertilizing, and custom UAV builds, it’s a trusted original EFT spare or upgrade part for professional use.`,
@@ -317,10 +317,10 @@ async function seedAccessories() {
                 productCategory: "agriculture",
                 stock: 5,
                 inStock: true,
-                image: "assets/img/product/specialized/AW16Ltank.png",
+                image: "/assets/img/product/specialized/AW16Ltank.png",
                 thumbnails: [
-                    "assets/img/product/specialized//AW16Ltank.png",
-                    "assets/img/product/specialized//AW16Ltank1.png"
+                    "/assets/img/product/specialized//AW16Ltank.png",
+                    "/assets/img/product/specialized//AW16Ltank1.png"
                 ],
                 shortDescription: "Durable 16L tank with integrated battery plate for agriculture drones — enhances spraying efficiency with balanced design and easy installation.",
                 description: `The EFT 16L Standard Tank with Battery Plate Set is a complete payload solution for agricultural drones. Designed for high-volume spraying applications, it combines a robust HDPE tank and integrated battery plate for superior balance and easy setup. Ideal for fertilizer and pesticide applications, it ensures consistent spray performance, efficient installation, and long service life. Perfect for professional drone builders and operators looking to boost flight efficiency and stability.`,
@@ -380,11 +380,11 @@ async function seedAccessories() {
                 productCategory: "agriculture",
                 stock: 6,
                 inStock: true,
-                image: "assets/img/product/specialized/hobbywing-8l-brushless-water-pump.jpg",
+                image: "/assets/img/product/specialized/hobbywing-8l-brushless-water-pump.jpg",
                 thumbnails: [
-                    "assets/img/product/specialized/hobbywing-8l-brushless-water-pump.jpg",
-                    "assets/img/product/specialized/hobbywing-8l-brushless-water-pump1.jpg",
-                    "assets/img/product/specialized/hobbywing-8l-brushless-water-pump2.jpg"
+                    "/assets/img/product/specialized/hobbywing-8l-brushless-water-pump.jpg",
+                    "/assets/img/product/specialized/hobbywing-8l-brushless-water-pump1.jpg",
+                    "/assets/img/product/specialized/hobbywing-8l-brushless-water-pump2.jpg"
                 ],
                 shortDescription: "High-performance 8L/min brushless water pump for agricultural drones — delivers stable, powerful liquid spraying with IP67 protection and 500+ hour lifespan.",
                 description: `The HOBBYWING 8L Brushless Water Pump is engineered for high-efficiency agricultural and industrial drone spraying systems. With a robust brushless motor and IP67 waterproof protection, it delivers a powerful, consistent water flow while maintaining durability and stability in harsh conditions. Ideal for 20–30L drone applications, it ensures uniform liquid distribution for precision spraying, cleaning, and irrigation tasks.`,
@@ -445,10 +445,10 @@ async function seedAccessories() {
                 productCategory: "agriculture",
                 stock: 5,
                 inStock: true,
-                image: "assets/img/product/specialized/rtk-mount.png",
+                image: "/assets/img/product/specialized/rtk-mount.png",
                 thumbnails: [
-                    "assets/img/product/specialized/rtk-mount.png",
-                    "assets/img/product/specialized/rtk-mount1.jpg"
+                    "/assets/img/product/specialized/rtk-mount.png",
+                    "/assets/img/product/specialized/rtk-mount1.jpg"
                 ],
                 shortDescription: "Foldable aluminum alloy GPS RTK mount for EFT agricultural drones. Durable, lightweight, and easy to install for enhanced precision mapping and flight control.",
                 description: `The EFT Agricultural Drone GPS RTK Mount is a compact, foldable bracket designed for precision agricultural drones. Crafted from high-strength aluminum alloy, this mount offers excellent durability and corrosion resistance. Its quick installation mechanism allows secure and firm attachment of GPS RTK modules, ensuring accurate navigation and data transmission for agricultural operations. The foldable design makes it easy to store, transport, and deploy in the field.`,
@@ -502,9 +502,9 @@ async function seedAccessories() {
                 productCategory: "agriculture",
                 stock: 4,
                 inStock: true,
-                image: "assets/img/product/specialized/hobbywing-5l-brushless-water-pump.webp",
+                image: "/assets/img/product/specialized/hobbywing-5l-brushless-water-pump.webp",
                 thumbnails: [
-                    "assets/img/product/specialized/hobbywing-5l-brushless-water-pump.webp"
+                    "/assets/img/product/specialized/hobbywing-5l-brushless-water-pump.webp"
                 ],
                 shortDescription: "High-efficiency 5L brushless water pump for agricultural drones, featuring temperature and current protection, long lifespan, and IP67 waterproof design.",
                 description: `The HOBBYWING 5L Brushless Water Pump is a high-performance EFC (Electrical Flow Control) pump designed specifically for agricultural drones. 
@@ -568,12 +568,12 @@ async function seedAccessories() {
                 productCategory: "agriculture",
                 stock: 8,
                 inStock: true,
-                image: "assets/img/product/specialized/agriculture-drone-spray-nozzle.webp",
+                image: "/assets/img/product/specialized/agriculture-drone-spray-nozzle.webp",
                 thumbnails: [
-                    "assets/img/product/specialized/agriculture-drone-spray-nozzle.webp",
-                    "assets/img/product/specialized/agriculture-drone-spray-nozzle1.webp",
-                    "assets/img/product/specialized/agriculture-drone-spray-nozzle2.webp",
-                    "assets/img/product/specialized/agriculture-drone-spray-nozzle3.webp"
+                    "/assets/img/product/specialized/agriculture-drone-spray-nozzle.webp",
+                    "/assets/img/product/specialized/agriculture-drone-spray-nozzle1.webp",
+                    "/assets/img/product/specialized/agriculture-drone-spray-nozzle2.webp",
+                    "/assets/img/product/specialized/agriculture-drone-spray-nozzle3.webp"
                 ],
                 shortDescription: "Dual spray heads for agricultural drones, ensuring even distribution, high durability, and easy installation.",
                 description: `The Agriculture Drone Dual Header Spray Nozzle is designed to improve efficiency in drone-based crop spraying. 
@@ -627,12 +627,12 @@ async function seedAccessories() {
                 productCategory: "agriculture",
                 stock: 4,
                 inStock: true,
-                image: "assets/img/product/specialized/eft5l-spraying-system-set.png",
+                image: "/assets/img/product/specialized/eft5l-spraying-system-set.png",
                 thumbnails: [
-                    "assets/img/product/specialized/eft-5l-spraying-system-set",
-                    "assets/img/product/specialized/eft-5l-spraying-system-set1",
-                    "assets/img/product/specialized/eft-5l-spraying-system-set2",
-                    "assets/img/product/specialized/eft-5l-spraying-system-set3",
+                    "/assets/img/product/specialized/eft-5l-spraying-system-set",
+                    "/assets/img/product/specialized/eft-5l-spraying-system-set1",
+                    "/assets/img/product/specialized/eft-5l-spraying-system-set2",
+                    "/assets/img/product/specialized/eft-5l-spraying-system-set3",
                 ],
                 shortDescription: "Complete 5L spraying system with brushless pump and high-pressure nozzles for precise agricultural applications.",
                 description: `The EFT 5L Spraying System Set combines a powerful 5L brushless water pump with precision pressure nozzles to deliver a reliable and efficient spraying solution. Ideal for agricultural drones, gardening, or surface cleaning, this system ensures consistent spray patterns and controlled liquid application. Designed for durability and long-lasting performance, it operates quietly while handling demanding conditions. The kit includes all necessary tubing and connectors, providing a ready-to-use setup for effective spraying over large areas.`,
@@ -700,12 +700,12 @@ async function seedAccessories() {
                 productCategory: "agriculture",
                 stock: 3,
                 inStock: true,
-                image: "assets/img/product/specializedEFT-Prop-X6-CW.jpg",
+                image: "/assets/img/product/specializedEFT-Prop-X6-CW.jpg",
                 thumbnails: [
-                    "assets/img/product/specializedEFT-Prop-X6-CW.jpg",
-                    "assets/img/product/specializedEFT-Prop-X6-CW1.jpg",
-                    "assets/img/product/specializedEFT-Prop-X6-CW3.jpg",
-                    "assets/img/product/specializedEFT-Prop-X6-CW4.jpg",
+                    "/assets/img/product/specializedEFT-Prop-X6-CW.jpg",
+                    "/assets/img/product/specializedEFT-Prop-X6-CW1.jpg",
+                    "/assets/img/product/specializedEFT-Prop-X6-CW3.jpg",
+                    "/assets/img/product/specializedEFT-Prop-X6-CW4.jpg",
                 ],
                 shortDescription: "High-performance CW propellers with hub for smooth and stable drone flight.",
                 description: `The Hobbywing X6 Plus 2480 Propellers with Hub – CW are precision-engineered for drones and multirotors. Clockwise (CW) rotation ensures stable flight, while high-quality materials provide durability and resistance to damage. The included hub guarantees secure and easy installation, making these propellers ideal for recreational, professional, or aerial photography drones. Optimized for thrust and lift, they enhance maneuverability and overall flight performance.`,
@@ -763,13 +763,13 @@ async function seedAccessories() {
                 productCategory: "fpv",
                 stock: 2,
                 inStock: true,
-                image: "assets/img/product/specialized/speedybee-bee25-frame.jpg",
+                image: "/assets/img/product/specialized/speedybee-bee25-frame.jpg",
                 thumbnails: [
-                    "assets/img/product/specialized/speedybee-bee25-frame.jpg",
-                    "assets/img/product/specialized/speedybee-bee25-frame2.jpg",
-                    "assets/img/product/specialized/speedybee-bee25-frame3.jpg",
-                    "assets/img/product/specialized/speedybee-bee25-frame4.jpg",
-                    "assets/img/product/specialized/speedybee-bee25-frame5.jpg",
+                    "/assets/img/product/specialized/speedybee-bee25-frame.jpg",
+                    "/assets/img/product/specialized/speedybee-bee25-frame2.jpg",
+                    "/assets/img/product/specialized/speedybee-bee25-frame3.jpg",
+                    "/assets/img/product/specialized/speedybee-bee25-frame4.jpg",
+                    "/assets/img/product/specialized/speedybee-bee25-frame5.jpg",
                 ],
                 shortDescription: "Durable 120mm FPV frame with integrated protection ring and wireless tuning support for Bee25 drones.",
                 description: `The SpeedyBee Bee25 Wireless Tuning Frame is designed for FPV enthusiasts who value durability, modularity, 
@@ -838,13 +838,13 @@ async function seedAccessories() {
                 sku: "SB-BEE35FRM",
                 stock: 25,
                 inStock: true,
-                image: "assets/img/product/specialized/speedybee-35-frame.jpg",
+                image: "/assets/img/product/specialized/speedybee-35-frame.jpg",
                 thumbnails: [
-                    "assets/img/product/specialized/speedybee-35-frame.jpg",
-                    "assets/img/product/specialized/speedybee-35-frame2.jpg",
-                    "assets/img/product/specialized/speedybee-35-frame3.jpg",
-                    "assets/img/product/specialized/speedybee-35-frame4.jpg",
-                    "assets/img/product/specialized/speedybee-35-frame5.jpg",
+                    "/assets/img/product/specialized/speedybee-35-frame.jpg",
+                    "/assets/img/product/specialized/speedybee-35-frame2.jpg",
+                    "/assets/img/product/specialized/speedybee-35-frame3.jpg",
+                    "/assets/img/product/specialized/speedybee-35-frame4.jpg",
+                    "/assets/img/product/specialized/speedybee-35-frame5.jpg",
                 ],
                 shortDescription: "Durable 3.5-inch FPV frame with aerospace-grade aluminum parts, advanced cooling, and modular design.",
                 description: `The SpeedyBee Bee35 3.5 inch Frame is a premium FPV cinewhoop frame designed for HD systems like the DJI O3 Air Unit and RunCam Link. 
@@ -923,13 +923,13 @@ async function seedAccessories() {
                 sku: "SB-F4MINI-STACK",
                 stock: 3,
                 inStock: true,
-                image: "assets/img/product/specialized/sb-mini-bls.jpg",
+                image: "/assets/img/product/specialized/sb-mini-bls.jpg",
                 thumbnails: [
-                    "assets/img/product/specialized/sb-mini-bls.jpg",
-                    "assets/img/product/specialized/sb-mini-bls1.jpg",
-                    "assets/img/product/specialized/sb-mini-bls2.jpg",
-                    "assets/img/product/specialized/sb-mini-bls3.jpg",
-                    "assets/img/product/specialized/sb-mini-bls4.jpg",
+                    "/assets/img/product/specialized/sb-mini-bls.jpg",
+                    "/assets/img/product/specialized/sb-mini-bls1.jpg",
+                    "/assets/img/product/specialized/sb-mini-bls2.jpg",
+                    "/assets/img/product/specialized/sb-mini-bls3.jpg",
+                    "/assets/img/product/specialized/sb-mini-bls4.jpg",
                 ],
                 shortDescription: "Compact 20x20mm FPV flight stack with F405 MCU, 35A 4-in-1 ESC, Bluetooth tuning, and 6S support.",
                 description: `The SpeedyBee F405 Mini BLS 35A 20x20 Stack offers exceptional performance in a compact form. 
@@ -1032,12 +1032,12 @@ async function seedAccessories() {
                 sku: "SB-O4PRO-ND-5PCS",
                 stock: 50,
                 inStock: true,
-                image: "assets/img/product/specialized/speedybee-nd-uv-cpl-o4-set.jpg",
+                image: "/assets/img/product/specialized/speedybee-nd-uv-cpl-o4-set.jpg",
                 thumbnails: [
-                    "assets/img/product/specialized/speedybee-nd-uv-cpl-o4-set.jpg",
-                    "assets/img/product/specialized/speedybee-nd-uv-cpl-o4-set_2.jpg",
-                    "assets/img/product/specialized/speedybee-nd-uv-cpl-o4-set_3.jpg",
-                    "assets/img/product/specialized/speedybee-nd-uv-cpl-o4-set_4.jpg"
+                    "/assets/img/product/specialized/speedybee-nd-uv-cpl-o4-set.jpg",
+                    "/assets/img/product/specialized/speedybee-nd-uv-cpl-o4-set_2.jpg",
+                    "/assets/img/product/specialized/speedybee-nd-uv-cpl-o4-set_3.jpg",
+                    "/assets/img/product/specialized/speedybee-nd-uv-cpl-o4-set_4.jpg"
                 ],
                 shortDescription: "Premium ND, UV, and CPL filter set for SpeedyBee BEE25 and Master3X FPV drones using the O4 Air Unit Pro.",
                 description: `The SpeedyBee ND/UV/CPL Filter Set is specially designed for the DJI O4 Air Unit Pro, enhancing image quality and protecting the lens during FPV flights. 

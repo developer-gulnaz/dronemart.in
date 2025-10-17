@@ -6,7 +6,7 @@
 * License: https://bootstrapmade.com/license/
 */
 
-(function() {
+(function () {
   "use strict";
 
   /**
@@ -26,7 +26,7 @@
    * Init swiper sliders
    */
   function initSwiper() {
-    document.querySelectorAll(".init-swiper").forEach(function(swiperElement) {
+    document.querySelectorAll(".init-swiper").forEach(function (swiperElement) {
       let config = JSON.parse(
         swiperElement.querySelector(".swiper-config").innerHTML.trim()
       );
@@ -71,7 +71,7 @@
    * Toggle mobile nav dropdowns
    */
   document.querySelectorAll('.navmenu .toggle-dropdown').forEach(navmenu => {
-    navmenu.addEventListener('click', function(e) {
+    navmenu.addEventListener('click', function (e) {
       e.preventDefault();
       this.parentNode.classList.toggle('active');
       this.parentNode.nextElementSibling.classList.toggle('dropdown-active');
@@ -146,9 +146,9 @@
 
   }
 
-  document.querySelectorAll('.countdown').forEach(function(countDownItem) {
+  document.querySelectorAll('.countdown').forEach(function (countDownItem) {
     updateCountDown(countDownItem);
-    setInterval(function() {
+    setInterval(function () {
       updateCountDown(countDownItem);
     }, 1000);
   });
@@ -167,7 +167,7 @@
 
     // Decrease quantity buttons
     decreaseButtons.forEach(btn => {
-      btn.addEventListener('click', function() {
+      btn.addEventListener('click', function () {
         const quantityInput = btn.closest('.quantity-selector').querySelector('.quantity-input');
         let currentValue = parseInt(quantityInput.value);
         if (currentValue > 1) {
@@ -178,7 +178,7 @@
 
     // Increase quantity buttons
     increaseButtons.forEach(btn => {
-      btn.addEventListener('click', function() {
+      btn.addEventListener('click', function () {
         const quantityInput = btn.closest('.quantity-selector').querySelector('.quantity-input');
         let currentValue = parseInt(quantityInput.value);
         if (currentValue < parseInt(quantityInput.getAttribute('max'))) {
@@ -189,7 +189,7 @@
 
     // Manual quantity inputs
     quantityInputs.forEach(input => {
-      input.addEventListener('change', function() {
+      input.addEventListener('change', function () {
         let currentValue = parseInt(input.value);
         const min = parseInt(input.getAttribute('min'));
         const max = parseInt(input.getAttribute('max'));
@@ -205,7 +205,7 @@
 
     // Remove item buttons
     removeButtons.forEach(btn => {
-      btn.addEventListener('click', function() {
+      btn.addEventListener('click', function () {
         btn.closest('.cart-item').remove();
       });
     });
@@ -258,7 +258,7 @@
       if (!thumbnails.length || !mainImage) return;
 
       thumbnails.forEach(thumbnail => {
-        thumbnail.addEventListener('click', function() {
+        thumbnail.addEventListener('click', function () {
           // Get image path from data attribute
           const imageSrc = this.getAttribute('data-image');
 
@@ -351,7 +351,7 @@
       updateDisplays();
 
       // Min range input event
-      minRange.addEventListener('input', function() {
+      minRange.addEventListener('input', function () {
         minValue = parseInt(this.value);
 
         // Ensure min doesn't exceed max
@@ -367,7 +367,7 @@
       });
 
       // Max range input event
-      maxRange.addEventListener('input', function() {
+      maxRange.addEventListener('input', function () {
         maxValue = parseInt(this.value);
 
         // Ensure max isn't less than min
@@ -383,7 +383,7 @@
       });
 
       // Min price input change
-      minPriceInput.addEventListener('change', function() {
+      minPriceInput.addEventListener('change', function () {
         let value = parseInt(this.value) || sliderMin;
 
         // Ensure value is within range
@@ -403,7 +403,7 @@
       });
 
       // Max price input change
-      maxPriceInput.addEventListener('change', function() {
+      maxPriceInput.addEventListener('change', function () {
         let value = parseInt(this.value) || sliderMax;
 
         // Ensure value is within range
@@ -424,7 +424,7 @@
 
       // Apply button click
       if (applyButton) {
-        applyButton.addEventListener('click', function() {
+        applyButton.addEventListener('click', function () {
           // This would typically trigger a form submission or AJAX request
           console.log(`Applying price filter: ₹${minValue} - ₹${maxValue}`);
 
@@ -494,21 +494,21 @@
 
     // Step Navigation
     nextButtons.forEach(button => {
-      button.addEventListener('click', function() {
+      button.addEventListener('click', function () {
         const nextStep = parseInt(this.getAttribute('data-next'));
         navigateToStep(nextStep);
       });
     });
 
     prevButtons.forEach(button => {
-      button.addEventListener('click', function() {
+      button.addEventListener('click', function () {
         const prevStep = parseInt(this.getAttribute('data-prev'));
         navigateToStep(prevStep);
       });
     });
 
     editButtons.forEach(button => {
-      button.addEventListener('click', function() {
+      button.addEventListener('click', function () {
         const editStep = parseInt(this.getAttribute('data-edit'));
         navigateToStep(editStep);
       });
@@ -516,7 +516,7 @@
 
     // Payment Method Selection for multi-step checkout
     paymentMethods.forEach(header => {
-      header.addEventListener('click', function() {
+      header.addEventListener('click', function () {
         // Get the radio input within this header
         const radio = this.querySelector('input[type="radio"]');
         if (radio) {
@@ -547,7 +547,7 @@
 
     // Order Summary Toggle (Mobile)
     if (summaryToggle) {
-      summaryToggle.addEventListener('click', function() {
+      summaryToggle.addEventListener('click', function () {
         this.classList.toggle('collapsed');
 
         if (orderSummaryContent) {
@@ -571,7 +571,7 @@
     // Form Validation for multi-step checkout
     const forms = document.querySelectorAll('.checkout-form-element');
     forms.forEach(form => {
-      form.addEventListener('submit', function(e) {
+      form.addEventListener('submit', function (e) {
         e.preventDefault();
 
         // Basic validation
@@ -670,7 +670,7 @@
     const paymentOptions = document.querySelectorAll('.payment-option input[type="radio"]');
 
     paymentOptions.forEach(option => {
-      option.addEventListener('change', function() {
+      option.addEventListener('change', function () {
         // Update active class on payment options
         document.querySelectorAll('.payment-option').forEach(opt => {
           opt.classList.remove('active');
@@ -692,7 +692,7 @@
     const checkoutForm = document.querySelector('.checkout-form');
 
     if (checkoutForm) {
-      checkoutForm.addEventListener('submit', function(e) {
+      checkoutForm.addEventListener('submit', function (e) {
         e.preventDefault();
 
         // Basic validation
@@ -761,7 +761,7 @@
       // Add input event listeners to clear validation styling when user types
       const formInputs = checkoutForm.querySelectorAll('input, select, textarea');
       formInputs.forEach(input => {
-        input.addEventListener('input', function() {
+        input.addEventListener('input', function () {
           if (this.value.trim()) {
             this.classList.remove('is-invalid');
           }
@@ -775,7 +775,7 @@
     // Card number input mask (format: XXXX XXXX XXXX XXXX)
     const cardNumberInput = document.getElementById('card-number');
     if (cardNumberInput) {
-      cardNumberInput.addEventListener('input', function(e) {
+      cardNumberInput.addEventListener('input', function (e) {
         let value = e.target.value.replace(/\D/g, '');
         if (value.length > 16) value = value.slice(0, 16);
 
@@ -795,7 +795,7 @@
     // Expiry date input mask (format: MM/YY)
     const expiryInput = document.getElementById('expiry');
     if (expiryInput) {
-      expiryInput.addEventListener('input', function(e) {
+      expiryInput.addEventListener('input', function (e) {
         let value = e.target.value.replace(/\D/g, '');
         if (value.length > 4) value = value.slice(0, 4);
 
@@ -811,7 +811,7 @@
     // CVV input mask (3-4 digits)
     const cvvInput = document.getElementById('cvv');
     if (cvvInput) {
-      cvvInput.addEventListener('input', function(e) {
+      cvvInput.addEventListener('input', function (e) {
         let value = e.target.value.replace(/\D/g, '');
         if (value.length > 4) value = value.slice(0, 4);
         e.target.value = value;
@@ -821,7 +821,7 @@
     // Phone number input mask
     const phoneInput = document.getElementById('phone');
     if (phoneInput) {
-      phoneInput.addEventListener('input', function(e) {
+      phoneInput.addEventListener('input', function (e) {
         let value = e.target.value.replace(/\D/g, '');
         if (value.length > 10) value = value.slice(0, 10);
 
@@ -843,7 +843,7 @@
     // ZIP code input mask (5 digits)
     const zipInput = document.getElementById('zip');
     if (zipInput) {
-      zipInput.addEventListener('input', function(e) {
+      zipInput.addEventListener('input', function (e) {
         let value = e.target.value.replace(/\D/g, '');
         if (value.length > 5) value = value.slice(0, 5);
         e.target.value = value;
@@ -857,7 +857,7 @@
     const promoButton = document.querySelector('.promo-code button');
 
     if (promoInput && promoButton) {
-      promoButton.addEventListener('click', function() {
+      promoButton.addEventListener('click', function () {
         const promoCode = promoInput.value.trim();
 
         if (promoCode) {
@@ -929,12 +929,12 @@
       // Fallback for when Bootstrap JS is not loaded
       const cvvHint = document.querySelector('.cvv-hint');
       if (cvvHint) {
-        cvvHint.addEventListener('mouseenter', function() {
+        cvvHint.addEventListener('mouseenter', function () {
           this.setAttribute('data-original-title', this.getAttribute('title'));
           this.setAttribute('title', '');
         });
 
-        cvvHint.addEventListener('mouseleave', function() {
+        cvvHint.addEventListener('mouseleave', function () {
           this.setAttribute('title', this.getAttribute('data-original-title'));
         });
       }
@@ -955,4 +955,93 @@
     });
   });
 
+
+  // 🧩 Modern Center Dialog Box
+window.showDialog = function (message, type = "info") {
+  // Overlay background
+  const overlay = document.createElement("div");
+  overlay.className = "dialog-overlay";
+  Object.assign(overlay.style, {
+    position: "fixed",
+    top: "0",
+    left: "0",
+    width: "100vw",
+    height: "100vh",
+    background: "rgba(0,0,0,0.4)",
+    zIndex: "9998",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    opacity: "0",
+    transition: "opacity 0.3s ease",
+  });
+
+  // Dialog box
+  const dialog = document.createElement("div");
+  dialog.className = "dialog-box";
+  dialog.textContent = message;
+
+  const colors = {
+    success: "#4caf50",
+    error: "#f44336",
+    info: "#2196f3",
+  };
+
+  Object.assign(dialog.style, {
+    background: "#fff",
+    borderRadius: "12px",
+    padding: "24px 28px",
+    color: "#333",
+    fontSize: "16px",
+    fontWeight: "500",
+    maxWidth: "400px",
+    width: "90%",
+    textAlign: "center",
+    boxShadow: "0 8px 24px rgba(0,0,0,0.25)",
+    transform: "scale(0.9)",
+    opacity: "0",
+    transition: "all 0.25s ease",
+    borderTop: `6px solid ${colors[type] || colors.info}`,
+  });
+
+  // ✅ Add icon or color line
+  const icon = document.createElement("div");
+  icon.innerHTML =
+    type === "success"
+      ? "✅"
+      : type === "error"
+        ? "❌"
+        : "ℹ️";
+  Object.assign(icon.style, {
+    fontSize: "28px",
+    marginBottom: "10px",
+  });
+
+  const msg = document.createElement("div");
+  msg.textContent = message;
+
+  dialog.textContent = "";
+  dialog.appendChild(icon);
+  dialog.appendChild(msg);
+
+  overlay.appendChild(dialog);
+  document.body.appendChild(overlay);
+
+  // Fade in
+  setTimeout(() => {
+    overlay.style.opacity = "1";
+    dialog.style.opacity = "1";
+    dialog.style.transform = "scale(1)";
+  }, 10);
+
+  // Auto close after 2.5s
+  setTimeout(() => {
+    dialog.style.opacity = "0";
+    dialog.style.transform = "scale(0.9)";
+    overlay.style.opacity = "0";
+    setTimeout(() => overlay.remove(), 300);
+  }, 1500);
+};
+
 })();
+

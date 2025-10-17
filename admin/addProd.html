@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Add Product</title>
+<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+<style>
+    .section-block { margin-bottom: 20px; }
+    .nested-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .spec-item { border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; }
+    .spec-header { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 5px; align-items: center; }
+    .nested-specs { margin-left: 15px; }
+    .collapsed .nested-specs { display: none; }
+    .form-floating input, .form-floating textarea { width: 100%; }
+    .image-preview img { max-width: 80px; margin: 2px; }
+    .box-item { margin-bottom: 10px; }
+</style>
+</head>
+<body>
+<div class="container my-4">
+    <form id="productForm" enctype="multipart/form-data">
+        <h4>Add Product</h4>
+
+        <!-- Product Title -->
+        <div class="form-floating mb-3">
+            <input type="text" name="title" id="title" placeholder="Product Title" class="form-control" required>
+            <label>Title</label>
+        </div>
+
+        <!-- Brand & Category as input -->
+        <div class="form-floating mb-3">
+            <input type="text" name="brand" placeholder="Brand" class="form-control" required>
+            <label>Brand</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" name="category" placeholder="Category" class="form-control" required>
+            <label>Category</label>
+        </div>
+
+        <!-- Price & Sale Price -->
+        <div class="form-floating mb-3">
+            <input type="number" name="price" placeholder="Price" class="form-control" required>
+            <label>Price</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="number" name="salePrice" placeholder="Sale Price" class="form-control">
+            <label>Sale Price</label>
+        </div>
+
+        <!-- Stock -->
+        <div class="form-floating mb-3">
+            <input type="number" name="stock" placeholder="Stock" class="form-control">
+            <label>Stock</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" name="badge" placeholder="Badge" class="form-control">
+            <label>Badge</label>
+        </div>
+
+        <!-- Description & Short Description -->
+        <div class="form-floating mb-3">
+            <textarea name="description" placeholder="Description" class="form-control" style="height:80px;"></textarea>
+            <label>Description</label>
+        </div>
+        <div class="form-floating mb-3">
+            <textarea name="shortDescription" placeholder="Short Description" class="form-control" style="height:60px;"></textarea>
+            <label>Short Description</label>
+        </div>
+
+        <!-- Meta info -->
+        <div class="form-floating mb-3">
+            <input type="text" name="metaTitle" placeholder="Meta Title" class="form-control">
+            <label>Meta Title</label>
+        </div>
+        <div class="form-floating mb-3">
+            <textarea name="metaDescription" placeholder="Meta Description" class="form-control" style="height:60px;"></textarea>
+            <label>Meta Description</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" name="keywords" placeholder="Keywords" class="form-control">
+            <label>Keywords</label>
+        </div>
+
+        <!-- Images -->
+        <div class="section-block">
+            <h6>Main Image</h6>
+            <input type="file" name="image" accept="image/*" class="form-control">
+            <div class="image-preview" id="mainPreview"></div>
+        </div>
+
+        <div class="section-block">
+            <h6>Thumbnails</h6>
+            <input type="file" name="thumbnails" multiple accept="image/*" class="form-control">
+            <div class="image-preview" id="thumbPreview"></div>
+        </div>
+
+        <!-- In The Box -->
+        <div class="section-block">
+            <h6>In The Box Items</h6>
+            <div id="inTheBoxContainer"></div>
+            <button type="button" onclick="addInTheBox()" class="btn btn-sm btn-success mt-2">+ Add Item</button>
+        </div>
+
+        <!-- Specs -->
+        <div class="section-block">
+            <h6>Specs</h6>
+            <div id="specsContainer"></div>
+            <button type="button" onclick="addSpec()" class="btn btn-sm btn-success mt-2">+ Add Spec</button>
+        </div>
+
+        <!-- Featured -->
+        <div class="form-check mb-3">
+            <input type="checkbox" name="featured" class="form-check-input" id="featured">
+            <label class="form-check-label" for="featured">Featured</label>
+        </div>
+
+        <div class="col-12 mt-3">
+            <button type="submit" class="btn btn-primary w-100">Add Product</button>
+        </div>
+    </form>
+</div>
+
+<script>
+// Generate slug from title
+function generateSlug(title){
+    return title.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g,'');
+}
+
+// ===== Specs Functions =====
+const specsContainer = document.getElementById('specsContainer');
+function addSpec(parent=null, key='', value=''){
+    const div = document.createElement('div');
+    div.classList.add('spec-item');
+    div.innerHTML = `
+        <div class="spec-header">
+            <input type="text" placeholder="Spec Header" class="spec-key form-control" value="${key}">
+            <input type="text" placeholder="Spec Value" class="spec-value form-control" value="${value}">
+            <button type="button" class="btn btn-sm btn-success">+ Nested</button>
+            <button type="button" class="btn btn-sm btn-danger">Remove</button>
+        </div>
+        <div class="nested-specs"></div>
+    `;
+    div.querySelector('.btn-success').addEventListener('click', ()=>addSpec(div));
+    div.querySelector('.btn-danger').addEventListener('click', ()=>div.remove());
+    if(parent) parent.querySelector('.nested-specs').appendChild(div);
+    else specsContainer.appendChild(div);
+}
+function buildSpecs(parent){
+    const specs={};
+    Array.from(parent.children).forEach(child=>{
+        if(child.classList.contains('spec-item')){
+            const key=child.querySelector('.spec-key').value;
+            const value=child.querySelector('.spec-value').value;
+            const nested=child.querySelector('.nested-specs');
+            if(nested && nested.children.length>0) specs[key]=buildSpecs(nested);
+            else specs[key]=value;
+        }
+    });
+    return specs;
+}
+
+// ===== In The Box Functions =====
+const inTheBoxContainer=document.getElementById('inTheBoxContainer');
+function addInTheBox(){
+    const div=document.createElement('div');
+    div.classList.add('box-item');
+    div.innerHTML=`
+        <input type="text" name="inTheBoxTitle[]" placeholder="Item Title" class="form-control mb-1" required>
+        <input type="number" name="inTheBoxQty[]" placeholder="Quantity" value="1" class="form-control mb-1">
+        <input type="file" name="inTheBoxImage[]" accept="image/*" class="form-control mb-1">
+        <button type="button" class="btn btn-sm btn-danger mb-2">Remove</button>
+    `;
+    div.querySelector('button').addEventListener('click', ()=>div.remove());
+    inTheBoxContainer.appendChild(div);
+}
+
+// ===== Form Submit =====
+document.getElementById('productForm').addEventListener('submit', async e=>{
+    e.preventDefault();
+    const form=document.getElementById('productForm');
+    const formData=new FormData(form);
+
+    // slug
+    const title=form.querySelector('[name="title"]').value;
+    formData.append('slug', generateSlug(title));
+
+    // specs
+    formData.append('specs', JSON.stringify(buildSpecs(specsContainer)));
+
+    // InTheBox array
+    const boxItems=[];
+    Array.from(inTheBoxContainer.children).forEach(div=>{
+        const title=div.querySelector('input[name="inTheBoxTitle[]"]').value;
+        const qty=div.querySelector('input[name="inTheBoxQty[]"]').value;
+        boxItems.push({title, quantity:Number(qty)});
+    });
+    formData.append('inTheBox', JSON.stringify(boxItems));
+
+    // featured checkbox
+    formData.set('featured', form.querySelector('[name="featured"]').checked);
+
+    try{
+        const res=await fetch('/api/products',{method:'POST',body:formData, credentials:'include'});
+        if(res.ok) alert('✅ Product added!');
+        else alert('❌ Error adding product');
+    }catch(err){console.error(err); alert('❌ Error adding product');}
+});
+</script>
+</body>
+</html>

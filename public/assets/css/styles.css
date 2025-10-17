@@ -724,3 +724,163 @@
     width: 100%;
     /* Full width of carousel */
 }
+
+
+/* ==========================
+   DroneMart WhatsApp Chat Widget
+   ========================== */
+
+.chat-button {
+    position: fixed;
+    bottom: 40px;
+    right: 20px;
+    background-color: #15bf78;
+    color: white;
+    border: none;
+    border-radius: 36px;
+    padding: 8px;
+    font-weight: 600;
+    font-family: "Poppins", sans-serif;
+    box-shadow: 4px 5px 10px rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 9999;
+}
+
+.chat-button:hover {
+    background-color: #119860;
+    transform: scale(1.05);
+}
+
+/* Floating bubble text */
+.chat-tooltip {
+    position: fixed;
+    bottom: 130px;
+    right: 30px;
+    background: white;
+    color: #0b64ca;
+    font-weight: 600;
+    font-size: 14px;
+    font-family: "Poppins", sans-serif;
+    border-radius: 20px;
+    padding: 10px 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    animation: fadeInUp 0.4s ease forwards;
+    z-index: 9999;
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.chat-tooltip.hidden {
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+.chat-button img {
+    width: 35px;
+    height: 35px;
+}
+
+.chat-popup {
+    position: fixed;
+    bottom: 130px;
+    right: 20px;
+    width: 320px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    transform: scale(0);
+    transform-origin: bottom right;
+    transition: all 0.3s ease;
+    z-index: 9999;
+}
+
+.chat-popup.active {
+    transform: scale(1);
+}
+
+.chat-header {
+    background-color: #0b64ca;
+    color: white;
+    padding: 7px 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.chat-header img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: white;
+    padding: 3px;
+}
+
+.chat-header .brand-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-header .brand-info h4 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: #FFFFFF;
+}
+
+.chat-header .brand-info span {
+    font-size: 12px;
+    opacity: 0.9;
+}
+
+.chat-body {
+    padding: 7px 15px;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    color: #333;
+}
+
+.chat-body p {
+    margin: 0;
+    background: #f1f1f1;
+    padding: 10px 12px;
+    border-radius: 12px;
+    display: inline-block;
+}
+
+.chat-footer {
+    text-align: right;
+    padding: 10px 15px 20px;
+}
+
+.chat-footer a {
+    background-color: #25D366;
+    color: white;
+    text-decoration: none;
+    padding: 10px 16px;
+    border-radius: 25px;
+    font-weight: 600;
+    display: inline-block;
+    transition: background-color 0.3s;
+}
+
+.chat-footer a:hover {
+    background-color: #1ebe5b;
+}

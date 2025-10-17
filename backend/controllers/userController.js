@@ -15,13 +15,11 @@ exports.registerUser = async (req, res) => {
     const existingUser = await User.findOne({ email });
     if (existingUser) return res.status(400).json({ message: "User already exists" });
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-
     const user = await User.create({
       firstName,
       lastName,
       email,
-      password: hashedPassword,
+      password,
       mobile,
       city,
       state,
@@ -55,7 +53,7 @@ exports.loginUserSession = async (req, res) => {
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(401).json({ message: "Invalid password" });
-    req.session.userId = user._id;   // store user ID in session
+    req.session.userId = user._id; 
 
     res.json({
       message: "Login successfully !",
@@ -182,6 +180,15 @@ exports.getDashboardStatus = [
       let newOrders = 0;
       let revenue = 0;
 
+      let repairRequets = 0;
+      try {
+        const Repairs = require("../models/Repairs");
+        if (Repairs) {
+          repairRequets = await Repairs.countDocuments();
+        }
+      }
+      catch (e) { }
+
       try {
         const Order = require("../models/Order");
         if (Order) {
@@ -209,7 +216,8 @@ exports.getDashboardStatus = [
         newLeads,
         newOrders,
         revenue,
-        totalLeads
+        totalLeads,
+        repairRequets
       });
     } catch (err) {
       console.error("Error fetching dashboard status:", err);

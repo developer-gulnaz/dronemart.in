@@ -3940,7 +3940,7 @@ section,
 }
 
 .productDetails .info-tabs-container .overview-content .package-contents {
-  padding: 2rem;
+  padding: 1.75rem 3rem;
   background: linear-gradient(135deg, var(--surface-color), color-mix(in srgb, var(--surface-color), #f8f9fa 50%));
   border-radius: 16px;
   border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
@@ -3949,7 +3949,7 @@ section,
 .productDetails .info-tabs-container .overview-content .package-contents h4 {
   color: var(--heading-color);
   font-weight: 700;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .productDetails .info-tabs-container .overview-content .package-contents .contents-list {
@@ -3962,7 +3962,7 @@ section,
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.75rem 0;
+  padding: 0.5rem 0;
   color: color-mix(in srgb, var(--default-color), transparent 20%);
 }
 

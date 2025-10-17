@@ -96,19 +96,64 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // =============================
-    // ✅ Update Stock
-    // =============================
+    const modal = new bootstrap.Modal(document.getElementById('updateStockModal'));
+    const stockInput = document.getElementById('stockInput');
+    const saveBtn = document.getElementById('saveStockBtn');
+
+    let selectedProductId = null;
+
+    // Setup buttons
     function setupStockButtons() {
         document.querySelectorAll(".stock-btn").forEach(btn => {
             btn.addEventListener("click", () => {
-                const productId = btn.dataset.id;
+                selectedProductId = btn.dataset.id;
                 const currentStock = btn.dataset.stock;
-                // Redirect to update-product page with stock query
-                window.location.href = `updateProduct.html?id=${productId}&stock=${currentStock}`;
+
+                // Set current stock in input
+                stockInput.value = currentStock;
+
+                // Open modal
+                modal.show();
             });
         });
     }
+
+    setupStockButtons();
+
+    // Save stock
+    saveBtn.addEventListener("click", async () => {
+        const newStock = parseInt(stockInput.value);
+        if (isNaN(newStock) || newStock < 0) return alert("Please enter a valid stock quantity.");
+
+        try {
+            saveBtn.disabled = true;
+            saveBtn.textContent = 'Saving...';
+
+            const res = await fetch(`/api/products/${selectedProductId}/stock`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ stock: newStock })
+            });
+
+            const data = await res.json();
+            if (!data.success) throw new Error(data.message);
+
+            alert("✅ Stock updated successfully!");
+            modal.hide();
+            await loadProducts();
+
+            // Optionally refresh table / update button data-stock attribute
+            const btn = document.querySelector(`.stock-btn[data-id="${selectedProductId}"]`);
+            if (btn) btn.dataset.stock = newStock;
+
+        } catch (err) {
+            console.error(err);
+            alert("❌ Failed to update stock.");
+        } finally {
+            saveBtn.disabled = false;
+            saveBtn.textContent = 'Save';
+        }
+    });
 
     // =============================
     // ✅ Initial Load

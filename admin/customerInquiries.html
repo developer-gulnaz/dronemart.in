@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DroneMart Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+
+</head>
+
+<body>
+
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h4>DroneMart Admin</h4>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="bi bi-arrow-left-circle"></i>
+            </button>
+        </div>
+        <ul class="sidebar-menu">
+            <li>
+                <a href="dashboard.html" class="active">
+                    <i class="fa-solid fa-gauge"></i>
+                    <span class="menu-text">Dashboard</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="users.html">
+                    <i class="fa-solid fa-user-group"></i>
+                    <span class="menu-text">Users</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="leads.html">
+                    <i class="fa-solid fa-address-card"></i>
+                    <span class="menu-text">Leads</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="repairs.html">
+                    <i class="fa-solid fa-screwdriver-wrench"></i>
+                    <span class="menu-text">Repair Requests</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="products.html">
+                    <i class="fa-solid fa-box-open"></i>
+                    <span class="menu-text">Products</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="accessories.html">
+                    <i class="fa-solid fa-puzzle-piece"></i>
+                    <span class="menu-text">Accessories</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="orders.html">
+                    <i class="fa-solid fa-receipt"></i>
+                    <span class="menu-text">Orders</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span class="menu-text">Analytics</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#">
+                    <i class="fa-solid fa-gear"></i>
+                    <span class="menu-text">Settings</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Topbar / Header -->
+        <div class="topbar">
+            <button class="hamburger" id="hamburger">
+                <i class="bi bi-list"></i>
+            </button>
+            <h4 class="mb-0">Customer Inquiries</h4>
+            <div class="profile p-3" id="profileToggle">
+                <div class="d-flex align-items-center">
+                    <img src="https://ui-avatars.com/api/?name=User&background=random" alt="Profile"
+                        class="rounded-circle me-2" width="40" height="40">
+                    <div class="d-none d-md-block">
+                        <div class="fw-bold" id="adminName">User</div>
+                        <small class="text-muted" id="userType">Guest</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Dropdown -->
+            <div class="profile-dropdown" id="profileDropdown">
+                <div class="dropdown-item">
+                    <i class="bi bi-person"></i> Profile
+                </div>
+                <div class="dropdown-item">
+                    <i class="bi bi-gear"></i> Settings
+                </div>
+                <div class="dropdown-item">
+                    <i class="bi bi-bell"></i> Notifications
+                </div>
+                <hr>
+                <div class="dropdown-item" id="logoutBtn">
+                    <i class="bi bi-box-arrow-right"></i> Logout
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Filter -->
+        <!-- Row 1: Keyword Search -->
+        <div class="row mb-3">
+            <div class="col-md-2 d-flex align-items-center">
+                <span class="fw-bold me-2"> Search:</span>
+            </div>
+            <div class="col-md-4 d-flex align-items-center">
+                <input type="text" id="searchKeyword" class="form-control" placeholder="Enter name or mobile">
+            </div>
+        </div>
+
+        <!-- Row 2: Datewise Search (Single Row) -->
+        <div class="row mb-4 align-items-center">
+            <div class="col-md-2 d-flex align-items-center">
+                <span class="fw-bold me-2">Datewise Search:</span>
+            </div>
+            <div class="col-md-3 d-flex align-items-center">
+                <input type="date" id="searchFromDate" class="form-control">
+            </div>
+            <div class="col-md-3 d-flex align-items-center">
+                <input type="date" id="searchToDate" class="form-control">
+            </div>
+            <div class="col-md-2 d-flex align-items-center">
+                <button id="searchBtn" class="btn btn-primary w-100">Search</button>
+            </div>
+        </div>
+
+
+
+        <!-- Users Table -->
+        <div class="table-responsive">
+            <table class="table table-hover" id="inquiryTable">
+                <thead class="table-primary">
+                    <tr>
+                        <th>Sr No</th>
+                        <th>Date</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Mobile</th>
+                        <th>Message</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- View / Update Lead Modal -->
+    <div class="modal fade" id="updateUserStatusModal" tabindex="-1" aria-labelledby="updateUserStatusModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="updateUserStatusModalLabel">View / Update Inquiry Details</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div id="leadDetails">
+                        <p><strong>Remarks:</strong> <span id="adminNotesDisplay">-</span></p>
+                        <hr>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Current Status:</label><br>
+                        <span id="modalCurrentUserStatusBadge" class="badge bg-secondary">Loading...</span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="userStatusSelect" class="form-label">Update Status</label>
+                        <select class="form-select" id="userStatusSelect">
+                            <option value="New">New User</option>
+                            <option value="Connected">Connected</option>
+                            <option value="Follow-up">Follow up</option>
+                            <option value="Not-connected">Not Connected</option>
+                            <option value="Not-interested">Not Interested</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="adminNotesInput" class="form-label">Admin Notes</label>
+                        <textarea class="form-control" id="adminNotesInput" rows="3"
+                            placeholder="Write admin notes or follow-up remarks..."></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="saveUserStatusBtn">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="assets/js/common.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const tableBody = document.querySelector('#inquiryTable tbody');
+            const modal = new bootstrap.Modal(document.getElementById('updateUserStatusModal'));
+            const modalStatus = document.getElementById('modalCurrentUserStatusBadge');
+            const statusSelect = document.getElementById('userStatusSelect');
+            const notesInput = document.getElementById('adminNotesInput');
+            const notesDisplay = document.getElementById('adminNotesDisplay');
+            const saveBtn = document.getElementById('saveUserStatusBtn');
+
+            let selectedContactId = null;
+            let existingNotes = '';
+
+            // --------------------------------
+            // 🔹 Load Contacts
+            // --------------------------------
+            async function loadContacts() {
+                try {
+                    const res = await fetch('/api/contacts');
+                    const data = await res.json();
+                    if (!data.success) throw new Error(data.message);
+
+                    tableBody.innerHTML = '';
+                    data.contacts.forEach((c, i) => {
+                        const row = `
+                            <tr>
+                                <td>${i + 1}</td>
+                                <td>${new Date(c.createdAt).toLocaleString()}</td>
+                                <td>${c.name}</td>
+                                <td>${c.email}</td>
+                                <td>${c.phone}</td>
+                                <td>${c.message}</td>
+                                <td>
+                                <button class="btn btn-sm btn-outline-primary update-status-btn"
+                                    data-id="${c._id}"
+                                    data-status="${c.status || 'New'}"
+                                    data-notes="${c.notes ? c.notes.replace(/"/g, '&quot;') : ''}">
+                                    Update
+                                </button>
+                                </td>
+                            </tr>
+                            `;
+                        tableBody.insertAdjacentHTML('beforeend', row);
+                    });
+                } catch (err) {
+                    console.error('Failed to load contacts:', err);
+                    alert('Error loading contact inquiries.');
+                }
+            }
+
+            await loadContacts();
+
+            // --------------------------------
+            // 🔹 Open Modal
+            // --------------------------------
+            tableBody.addEventListener('click', (e) => {
+                const btn = e.target.closest('.update-status-btn');
+                if (!btn) return;
+
+                selectedContactId = btn.dataset.id;
+                const currentStatus = btn.dataset.status;
+                existingNotes = btn.dataset.notes || '';
+
+                // Display existing notes
+                modalStatus.textContent = currentStatus;
+                modalStatus.className = 'badge bg-secondary';
+                statusSelect.value = currentStatus;
+                notesDisplay.textContent = existingNotes === '' ? '-' : existingNotes;
+
+                // Textarea blank for new entry
+                notesInput.value = '';
+
+                modal.show();
+            });
+
+            // --------------------------------
+            // 🔹 Save Updates
+            // --------------------------------
+            saveBtn.addEventListener('click', async () => {
+                const newStatus = statusSelect.value;
+                const newNotes = notesInput.value.trim();
+
+                if (!selectedContactId) return alert('No contact selected.');
+
+                // If textarea empty → keep existing notes
+                const notesToSave = newNotes === '' ? existingNotes : newNotes;
+
+                try {
+                    saveBtn.disabled = true;
+                    saveBtn.textContent = 'Saving...';
+
+                    const res = await fetch(`/api/contacts/${selectedContactId}/status`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ status: newStatus, notes: notesToSave })
+                    });
+
+                    const data = await res.json();
+                    if (!data.success) throw new Error(data.message);
+
+                    // alert('✅ Status updated successfully!');
+                    window.showDialog(`Status updated successfully!`, "success");
+
+                    modal.hide();
+                    await loadContacts();
+                } catch (err) {
+                    console.error('Update failed:', err);
+                    window.showDialog(`Error updating Status!`, "error");
+                } finally {
+                    saveBtn.disabled = false;
+                    saveBtn.textContent = 'Save Changes';
+                }
+            });
+        });
+    </script>
+
+
+
+</body>
+
+</html>

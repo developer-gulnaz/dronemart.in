@@ -158,6 +158,45 @@ document.addEventListener("DOMContentLoaded", () => {
     renderHeader();
 });
 
+// ==========================
+// DroneMart WhatsApp Chat Widget
+// ==========================
+document.addEventListener("DOMContentLoaded", () => {
+    const chatWidgetHTML = `
+    <button class="chat-button" id="chatToggle">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="">
+    </button>
+
+    <div class="chat-popup" id="chatPopup">
+      <div class="chat-header">
+        <img src="/assets/drone-logo.png" alt="DroneMart Logo">
+        <div class="brand-info">
+          <h4>DroneMart Support</h4>
+        </div>
+      </div>
+      <div class="chat-body">
+        <p>Hi there 👋<br>How can we help you today?</p>
+      </div>
+      <div class="chat-footer">
+        <a href="https://wa.me/919284818057?text=Hello%2C%20I%20have%20a%20question%20about..." target="_blank">
+          Chat with us
+        </a>
+      </div>
+    </div>
+  `;
+
+    const wrapper = document.createElement("div");
+    wrapper.innerHTML = chatWidgetHTML;
+    document.body.appendChild(wrapper);
+
+    const chatToggle = document.getElementById("chatToggle");
+    const chatPopup = document.getElementById("chatPopup");
+
+    chatToggle.addEventListener("click", () => {
+        chatPopup.classList.toggle("active");
+    });
+});
+
 
 // 🌍 Global: remove item from wishlist
 window.removeFromWishlist = async function (productId, triggerEl = null) {

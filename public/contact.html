@@ -431,7 +431,7 @@
               </div>
               <div class="info-content">
                 <h4>Our Address</h4>
-                <p>1842 Maple Avenue, Portland, Oregon 97204</p>
+                <p>2nd Floar, Welcome Furniture Mart, Trisharan Square, Ramshwari road, Nagpur</p>
               </div>
             </div>
           </div>
@@ -443,8 +443,7 @@
               </div>
               <div class="info-content">
                 <h4>Email Address</h4>
-                <p>info@example.com</p>
-                <p>contact@example.com</p>
+                <p>info@dronemart.com</p>
               </div>
             </div>
           </div>
@@ -456,8 +455,7 @@
               </div>
               <div class="info-content">
                 <h4>Hours of Operation</h4>
-                <p>Sunday-Fri: 9 AM - 6 PM</p>
-                <p>Saturday: 9 AM - 4 PM</p>
+                <p>Monday-Saturday: 10 AM - 7 PM</p>
               </div>
             </div>
           </div>
@@ -468,8 +466,8 @@
       <!-- Google Maps (Full Width) -->
       <div class="map-section" data-aos="fade-up" data-aos-delay="200">
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d48389.78314118045!2d-74.006138!3d40.710059!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a22a3bda30d%3A0xb89d1fe6bc499443!2sDowntown%20Conference%20Center!5e0!3m2!1sen!2sus!4v1676961268712!5m2!1sen!2sus"
-          width="100%" height="500" style="border:0;" allowfullscreen="" loading="lazy"
+          src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d232.62178953499009!2d79.09134472782033!3d21.114650776467887!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd4bf5c113dbe29%3A0x2afab2abee07afa7!2sWindelite!5e0!3m2!1sen!2sus!4v1760524008330!5m2!1sen!2sus"
+          width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
 
@@ -480,7 +478,7 @@
             <div class="contact-form-wrapper">
               <h2 class="text-center mb-4">Get in Touch</h2>
 
-              <form action="forms/contact.php" method="post" class="php-email-form">
+              <form id="contactForm" method="post" class="">
                 <div class="row g-3">
                   <div class="col-md-6">
                     <div class="form-group">
@@ -496,6 +494,24 @@
                       <div class="input-with-icon">
                         <i class="bi bi-envelope"></i>
                         <input type="email" class="form-control" name="email" placeholder="Email Address" required="">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-with-icon">
+                        <i class="bi bi-telephone"></i>
+                        <input type="number" class="form-control" name="phone" placeholder="Phone Number" required="">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-with-icon">
+                        <i class="bi bi-building"></i>
+                        <input type="text" class="form-control" name="City" placeholder="City" required="">
                       </div>
                     </div>
                   </div>
@@ -519,14 +535,8 @@
                     </div>
                   </div>
 
-                  <div class="col-12">
-                    <div class="loading">Loading</div>
-                    <div class="error-message"></div>
-                    <div class="sent-message">Your message has been sent. Thank you!</div>
-                  </div>
-
                   <div class="col-12 text-center">
-                    <button type="submit" class="btn btn-primary btn-submit">SEND MESSAGE</button>
+                    <button type="submit" form="contactForm" class="btn btn-primary btn-submit">SEND MESSAGE</button>
                   </div>
                 </div>
               </form>
@@ -540,7 +550,7 @@
 
   </main>
 
- <footer id="footer" class="footer dark-background">
+  <footer id="footer" class="footer dark-background">
     <div class="footer-main">
       <div class="container">
         <div class="row gy-4">
@@ -648,12 +658,13 @@
             <div class="footer-contact social-links mt-4 footer-widget">
               <h4>Connect With Us</h4>
               <div class="social-icons">
-                <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
-                <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-                <a href="#" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
-                <a href="#" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
-                <a href="#" aria-label="Pinterest"><i class="bi bi-pinterest"></i></a>
-                <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+                <a href="https://www.facebook.com/people/DroneMart/61579675953199/" aria-label="Facebook"><i
+                    class="bi bi-facebook"></i></a>
+                <a href="https://www.instagram.com/dronemart/" aria-label="Instagram"><i
+                    class="bi bi-instagram"></i></a>
+                <a href="https://api.whatsapp.com/send?phone=919284818057" aria-label="WhatsApp"><i
+                    class="bi bi-whatsapp"></i></a>
+                <!-- <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a> -->
               </div>
             </div>
           </div>
@@ -706,30 +717,103 @@
   <script src="assets/js/main.js"></script>
   <script src="assets/js/index.js"></script>
   <script src="assets/js/common.js"></script>
+
   <script>
-    window.addEventListener("scroll", function () {
-      const header = document.getElementById("header");
-      const topbar = header?.querySelector(".top-bar");
-      const navbarActions = header?.querySelector(".navbar-actions"); // navbar header-actions
+    // --------------------------
+    // 🔹 Select elements
+    // --------------------------
+    const form = document.getElementById('contactForm');
+    const submitBtn = form.querySelector('button[type="submit"]');
 
-      const scrollY = window.scrollY;
-      const threshold = 10; // scroll threshold
+    // Create feedback elements (optional — if not already in HTML)
+    let loadingEl = document.querySelector('.loading');
+    let errorEl = document.querySelector('.error-message');
+    let successEl = document.querySelector('.sent-message');
 
-      if (scrollY > threshold) {
-        // Scroll down: hide topbar, show navbar actions
-        header.classList.add("scrolled");
+    if (!loadingEl) {
+      loadingEl = document.createElement('div');
+      loadingEl.className = 'loading';
+      loadingEl.style.display = 'none';
+      loadingEl.textContent = 'Loading...';
+      form.appendChild(loadingEl);
+    }
 
-        if (topbar) topbar.classList.add("hidden");
-        if (navbarActions) navbarActions.classList.add("visible");
-      } else {
-        // Scroll up: show topbar, hide navbar actions
-        header.classList.remove("scrolled");
+    if (!errorEl) {
+      errorEl = document.createElement('div');
+      errorEl.className = 'error-message';
+      errorEl.style.display = 'none';
+      errorEl.style.color = 'red';
+      form.appendChild(errorEl);
+    }
 
-        if (topbar) topbar.classList.remove("hidden");
-        if (navbarActions) navbarActions.classList.remove("visible");
+    if (!successEl) {
+      successEl = document.createElement('div');
+      successEl.className = 'sent-message';
+      successEl.style.display = 'none';
+      successEl.style.color = 'green';
+      successEl.textContent = 'Your message has been sent. Thank you!';
+      form.appendChild(successEl);
+    }
+
+    // --------------------------
+    // 🔹 Submit handler
+    // --------------------------
+    async function submitContactForm(event) {
+      event.preventDefault();
+
+      const fd = new FormData(form);
+      const requiredFields = ['name', 'email', 'phone', 'City', 'subject', 'message'];
+
+      // ✅ Validate required fields
+      for (const field of requiredFields) {
+        if (!fd.get(field)?.trim()) {
+          window.showDialog?.(`Please fill in the ${field} field.`, "error");
+          return;
+        }
       }
-    });
+
+      try {
+        // UI: loading state
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Sending...';
+        loadingEl.style.display = 'block';
+        errorEl.style.display = 'none';
+        successEl.style.display = 'none';
+
+        // Send to backend
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(Object.fromEntries(fd.entries()))
+        });
+
+        const data = await res.json();
+        loadingEl.style.display = 'none';
+
+        if (!res.ok) throw new Error(data.message || 'Failed to send message.');
+
+        // ✅ Success
+        successEl.style.display = 'block';
+        window.showDialog?.("✅ Message sent successfully!", "success");
+        form.reset();
+
+      } catch (err) {
+        console.error('Contact form submission failed:', err);
+        errorEl.textContent = '❌ ' + err.message;
+        errorEl.style.display = 'block';
+        window.showDialog?.(`❌ Error: ${err.message}`, "error");
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'SEND MESSAGE';
+      }
+    }
+
+    // --------------------------
+    // 🔘 Attach event listener
+    // --------------------------
+    form.addEventListener('submit', submitContactForm);
   </script>
+
 
 </body>
 

@@ -140,3 +140,91 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+
+// 🧩 Modern Center Dialog Box
+window.showDialog = function (message, type = "info") {
+    // Overlay background
+    const overlay = document.createElement("div");
+    overlay.className = "dialog-overlay";
+    Object.assign(overlay.style, {
+        position: "fixed",
+        top: "0",
+        left: "0",
+        width: "100vw",
+        height: "100vh",
+        background: "rgba(0,0,0,0.4)",
+        zIndex: "9998",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        opacity: "0",
+        transition: "opacity 0.3s ease",
+    });
+
+    // Dialog box
+    const dialog = document.createElement("div");
+    dialog.className = "dialog-box";
+    dialog.textContent = message;
+
+    const colors = {
+        success: "#4caf50",
+        error: "#f44336",
+        info: "#2196f3",
+    };
+
+    Object.assign(dialog.style, {
+        background: "#fff",
+        borderRadius: "12px",
+        padding: "24px 28px",
+        color: "#333",
+        fontSize: "16px",
+        fontWeight: "500",
+        maxWidth: "400px",
+        width: "90%",
+        textAlign: "center",
+        boxShadow: "0 8px 24px rgba(0,0,0,0.25)",
+        transform: "scale(0.9)",
+        opacity: "0",
+        transition: "all 0.25s ease",
+        borderTop: `6px solid ${colors[type] || colors.info}`,
+    });
+
+    // ✅ Add icon or color line
+    const icon = document.createElement("div");
+    icon.innerHTML =
+        type === "success"
+            ? "✅"
+            : type === "error"
+                ? "❌"
+                : "ℹ️";
+    Object.assign(icon.style, {
+        fontSize: "28px",
+        marginBottom: "10px",
+    });
+
+    const msg = document.createElement("div");
+    msg.textContent = message;
+
+    dialog.textContent = "";
+    dialog.appendChild(icon);
+    dialog.appendChild(msg);
+
+    overlay.appendChild(dialog);
+    document.body.appendChild(overlay);
+
+    // Fade in
+    setTimeout(() => {
+        overlay.style.opacity = "1";
+        dialog.style.opacity = "1";
+        dialog.style.transform = "scale(1)";
+    }, 10);
+
+    // Auto close after 2.5s
+    setTimeout(() => {
+        dialog.style.opacity = "0";
+        dialog.style.transform = "scale(0.9)";
+        overlay.style.opacity = "0";
+        setTimeout(() => overlay.remove(), 300);
+    }, 1500);
+};
