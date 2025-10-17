@@ -1,5 +1,9 @@
 document.addEventListener("DOMContentLoaded", async () => {
-    const tbody = document.querySelector("#ProductsTable tbody");
+    const tbody = document.querySelector("#productsTable tbody");
+    const searchKeyword = document.getElementById('searchKeyword');
+
+    let products = [];
+    
 
     // =============================
     // ✅ Load Products
@@ -12,46 +16,88 @@ document.addEventListener("DOMContentLoaded", async () => {
                 return;
             }
             if (!res.ok) throw new Error("Failed to fetch products");
-            const products = await res.json();
+            products = await res.json();
 
-            tbody.innerHTML = "";
-
-            if (products.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" class="text-center">No products found</td></tr>`;
-                return;
-            }
-
-            products.forEach((product, index) => {
-                const row = document.createElement("tr");
-
-                row.innerHTML = `
-                    <td>${index + 1}</td>
-                    <td>${product.title}</td>
-                    <td>${product.category || "-"}</td>
-                    <td>${product.price}</td>
-                    <td>${product.stock}</td>
-                    <td>${product.featured ? "Yes" : "No"}</td>
-                    <td>
-                        <button class="btn btn-sm btn-primary me-2 edit-btn" data-id="${product._id}">
-                            <i class="bi bi-pencil-square"></i> Edit
-                        </button>
-                        <button class="btn btn-sm btn-danger me-2 delete-btn" data-id="${product._id}">
-                            <i class="bi bi-trash"></i> Delete
-                        </button>
-                        <button class="btn btn-sm btn-warning stock-btn" data-id="${product._id}" data-stock="${product.stock}">
-                            <i class="bi bi-box-seam"></i> Update Stock
-                        </button>
-                    </td>
-                `;
-                tbody.appendChild(row);
-            });
-
-            attachProductActions(); // Attach events after rows are created
+            renderProductsTable(products);
         } catch (err) {
             console.error(err);
             alert("Error fetching products. Check console.");
         }
     }
+
+    // -----------------------------
+    // ✅ Render Table (Reusable)
+    // -----------------------------
+    function renderProductsTable(rows) {
+        tbody.innerHTML = "";
+
+        if (!rows || rows.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="7" class="text-center">No products found</td></tr>`;
+            return;
+        }
+
+        rows.forEach((product, index) => {
+            const row = document.createElement("tr");
+
+            row.innerHTML = `
+                <td>${index + 1}</td>
+                <td>${product.title}</td>
+                <td>${product.brand || "-"}</td>
+                <td>${product.category || "-"}</td>
+                <td>${product.price}</td>
+                <td>${product.stock}</td>
+                <td>${product.featured ? "Yes" : "No"}</td>
+                <td>
+                    <button class="btn btn-sm btn-primary me-2 edit-btn" data-id="${product._id}">
+                        <i class="bi bi-pencil-square"></i> Edit
+                    </button>
+                    <button class="btn btn-sm btn-danger me-2 delete-btn" data-id="${product._id}">
+                        <i class="bi bi-trash"></i> Delete
+                    </button>
+                    <button class="btn btn-sm btn-warning stock-btn" data-id="${product._id}" data-stock="${product.stock}">
+                        <i class="bi bi-box-seam"></i> Update Stock
+                    </button>
+                </td>
+            `;
+
+            tbody.appendChild(row);
+        });
+
+        attachProductActions(); // reattach events after rendering
+    }
+
+    // -----------------------------
+    // ✅ Setup Filters
+    // -----------------------------
+    function setupFilters() {
+        if (!searchKeyword || !Array.isArray(products)) {
+            console.error("Missing search input or products array");
+            return;
+        }
+
+        const brandFilter = document.getElementById('brandFilter'); // get brand dropdown
+
+        function filterProducts() {
+            const keyword = searchKeyword.value.toLowerCase().trim();
+            const selectedBrand = brandFilter.value; // e.g., 'DJI', 'EFT', or 'all'
+
+            const filtered = products.filter(p => {
+                const title = (p.title || "").toLowerCase();
+                const brand = (p.brand || "").toLowerCase();
+
+                const matchesKeyword = title.includes(keyword) || brand.includes(keyword);
+                const matchesBrand = selectedBrand === "all" || brand === selectedBrand.toLowerCase();
+
+                return matchesKeyword && matchesBrand;
+            });
+
+            renderProductsTable(filtered);
+        }
+
+        searchKeyword.addEventListener("input", filterProducts);
+        brandFilter.addEventListener("change", filterProducts); // filter on brand change
+    }
+
 
     // =============================
     // ✅ Attach Actions
@@ -60,7 +106,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         setupEditButtons();
         setupDeleteButtons();
         setupStockButtons();
-        // Future features can be added here as separate functions
     }
 
     // =============================
@@ -118,8 +163,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    setupStockButtons();
-
     // Save stock
     saveBtn.addEventListener("click", async () => {
         const newStock = parseInt(stockInput.value);
@@ -142,7 +185,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             modal.hide();
             await loadProducts();
 
-            // Optionally refresh table / update button data-stock attribute
             const btn = document.querySelector(`.stock-btn[data-id="${selectedProductId}"]`);
             if (btn) btn.dataset.stock = newStock;
 
@@ -159,8 +201,5 @@ document.addEventListener("DOMContentLoaded", async () => {
     // ✅ Initial Load
     // =============================
     await loadProducts();
-
-    // =============================
-    // Future features can be initialized here
-    // =============================
+    setupFilters();
 });

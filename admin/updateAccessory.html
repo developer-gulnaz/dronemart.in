@@ -96,7 +96,7 @@
             <button class="hamburger" id="hamburger">
                 <i class="bi bi-list"></i>
             </button>
-            <h4 class="mb-0">Add Accessory</h4>
+            <h4 class="mb-0">Update Accessory</h4>
             <div class="profile p-3" id="profileToggle">
                 <div class="d-flex align-items-center">
                     <img src="https://ui-avatars.com/api/?name=User&background=random" alt="Profile"
@@ -251,8 +251,7 @@
                     <!-- Main Image -->
                     <div class="col-md-6">
                         <label for="mainImage" class="form-label">Main Image</label>
-                        <input type="file" class="form-control" id="image" name="image" accept="image/*"
-                            required>
+                        <input type="file" class="form-control" id="image" name="image" accept="image/*">
                     </div>
 
                     <!-- Thumbnails -->
@@ -328,103 +327,148 @@
     <script src="assets/js/main.js"></script>
 
     <script>
-        // Auto-generate slug from title
-        const titleInput = document.getElementById('title');
-        const slugInput = document.getElementById('slug');
+        document.addEventListener("DOMContentLoaded", async () => {
+            const form = document.getElementById("accessoryForm");
+            const params = new URLSearchParams(window.location.search);
+            const accessoryId = params.get("id");
 
-        titleInput.addEventListener('input', () => {
-            const slug = titleInput.value
-                .toLowerCase()
-                .trim()
-                .replace(/[^a-z0-9\s-]/g, '') // remove special chars
-                .replace(/\s+/g, '-')         // replace spaces with hyphens
-                .replace(/-+/g, '-');         // remove multiple hyphens
-            slugInput.value = slug;
-        });
+            if (!accessoryId) {
+                alert("No Accessory ID found in URL!");
+                return;
+            }
 
-        // Add In-The-Box Item dynamically
-        document.getElementById('addBoxItem').addEventListener('click', () => {
-            const container = document.getElementById('inTheBoxContainer');
-            const item = document.createElement('div');
-            item.classList.add('row', 'g-2', 'mb-2', 'in-box-item');
+            // ================= Fetch existing accessory =================
+            const res = await fetch(`/api/accessory/${accessoryId}`);
+            const accessory = await res.json();
 
-            item.innerHTML = `
-        <div class="col-md-4">
-            <input type="text" class="form-control" name="inTheBoxTitle[]" placeholder="Item Title" required>
-        </div>
-        <div class="col-md-3">
-            <input type="number" class="form-control" name="inTheBoxQuantity[]" placeholder="Quantity" value="1" min="1" required>
-        </div>
-        <div class="col-md-5">
-            <input type="file" class="form-control" name="inTheBoxImage[]" accept="image/*">
-        </div>
-    `;
+            if (!res.ok) {
+                alert("Failed to load accessory");
+                return;
+            }
 
-            container.appendChild(item);
-        });
+            // ================= Fill form fields =================
+            document.getElementById("title").value = accessory.title;
+            document.getElementById("slug").value = accessory.slug;
+            document.getElementById("type").value = accessory.type || "";
+            document.getElementById("brand").value = accessory.brand || "";
+            document.getElementById("category").value = accessory.category || "";
+            document.getElementById("productCategory").value = accessory.productCategory || "";
+            document.getElementById("price").value = accessory.price || 0;
+            document.getElementById("salePrice").value = accessory.salePrice || 0;
+            document.getElementById("stock").value = accessory.stock || 0;
+            document.getElementById("inStock").checked = accessory.inStock;
+            document.getElementById("description").value = accessory.description || "";
+            document.getElementById("shortDescription").value = accessory.shortDescription || "";
+            document.getElementById("specs").value = JSON.stringify(accessory.specs || {}, null, 2);
+            document.getElementById("metaTitle").value = accessory.metaTitle || "";
+            document.getElementById("metaDescription").value = accessory.metaDescription || "";
+            document.getElementById("keywords").value = accessory.keywords?.join(", ") || "";
 
-        // Preview Thumbnails
-        const thumbInput = document.getElementById('thumbnails');
-        const thumbPreview = document.getElementById('thumbPreview');
+            // ================= Preview main image =================
+            const imageContainer = document.getElementById("image").parentNode;
+            if (accessory.image) {
+                const img = document.createElement("img");
+                img.src = "" + accessory.image;
+                img.style.width = "100px";
+                img.classList.add("mt-2", "border", "rounded");
+                img.id = "existingMainImage";
+                imageContainer.appendChild(img);
+            }
 
-        thumbInput.addEventListener('change', function () {
-            thumbPreview.innerHTML = '';
-            Array.from(this.files).forEach(file => {
-                const reader = new FileReader();
-                reader.onload = e => {
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.style.width = '80px';
-                    img.style.height = '80px';
-                    img.style.objectFit = 'cover';
-                    img.classList.add('border', 'rounded');
+            // ================= Preview thumbnails =================
+            const thumbPreview = document.getElementById("thumbPreview");
+            if (accessory.thumbnails && accessory.thumbnails.length) {
+                accessory.thumbnails.forEach((t, i) => {
+                    const img = document.createElement("img");
+                    img.src = "" + t;
+                    img.style.width = "80px";
+                    img.style.height = "80px";
+                    img.style.objectFit = "cover";
+                    img.classList.add("border", "rounded");
+                    img.dataset.index = i;
                     thumbPreview.appendChild(img);
-                };
-                reader.readAsDataURL(file);
-            });
-        });
-
-        // Submit Form
-        document.getElementById('accessoryForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const form = document.getElementById('accessoryForm');
-            const formData = new FormData(form);
-
-            // Handle In-The-Box items
-            const inBoxTitles = document.getElementsByName('inTheBoxTitle[]');
-            const inBoxQty = document.getElementsByName('inTheBoxQuantity[]');
-            const inBoxImages = document.getElementsByName('inTheBoxImage[]');
-
-            for (let i = 0; i < inBoxTitles.length; i++) {
-                formData.append('inTheBox[]', JSON.stringify({
-                    title: inBoxTitles[i].value,
-                    quantity: inBoxQty[i].value,
-                    // Image will be handled separately
-                }));
-                if (inBoxImages[i].files[0]) {
-                    formData.append('inTheBoxImage[]', inBoxImages[i].files[0]);
-                }
-            }
-
-            try {
-                const res = await fetch('/api/accessory', {
-                    method: 'POST',
-                    body: formData
                 });
-
-                if (res.ok) {
-                    alert('Accessory added successfully!');
-                    form.reset();
-                    thumbPreview.innerHTML = '';
-                    document.getElementById('inTheBoxContainer').innerHTML = ''; // clear in-box items
-                } else {
-                    const err = await res.json();
-                    alert('Error: ' + err.message);
-                }
-            } catch (error) {
-                alert('Error: ' + error.message);
             }
+
+            // ================= Fill In-The-Box =================
+            const container = document.getElementById("inTheBoxContainer");
+            container.innerHTML = "";
+            if (accessory.inTheBox && accessory.inTheBox.length) {
+                accessory.inTheBox.forEach((item, i) => {
+                    const div = document.createElement("div");
+                    div.classList.add("row", "g-2", "mb-2", "in-box-item");
+                    div.innerHTML = `
+                <div class="col-md-4">
+                    <input type="text" class="form-control" name="inTheBoxTitle[]" value="${item.title}" required>
+                </div>
+                <div class="col-md-3">
+                    <input type="number" class="form-control" name="inTheBoxQuantity[]" value="${item.quantity}" min="1" required>
+                </div>
+                <div class="col-md-5">
+                    <input type="file" class="form-control" name="inTheBoxImage[]" accept="image/*">
+                    ${item.image ? `<img src="/${item.image}" style="width:80px" class="mt-1 border rounded">` : ""}
+                </div>
+            `;
+                    container.appendChild(div);
+                });
+            }
+
+            // ================= Add new In-The-Box item =================
+            document.getElementById('addBoxItem').addEventListener('click', () => {
+                const item = document.createElement('div');
+                item.classList.add('row', 'g-2', 'mb-2', 'in-box-item');
+                item.innerHTML = `
+            <div class="col-md-4">
+                <input type="text" class="form-control" name="inTheBoxTitle[]" placeholder="Item Title" required>
+            </div>
+            <div class="col-md-3">
+                <input type="number" class="form-control" name="inTheBoxQuantity[]" placeholder="Quantity" value="1" min="1" required>
+            </div>
+            <div class="col-md-5">
+                <input type="file" class="form-control" name="inTheBoxImage[]" accept="image/*">
+            </div>
+        `;
+                container.appendChild(item);
+            });
+
+            // ================= Form Submission =================
+            form.addEventListener("submit", async e => {
+                e.preventDefault();
+                const formData = new FormData(form);
+
+                // Append In-The-Box items
+                const titles = document.getElementsByName("inTheBoxTitle[]");
+                const qtys = document.getElementsByName("inTheBoxQuantity[]");
+                const images = document.getElementsByName("inTheBoxImage[]");
+
+                for (let i = 0; i < titles.length; i++) {
+                    formData.append("inTheBox[]", JSON.stringify({
+                        title: titles[i].value,
+                        quantity: qtys[i].value,
+                    }));
+                    if (images[i].files[0]) {
+                        formData.append("inTheBoxImages[]", images[i].files[0]);
+                    }
+                }
+
+                try {
+                    const res = await fetch(`/api/accessory/${accessoryId}`, {
+                        method: "PUT",
+                        body: formData,
+                    });
+
+                    const data = await res.json();
+                    if (res.ok) {
+                        alert("Accessory updated successfully!");
+                        window.location.href = "/admin/accessories.html";
+                    } else {
+                        alert("Error: " + data.message);
+                    }
+                } catch (err) {
+                    console.error(err);
+                    alert("Something went wrong.");
+                }
+            });
         });
     </script>
 

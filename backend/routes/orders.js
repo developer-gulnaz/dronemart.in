@@ -127,7 +127,7 @@ router.delete("/:id", checkUserSession, async (req, res) => {
 // Get all orders
 router.get("/", checkAdminSession, async (req, res) => {
   try {
-    const orders = await Order.find().populate("user", "firstName lastName email").sort({ createdAt: -1 });
+    const orders = await Order.find().populate("user", "firstName lastName mobile email").sort({ createdAt: -1 });
     res.json(orders);
   } catch (err) {
     console.error("Error fetching all orders:", err);

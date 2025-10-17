@@ -45,8 +45,6 @@ const uploadFields = upload.fields([
   { name: "inTheBoxImage", maxCount: 20 }
 ]);
 
-
-
 router.post("/", checkAdminSession, uploadFields, productController.addProduct);
 
 router.patch('/:id', uploadFields, productController.updateProduct);

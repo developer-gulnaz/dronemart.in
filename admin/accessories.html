@@ -54,6 +54,13 @@
             </li>
 
             <li>
+                <a href="customerInquiries.html">
+                    <i class="fa-solid fa-users-gear"></i>
+                    <span class="menu-text">Customer Inquiries</span>
+                </a>
+            </li>
+
+            <li>
                 <a href="products.html">
                     <i class="fa-solid fa-box-open"></i>
                     <span class="menu-text">Products</span>
@@ -62,7 +69,7 @@
 
             <li>
                 <a href="accessories.html">
-                    <i class="fa-solid fa-puzzle-piece"></i>
+                    <i class="fa-solid fa-toolbox"></i>
                     <span class="menu-text">Accessories</span>
                 </a>
             </li>
@@ -129,12 +136,24 @@
         </div>
         <!-- Accessories Table -->
         <div class="container mt-4">
-            <div class="d-flex justify-content-between mb-3">
-                <a href="addAccessory.html">
-                    <button class="btn btn-success">
-                        <i class="bi bi-plus-lg"></i> Add Accessory
-                    </button>
-                </a>
+            <div class="row mb-4 align-items-center">
+                <div class="col-md-4">
+                    <input type="text" id="searchKeyword" class="form-control" placeholder="Search by name or product">
+                </div>
+
+                <div class="col-md-3">
+                    <select id="typeFilter" class="form-select">
+
+                    </select>
+                </div>
+
+                <div class="col-md-3 justify-content-between">
+                    <a href="addAccessory.html">
+                        <button class="btn btn-success">
+                            <i class="bi bi-plus-lg"></i> Add Accessory
+                        </button>
+                    </a>
+                </div>
             </div>
 
             <table class="table table-hover table-responsive" id="AccessoriesTable">
@@ -142,7 +161,7 @@
                     <tr>
                         <th>#</th>
                         <th>Title</th>
-                        <th>Category</th>
+                        <th>Type</th>
                         <th>Price ($)</th>
                         <th>Stock</th>
                         <th>Actions</th>
@@ -153,7 +172,30 @@
                 </tbody>
             </table>
         </div>
+        <!-- Update Stock Modal -->
+        <div class="modal fade" id="updateStockModal" tabindex="-1" aria-labelledby="updateStockModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
 
+                    <div class="modal-header bg-warning text-dark">
+                        <h5 class="modal-title" id="updateStockModalLabel">Update Accessory Stock</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <input type="number" id="stockInput" class="form-control" min="0"
+                            placeholder="Enter new stock quantity">
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-warning" id="saveStockBtn">Save</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
 
 
     </div>

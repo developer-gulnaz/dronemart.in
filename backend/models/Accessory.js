@@ -11,6 +11,7 @@ const AccessorySchema = new mongoose.Schema({
   slug: { type: String, unique: true, index: true }, // SEO-friendly URL
   category: { type: String, index: true },
   brand: { type: String }, // optional, for brand filter
+  type: { type: String, require: true },
   price: { type: Number, required: true },
   salePrice: { type: Number }, // optional for discounts
 
