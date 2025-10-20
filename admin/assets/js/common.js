@@ -132,12 +132,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Logout functionality
     logoutBtn.addEventListener('click', function () {
-        if (confirm('Are you sure you want to logout?')) {
-            sessionStorage.removeItem('adminToken');
-            sessionStorage.removeItem('userType');
-            sessionStorage.removeItem('name');
-            window.location.href = '/admin';
-        }
+        sessionStorage.removeItem('adminToken');
+        sessionStorage.removeItem('userType');
+        sessionStorage.removeItem('name');
+        window.location.href = '/admin';
     });
 });
 

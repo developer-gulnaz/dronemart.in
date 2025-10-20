@@ -16,27 +16,36 @@ const checkAdminSession = (req, res, next) => {
     next();
 };
 
-
-// GET /api/accessories?keyword=agriculture
+// GET /api/accessory
 router.get('/', async (req, res) => {
     try {
-        const { productId, productCategory, brand } = req.query;
+        const { productId, productCategory, brand, type, q } = req.query;
         const query = {};
 
-        if (productId) {
-            query.productId = productId;
-        }
+        // Optional filters
+        if (productId) query.productId = productId;
+        if (productCategory) query.productCategory = productCategory;
+        if (type) query.type = new RegExp(`^${type}$`, 'i'); // Case-insensitive type match
 
-        if (productCategory) {
-            query.productCategory = productCategory;
-        }
-
-        // ✅ Optional brand filter (used only when passed from frontend)
+        // ✅ Handle multiple brands (array or single string)
         if (brand) {
-            query.brand = new RegExp(`^${brand}$`, 'i'); // Case-insensitive match
+            if (Array.isArray(brand)) {
+                query.brand = { $in: brand.map(b => new RegExp(`^${b}$`, 'i')) };
+            } else {
+                query.brand = new RegExp(`^${brand}$`, 'i');
+            }
         }
 
-        const accessories = await Accessory.find(query);
+        // ✅ Optional text search
+        if (q) {
+            query.$or = [
+                { title: { $regex: q, $options: 'i' } },
+                { description: { $regex: q, $options: 'i' } },
+                { keywords: { $regex: q, $options: 'i' } }
+            ];
+        }
+
+        const accessories = await Accessory.find(query).sort({ createdAt: -1 });
 
         res.status(200).json({
             success: true,
@@ -52,6 +61,7 @@ router.get('/', async (req, res) => {
         });
     }
 });
+
 
 router.get('/all', async (req, res) => {
     try {

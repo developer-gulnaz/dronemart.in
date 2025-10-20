@@ -266,6 +266,181 @@ async function seedAccessories() {
             },
 
             {
+                title: "DJI Mini 2 Intelligent Flight Battery",
+                slug: "dji-mini-2-intelligent-flight-battery",
+                category: "Accessories",
+                type: "Battery",
+                brand: "DJI",
+                price: 5999,
+                productCategory: "mini",
+                sku: "DJI-M2-BATT",
+                stock: 5,
+                inStock: true,
+                image: "/assets/img/product/dji/mini2-battery.jpg",
+                thumbnails: [
+                    "/assets/img/product/dji/mini2-battery.jpg",
+                    "/assets/img/product/dji/mini2-battery-1.jpg",
+                    "/assets/img/product/dji/mini2-battery-2.jpg",
+                    "/assets/img/product/dji/mini2-battery-3.jpg"
+                ],
+                shortDescription: "Lightweight Intelligent Flight Battery offering up to 31 minutes of flight time for DJI Mini 2 and Mini SE.",
+                description: `The DJI Mini 2 Intelligent Flight Battery delivers up to 31 minutes of flight time with higher energy density and reduced weight. Its built-in DJI Intelligent Battery Management System monitors battery status in real-time, ensuring safer and more reliable flight.`,
+                specs: {
+                    model: "BWX161-2250-7.7",
+                    capacity: "2250 mAh",
+                    type: "LiPo 2S",
+                    ratedVoltage: "7.7 V",
+                    chargingVoltageLimit: "8.8 V",
+                    chargingTemperature: "5° to 40° C (41° to 104° F)",
+                    maxChargingPower: "29 W"
+                },
+                inTheBox: [{ title: "Intelligent Flight Battery", quantity: 1 }],
+                rating: 0,
+                reviews: 0,
+                metaTitle: "DJI Mini 2 Intelligent Flight Battery | 31-Min Max Flight Time",
+                metaDescription: "Buy DJI Mini 2 Intelligent Flight Battery with 2250 mAh capacity. Provides up to 31 minutes of flight time for DJI Mini 2, Mini 2 SE, and Mini SE drones.",
+                keywords: [
+                    "DJI Mini 2 battery",
+                    "Mini 2 SE battery",
+                    "Mini SE Intelligent Flight Battery",
+                    "DJI drone battery"
+                ],
+                compatibility: [
+                    "DJI Mini 2",
+                    "DJI Mini 2 SE",
+                    "DJI Mini SE",
+                    "DJI Mini 4K"
+                ]
+            },
+            {
+                title: "DJI Mini 2 Two-Way Charging Hub",
+                slug: "dji-mini-2-two-way-charging-hub",
+                category: "Accessories",
+                type: "Charger",
+                brand: "DJI",
+                price: 4299,
+                productCategory: "mini",
+                sku: "DJI-M2-HUB",
+                stock: 5,
+                inStock: true,
+                image: "/assets/img/product/dji/mini2-charging-hub.jpg",
+                thumbnails: [
+                    "/assets/img/product/dji/mini2-charging-hub.jpg",
+                    "/assets/img/product/dji/mini2-charging-hub-1.jpg",
+                    "/assets/img/product/dji/mini2-charging-hub-2.jpg",
+                    "/assets/img/product/dji/mini2-charging-hub-3.jpg"
+                ],
+                shortDescription: "Charge up to three batteries in sequence or use as a power bank for additional devices with the DJI Mini 2 Two-Way Charging Hub.",
+                description: `The DJI Mini 2 Two-Way Charging Hub allows you to charge up to three intelligent flight batteries in sequence. It can also function as a power bank to charge your other devices, making it a versatile accessory for extended flight sessions.`,
+                specs: {
+                    type: "Charging Hub",
+                    maxBatteries: 3,
+                    powerBankFunction: true
+                },
+                inTheBox: [{ title: "DJI Mini 2 Two-Way Charging Hub", quantity: 1 }],
+                rating: 0,
+                reviews: 0,
+                metaTitle: "DJI Mini 2 Two-Way Charging Hub | Charge up to 3 Batteries",
+                metaDescription: "Buy DJI Mini 2 Two-Way Charging Hub to charge up to three batteries in sequence or use as a power bank. Compatible with DJI Mini 2, Mini 2 SE, Mini SE, and Mini 4K.",
+                keywords: [
+                    "DJI Mini 2 charging hub",
+                    "Mini 2 SE charger",
+                    "Mini SE two-way hub",
+                    "DJI battery charger"
+                ],
+                compatibility: [
+                    "DJI Mini 2",
+                    "DJI Mini 2 SE",
+                    "DJI Mini SE",
+                    "DJI Mini 4K"
+                ]
+            },
+            {
+                title: "DJI Mini 2 Propellers",
+                slug: "dji-mini-2-propellers",
+                category: "Accessories",
+                type: "Propeller",
+                brand: "DJI",
+                price: 1799,
+                productCategory: "mini",
+                sku: "DJI-M2-PROP",
+                stock: 10,
+                inStock: true,
+                image: "/assets/img/product/dji/mini2-propellers.jpg",
+                thumbnails: [
+                    "/assets/img/product/dji/mini2-propellers.jpg"
+                ],
+                shortDescription: "Lightweight propellers for DJI Mini 2 and Mini SE offering quieter flight and stable momentum.",
+                description: `Designed specifically for DJI Mini 2, these compact propellers provide quieter flight and enhanced stability. Each package includes propeller pairs and screws for safe and proper installation.`,
+                specs: {
+                    diameterPitch: "4.7×2.6 inch (119.38×66.04 mm)",
+                    weight: "0.6 g each"
+                },
+                inTheBox: [
+                    { title: "Propeller (pair)", quantity: 2 },
+                    { title: "Screw", quantity: 12 }
+                ],
+                rating: 0,
+                reviews: 0,
+                metaTitle: "DJI Mini 2 Propellers | Quieter & Stable Flight",
+                metaDescription: "Buy DJI Mini 2 Propellers for quieter and more stable flight. Compatible with DJI Mini 2, Mini 2 SE, Mini SE, and Mini 4K drones.",
+                keywords: [
+                    "DJI Mini 2 propellers",
+                    "Mini 2 SE propellers",
+                    "Mini SE replacement propellers",
+                    "DJI drone propellers"
+                ],
+                compatibility: [
+                    "DJI Mini 2",
+                    "DJI Mini 2 SE",
+                    "DJI Mini SE",
+                    "DJI Mini 4K"
+                ]
+            },
+            {
+                title: "DJI Air 2S Low-Noise Propellers",
+                slug: "dji-air-2s-low-noise-propellers",
+                category: "Accessories",
+                type: "Propeller",
+                brand: "DJI",
+                price: 1399,
+                productCategory: "air",
+                sku: "DJI-A2S-PROP",
+                stock: 10,
+                inStock: true,
+                image: "/assets/img/product/dji/air2-propellers.jpg",
+                thumbnails: [
+                    "/assets/img/product/dji/air2-propellers.jpg",
+                    "/assets/img/product/dji/air2-propellers-1.jpg",
+                    "/assets/img/product/dji/air2-propellers-2.jpg",
+                    "/assets/img/product/dji/air2-propellers-3.jpg"
+                ],
+                shortDescription: "Low-noise propellers for DJI Air 2S and Mavic Air 2 providing quieter and more efficient flight.",
+                description: `Designed for DJI Air 2S, these low-noise propellers undergo precise dynamic balance testing for less noise, higher aerodynamic efficiency, lower power consumption, and improved flight endurance. Each package includes one pair of propellers.`,
+                specs: {
+                    model: "7238 Low-Noise Propellers",
+                    diameterThreadPitch: "18.3×9.7 cm",
+                    weight: "4.8 g each"
+                },
+                inTheBox: [
+                    { title: "Low-Noise Propellers (Pair)", quantity: 1 }
+                ],
+                rating: 0,
+                reviews: 0,
+                metaTitle: "DJI Air 2S Low-Noise Propellers | Quieter & Efficient Flight",
+                metaDescription: "Buy DJI Air 2S Low-Noise Propellers for quieter and more efficient flights. Compatible with DJI Air 2S and Mavic Air 2.",
+                keywords: [
+                    "DJI Air 2S propellers",
+                    "Mavic Air 2 propellers",
+                    "Low-noise replacement propellers",
+                    "DJI drone propellers"
+                ],
+                compatibility: [
+                    "DJI Air 2S",
+                    "Mavic Air 2"
+                ]
+            },
+            {
                 title: "DJI 100W USB-C Power Adapter",
                 slug: "dji-100w-usb-c-power-adapter",
                 category: "Accessories",
@@ -677,6 +852,46 @@ async function seedAccessories() {
                     "DJI Air 3S accessories"
                 ],
                 compatibility: ["DJI Air 3S"],
+
+            },
+            {
+                title: "DJI Flip ND Filter Set (ND16/64/256)",
+                slug: "dji-flip-3s-nd-filter-set",
+                category: "Accessories",
+                type: "ND Filter Set",
+                brand: "DJI",
+                price: 5699,
+                productCategory: "flip",
+                sku: "DJI-FLIP-ND-FILTER",
+                stock: 5,
+                inStock: true,
+                image: "/assets/img/product/dji/dji-flip-nd-filter-set.webp",
+                thumbnails: [
+                    "/assets/img/product/dji/dji-flip-nd-filter-set.webp",
+                    "/assets/img/product/dji/dji-flip-nd-filter-set1.webp",
+                    "/assets/img/product/dji/dji-flip-nd-filter-set2.webp",
+                    "/assets/img/product/dji/dji-flip-nd-filter-set3.webp",
+                ],
+                description: "Control shutter speed and reduce glare with the DJI Flip ND filters. Perfect for maintaining clean, smooth footage at 180° shutter angles and low ISO settings. Includes ND16, ND64, and ND256 filters, each weighing just 0.34g.",
+                shortDescription: "Achieve flawless, cinematic footage with the DJI Flip ND Filter Set. Includes ND16, ND64, and ND256 filters for precise shutter control, even in bright conditions. Lightweight and easy to use",
+                specs: {
+                    weight: "0.34 g (each)"
+                },
+                inTheBox: [
+                    { title: "ND16 Filter", quantity: 1 },
+                    { title: "ND64 Filter", quantity: 1 },
+                    { title: "ND256 Filter", quantity: 1 }
+                ],
+                rating: 0,
+                reviews: 0,
+                metaTitle: "DJI Flip ND Filter Set | ND16 ND64 ND | Smooth Footage",
+                keywords: [
+                    "DJI Flip 3S ND filters",
+                    "Flip ND16 ND64 ND256",
+                    "DJI Flip camera filters",
+                    "DJI Flip accessories"
+                ],
+                compatibility: ["DJI Flip"],
 
             },
 
@@ -1150,13 +1365,13 @@ async function seedAccessories() {
                 sku: "DJI-MINI4-ND-FILTER",
                 stock: 60,
                 inStock: true,
-                image: "/assets/img/product/dji/dji-mini4-ndfilter.jpg",
+                image: "/assets/img/product/dji/dji-mini4-ndfilter-set-1.jpg",
                 thumbnails: [
-                    "/assets/img/product/dji/dji-mini4-ndfilter.jpg",
-                    "/assets/img/product/dji/dji-mini4-ndfilter-1.jpg",
-                    "/assets/img/product/dji/dji-mini4-ndfilter-2.jpg",
-                    "/assets/img/product/dji/dji-mini4-ndfilter-3.jpg",
-                    "/assets/img/product/dji/dji-mini4-ndfilter-4.jpg",
+                    "/assets/img/product/dji/dji-mini4-ndfilter-set-1.jpg",
+                    "/assets/img/product/dji/dji-mini4-ndfilter-set-2.jpg",
+                    "/assets/img/product/dji/dji-mini4-ndfilter-set-3.jpg",
+                    "/assets/img/product/dji/dji-mini4-ndfilter-set-4.jpg",
+                    "/assets/img/product/dji/dji-mini4-ndfilter-set.jpg",
                 ],
                 shortDescription:
                     "ND16/64/256 filters for DJI Mini 4 Pro reduce light in bright conditions, ideal for long exposure and timelapse shots.",
@@ -1236,7 +1451,7 @@ async function seedAccessories() {
                 title: "DJI Flip Intelligent Flight Battery",
                 slug: "dji-flip-intelligent-flight-battery",
                 category: "Accessories",
-                type : "Battery",
+                type: "Battery",
                 brand: "DJI",
                 price: 8799,
                 productCategory: "flip",
@@ -1446,7 +1661,7 @@ async function seedAccessories() {
                 title: "DJI Neo Intelligent Flight Battery",
                 slug: "dji-neo-intelligent-flight-battery",
                 category: "Accessories",
-                type : "Battery",
+                type: "Battery",
                 brand: "DJI",
                 price: 5900,
                 salePrice: 5259,
@@ -1674,7 +1889,7 @@ async function seedAccessories() {
                 title: "DJI Avata 2 Intelligent Flight Battery",
                 slug: "dji-avata-2-intelligent-flight-battery",
                 category: "Accessories",
-                type : "Battery",
+                type: "Battery",
                 brand: "DJI",
                 price: 19900,
                 salePrice: 17900,

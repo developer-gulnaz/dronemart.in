@@ -234,7 +234,7 @@ function populateProductUI(product) {
   if (mainContainer) mainContainer.innerHTML = "";
 
   const djiBrand = "DJI";
-  const specialCategories = ["Agriculture", "FPV", "Accessories"];
+  const specialCategories = ["agriculture", "FPV"];
 
   if (product.brand === djiBrand) {
     // DJI style grid

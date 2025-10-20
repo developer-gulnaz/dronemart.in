@@ -36,7 +36,6 @@ const productSchema = new mongoose.Schema({
   refType: { type: String, default: "Product" },
 
   metaTitle: { type: String },   // SEO fields
-  metaDescription: { type: String },
   keywords: [{ type: String }],
   features: [{ type: String }],
 

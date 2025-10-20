@@ -48,17 +48,27 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     let accessories = [];
     let currentAccessory = null;
-
     // === Fetch Accessories ===
     async function fetchAccessories(query = "", category = "") {
         try {
             const params = new URLSearchParams();
-            params.append("brand", "dji");
+
+            // Allow multiple brands
+            const brands = ["DJI", "Tattu", "Herewin"];
+            brands.forEach(brand => params.append("brand", brand));
+
+            // Add search and category filters
             if (query) params.append("q", query);
             if (category) params.append("productCategory", category);
 
+            // ✅ If category is "Battery" or query mentions battery, add type filter
+            if (category === "Battery" || query.toLowerCase().includes("battery")) {
+                params.append("type", "Battery");
+            }
+
             const res = await fetch(`/api/accessory?${params.toString()}`);
             if (!res.ok) throw new Error("Failed to fetch accessories");
+
             const result = await res.json();
             accessories = result.data || [];
             renderAccessories(accessories);
@@ -67,6 +77,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             productGrid.innerHTML = `<p class="text-danger">Failed to load accessories.</p>`;
         }
     }
+
 
     // === Render Accessories ===
     function renderAccessories(list) {
