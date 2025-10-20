@@ -884,3 +884,300 @@
 .chat-footer a:hover {
     background-color: #1ebe5b;
 }
+
+/* ==============================
+# Enterprise Banner
+============================== */
+.call-to-action {
+    position: relative;
+    overflow: hidden;
+    margin: 60px 0;
+    background: radial-gradient(ellipse at top,
+            color-mix(in srgb, var(--accent-color), transparent 96%) 0%,
+            var(--surface-color) 50%);
+}
+
+/* Background animations */
+.call-to-action::before {
+    content: "";
+    position: absolute;
+    inset: -50%;
+    background: conic-gradient(from 0deg,
+            transparent 0deg,
+            color-mix(in srgb, var(--accent-color), transparent 98%) 90deg,
+            transparent 180deg,
+            color-mix(in srgb, var(--heading-color), transparent 98%) 270deg,
+            transparent 360deg);
+    animation: rotate 20s linear infinite;
+    z-index: 1;
+}
+
+.call-to-action::after {
+    content: "";
+    position: absolute;
+    top: 20%;
+    right: 10%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle,
+            color-mix(in srgb, var(--accent-color), transparent 90%) 0%,
+            transparent 60%);
+    border-radius: 50%;
+    animation: pulse 4s ease-in-out infinite;
+    z-index: 1;
+}
+
+.call-to-action .container {
+    position: relative;
+    z-index: 2;
+}
+
+/* ==============================
+# Text
+============================== */
+.main-content {
+    text-align: center;
+}
+
+.offer-badge {
+    display: inline-flex;
+    align-items: center;
+    background: linear-gradient(135deg, var(--accent-color), color-mix(in srgb, var(--accent-color), black 15%));
+    padding: 10px 22px;
+    border-radius: 50px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--accent-color), transparent 70%);
+}
+
+.offer-badge .offer-text {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--contrast-color);
+}
+
+.offer-badge .limited-time {
+    font-size: 10px;
+    font-weight: 600;
+    color: color-mix(in srgb, var(--contrast-color), transparent 20%);
+    text-transform: uppercase;
+}
+
+h2 {
+    font-size: 32px;
+    font-weight: 700;
+    font-family: var(--heading-font);
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, var(--heading-color), var(--accent-color));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+    font-size: 15px;
+    color: color-mix(in srgb, var(--default-color), transparent 30%);
+    margin-bottom: 32px;
+}
+
+/* ==============================
+# Product Image & Overlay Button
+============================== */
+.product-showcase {
+    text-align: center;
+    margin: 0 auto;
+}
+
+.product-image {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.product-image img {
+    width: 80%;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.product-image img:hover {
+    transform: scale(1.05);
+}
+
+/* ==============================
+# Button
+============================== */
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.btn-shop-now {
+    display: inline-block;
+    padding: 10px 28px;
+    background: var(--accent-color);
+    color: var(--contrast-color);
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 16px;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.btn-shop-now::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, white, transparent);
+    opacity: 0.3;
+    transition: left 0.5s ease;
+}
+
+.btn-shop-now:hover {
+    transform: translateY(-2px);
+    color: #fff;
+}
+
+.btn-shop-now:hover::before {
+    left: 100%;
+}
+
+/* ==============================
+# Responsive
+============================== */
+@media (max-width: 992px) {
+    h2 {
+        font-size: 2.2rem;
+    }
+
+    .subtitle {
+        font-size: 16px;
+    }
+
+    .product-image img {
+        width: 85%;
+    }
+}
+
+@media (max-width: 768px) {
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    .subtitle {
+        font-size: 15px;
+    }
+
+    .product-image img {
+        width: 90%;
+    }
+}
+
+/* ==============================
+# Continuous Reviews Slider
+============================== */
+#reviews {
+    background-color: var(--surface-color);
+    padding: 60px 0;
+}
+
+#reviews .section-title h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--heading-color);
+    margin-bottom: 10px;
+}
+
+#reviews .section-title p {
+    font-size: 16px;
+    color: color-mix(in srgb, var(--default-color), transparent 50%);
+    margin-bottom: 40px;
+}
+
+/* Slider wrapper */
+.review-slider-wrapper {
+    overflow: hidden;
+    width: 100%;
+}
+
+.review-slider-track {
+    display: flex;
+    width: calc(200%);
+    /* Because we duplicate slides */
+    animation: scrollReviews 20s linear infinite;
+}
+
+.review-item {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 30px;
+}
+
+.review-logo {
+    width: 300px;
+    height: 250px;
+    object-fit: contain;
+    filter: grayscale(0.2);
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+
+.review-logo:hover {
+    transform: scale(1.25);
+    filter: grayscale(0);
+}
+
+/* Animation */
+@keyframes scrollReviews {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .review-logo {
+        width: 150px;
+        height: 85px;
+    }
+
+    .review-item {
+        margin: 0 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .review-logo {
+        width: 120px;
+        height: 70px;
+    }
+
+    .review-item {
+        margin: 0 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .review-logo {
+        width: 100px;
+        height: 60px;
+    }
+
+    .review-item {
+        margin: 0 10px;
+    }
+}

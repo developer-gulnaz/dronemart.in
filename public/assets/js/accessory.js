@@ -49,28 +49,20 @@ document.addEventListener('DOMContentLoaded', async function () {
     let accessories = [];
     let currentAccessory = null;
     // === Fetch Accessories ===
-    async function fetchAccessories(query = "", category = "") {
+    async function fetchAccessories(category = "", type = "") {
         try {
             const params = new URLSearchParams();
 
-            // Allow multiple brands
-            const brands = ["DJI", "Tattu", "Herewin"];
-            brands.forEach(brand => params.append("brand", brand));
-
-            // Add search and category filters
-            if (query) params.append("q", query);
+            // ✅ Add only category or type
             if (category) params.append("productCategory", category);
-
-            // ✅ If category is "Battery" or query mentions battery, add type filter
-            if (category === "Battery" || query.toLowerCase().includes("battery")) {
-                params.append("type", "Battery");
-            }
+            else if (type) params.append("type", type);
 
             const res = await fetch(`/api/accessory?${params.toString()}`);
             if (!res.ok) throw new Error("Failed to fetch accessories");
 
             const result = await res.json();
-            accessories = result.data || [];
+            const accessories = result.data || [];
+
             renderAccessories(accessories);
         } catch (err) {
             console.error("Error loading accessories:", err);
@@ -292,12 +284,13 @@ document.addEventListener('DOMContentLoaded', async function () {
                 e.preventDefault();
 
                 const category = this.dataset.category;
+                const type = this.dataset.type;
 
                 // ✅ Update URL hash without reload
                 history.pushState(null, "", `#${category}`);
 
                 // ✅ Fetch data
-                fetchAccessories("", category);
+                fetchAccessories(category, type);
 
                 // ✅ Update active link
                 categoryLinks.forEach(l => l.classList.remove("active"));
