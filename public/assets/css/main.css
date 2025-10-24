@@ -1531,8 +1531,8 @@ h6 {
 }
 
 .footer .footer-main .social-links .social-icons a:hover {
-  background-color: var(--accent-color);
-  color: var(--contrast-color);
+  background-color: #fff;
+  color: #000;
   transform: translateY(-3px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
@@ -3324,7 +3324,7 @@ section,
 }
 
 .productDetails .productDetails .purchase-section .action-buttons .btn.primary-action {
-  flex: 2;
+  /* flex: 2; */
   background: linear-gradient(135deg, var(--accent-color), color-mix(in srgb, var(--accent-color), #000 15%));
   color: var(--contrast-color);
 }

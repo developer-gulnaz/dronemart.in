@@ -39,6 +39,8 @@ const AccessorySchema = new mongoose.Schema({
   metaDescription: { type: String },
   keywords: [{ type: String }],
 
+  compatibility: [{ type: String }],
+
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now }
 });

@@ -56,8 +56,8 @@ async function startServer() {
         httpOnly: true,
         maxAge: 1000 * 60 * 60, // 1 hour in ms
         sameSite: "lax",
-        // secure: process.env.NODE_ENV === "production" // set true only behind HTTPS
-        secure: false
+        secure: process.env.NODE_ENV === "production" // set true only behind HTTPS
+        // secure: false
       }
     })
   );
@@ -107,8 +107,8 @@ async function startServer() {
     }
   });
 
-  // const PORT = process.env.PORT || 5000;
-  const PORT = 5000;
+  const PORT = process.env.PORT || 5000;
+  // const PORT = 5000;
 
   app.listen(PORT, "0.0.0.0", () =>
     console.log(`✅ Server running on port ${PORT}`)

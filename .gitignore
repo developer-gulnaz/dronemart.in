@@ -15,3 +15,4 @@
 /backend/addFPV.js
 /backend/addAccess.js
 /backend/djiAcc.js
+/backend/addBattery.js

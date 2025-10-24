@@ -271,8 +271,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // Update action buttons
             const actions = slideTemplate.querySelector('.hero-actions');
             actions.innerHTML = `
-  <a href="${slideData.links.learnMore}" class="btn-primary">Learn More</a>
-  <a href="${slideData.links.buyNow}" class="btn-secondary">Buy Now</a>
+            <a href="${slideData.links.learnMore}" class="btn-primary">Learn More</a>
 `;
 
             const featured = slideTemplate.querySelector('.featured');

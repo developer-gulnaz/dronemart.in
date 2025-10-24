@@ -183,14 +183,26 @@ document.addEventListener('DOMContentLoaded', async function () {
                         : "<p class='text-muted mb-0'>No items listed.</p>";
                 }
 
-                // === Compatibility ===
-                const compatContainer = document.getElementById('modalCompatibility');
-                if (compatContainer) {
-                    compatContainer.innerHTML = acc.compatibility?.length
-                        ? `<ul class="list-unstyled mb-0">
-                        ${acc.compatibility.map(c => `<li>• ${c}</li>`).join('')}
-                       </ul>`
-                        : "<p class='text-muted mb-0'>Compatibility info not available.</p>";
+                // Remove any existing compatibility section first
+                const existingBox = document.querySelector(".modal-compatibility-box");
+                if (existingBox) existingBox.remove();
+
+                if (acc.compatibility && acc.compatibility.length > 0) {
+                    const box = document.createElement("div");
+                    box.className = "modal-compatibility-box mt-3";
+
+                    box.innerHTML = `
+                        <h6>Compatibility</h6>
+                        <div id="modalCompatibility">
+                            <ul class="list-unstyled mb-0">
+                                ${acc.compatibility.map(c => `<li>• ${c}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `;
+
+                    // Append where the old compatibility container was supposed to go
+                    const modalBody = document.querySelector(".modal-body");
+                    modalBody.appendChild(box);
                 }
 
                 modal.show();
