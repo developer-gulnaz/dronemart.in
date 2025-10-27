@@ -228,7 +228,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const featuredProduct = firstSlide.querySelector('.featured');
         featuredProduct.querySelector('img').src = firstData.featuredProduct.image;
         featuredProduct.querySelector('img').alt = firstData.featuredProduct.name;
-        featuredProduct.querySelector('.product-badge').textContent = firstData.featuredProduct.badge;
+        // featuredProduct.querySelector('.product-badge').textContent = firstData.featuredProduct.badge;
         featuredProduct.querySelector('h4').textContent = firstData.featuredProduct.name;
         featuredProduct.querySelector('.sale-price').textContent = firstData.featuredProduct.salePrice;
         featuredProduct.querySelector('.original-price').textContent = firstData.featuredProduct.originalPrice;
@@ -277,7 +277,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const featured = slideTemplate.querySelector('.featured');
             featured.querySelector('img').src = slideData.featuredProduct.image;
             featured.querySelector('img').alt = slideData.featuredProduct.name;
-            featured.querySelector('.product-badge').textContent = slideData.featuredProduct.badge;
+            // featured.querySelector('.product-badge').textContent = slideData.featuredProduct.badge;
             featured.querySelector('h4').textContent = slideData.featuredProduct.name;
             featured.querySelector('.sale-price').textContent = slideData.featuredProduct.salePrice;
             featured.querySelector('.original-price').textContent = slideData.featuredProduct.originalPrice;
@@ -438,7 +438,7 @@ async function renderBestSellers() {
         container.innerHTML = ""; // Clear existing static products
 
         bestSellers.forEach(product => {
-            const badgeHTML = product.badge ? `<div class="product-badge">${product.badge}</div>` : "";
+            // const badgeHTML = product.badge ? `<div class="product-badge">${product.badge}</div>` : "";
             const productHTML = `
         <div class="col-lg-3 col-md-6">
           <div class="product-item" data-id="${product._id}">
@@ -536,11 +536,7 @@ async function loadCardProducts() {
                                     
                                 </div>
                                 <div class="product-info">
-                                ${product.badge ? `
-                                        <div class="product-badges">
-                                            <span class="${product.badge.toLowerCase().replace(' ', '-')}-badge">${product.badge}</span>
-                                        </div>
-                                    ` : ''}
+                               
                                     <h4 class="product-name">
                                         <a href="productDetails.html?slug=${product.slug}" style="color:#1f2937;">${product.title}</a>
                                     </h4>

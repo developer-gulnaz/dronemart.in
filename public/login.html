@@ -43,13 +43,13 @@
           <div class="col-lg-4 d-none d-lg-flex">
             <div class="top-bar-item">
               <a href="index.html" class="logo d-flex align-items-center">
-                <!-- <img src="assets/img/logo.png" alt=""> -->
-                <h1 class="sitename">Dronemart</h1>
+                <img src="assets/img/dronemart.png" alt="">
+                <!-- <h1 class="sitename">Dronemart</h1> -->
               </a>
             </div>
           </div>
 
-          <div class="col-lg-4 col-md-12 text-center">
+          <!-- <div class="col-lg-4 col-md-12 text-center">
             <div class="announcement-slider swiper init-swiper">
               <script type="application/json" class="swiper-config">
                 {
@@ -69,20 +69,13 @@
                 <div class="swiper-slide">🎁 20% off on your first order</div>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
 
     <!-- Navigation -->
-    <div class="header-nav">
-      <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
-        <a href="index.html" class="logo d-flex align-items-center">
-          <!-- <img src="assets/img/logo.png" alt=""> -->
-          <h1 class="sitename text-white">Dronemart</h3>
-        </a>
-      </div>
-    </div>
+    
 
     <!-- Mobile Search Form -->
     <div class="collapse" id="mobileSearch">
@@ -103,7 +96,7 @@
   <main class="main">
 
     <!-- Page Title -->
-    <div class="page-title light-background">
+    <!-- <div class="page-title light-background">
       <div class="container d-lg-flex justify-content-between align-items-center">
         <h3 class="mb-2 mb-lg-0">Login</h3>
         <nav class="breadcrumbs">
@@ -113,7 +106,8 @@
           </ol>
         </nav>
       </div>
-    </div><!-- End Page Title -->
+    </div>
+    End Page Title -->
 
     <!-- Login Section -->
     <section id="login" class="login section">
@@ -328,14 +322,14 @@
             <div class="footer-contact social-links mt-4 footer-widget">
               <h4>Connect With Us</h4>
               <div class="social-icons">
-<a href="https://www.facebook.com/people/DroneMart/61579675953199/" target="_blank" aria-label="Facebook"><i
-                    class="bi bi-facebook"></i></a>
+                <a href="https://www.facebook.com/people/DroneMart/61579675953199/" target="_blank"
+                  aria-label="Facebook"><i class="bi bi-facebook"></i></a>
                 <a href="https://www.instagram.com/dronemart/" target="_blank" aria-label="Instagram"><i
                     class="bi bi-instagram"></i></a>
                 <a href="https://api.whatsapp.com/send?phone=919284818057" target="_blank" aria-label="WhatsApp"><i
                     class="bi bi-whatsapp"></i></a>
                 <!-- <a href="#" aria-label="YouTube" target="_blank" ><i class="bi bi-youtube"></i></a> -->
-             </div>
+              </div>
             </div>
           </div>
         </div>
@@ -421,7 +415,7 @@
           const data = await res.json();
           if (!res.ok) throw new Error(data.message || "Login failed");
           // alert("login successful!");
-          window.showDialog(`login successful!`, "success");
+          window.showDialog(`Login Successful!`, "success");
 
           window.location.href = "account.html";
         } catch (err) {
