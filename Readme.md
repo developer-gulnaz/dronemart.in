@@ -1,161 +1,133 @@
-Project: Dronemart – E-commerce platform for drones and accessories
-Stack: Node.js, Express.js, MongoDB, Mongoose, HTML/CSS/JS, Bootstrap
+Here’s a professional README.md file for your Dronemart project.
 
-1. Overview
+---
 
-Dronemart is a full-stack e-commerce application designed to support:
+🛒 Dronemart – Drone E-Commerce & Repair Platform
 
-User account management, wishlist, cart, orders
-
-Session-based authentication
-
-Admin dashboard for managing users and products
-
-Product catalog and checkout system
-
-This README is structured for future development and easy extension.
-
-2. Features
-2.1 User
-
-Register / Login / Logout (session-based)
-
-View / Edit profile
-
-Change password
-
-Manage wishlist & cart
-
-View orders
-
-Delete account
-
-2.2 Admin
-
-Dashboard with user and order statistics
-
-View recent users
-
-Manage users (CRUD)
-
-Manage products (CRUD)
-
-Protected admin-only routes
-
-2.3 Product / Order Management
-
-Products: CRUD operations
-
-Orders: View user orders
-
-Wishlist & Cart: Add, remove, view items
-
-3. Architecture
-backend/
-├─ config/
-│  └─ db.js               # MongoDB connection
-├─ controllers/
-│  ├─ authController.js
-│  └─ userController.js
-├─ models/
-│  ├─ User.js
-│  ├─ Order.js
-│  └─ ... other models
-├─ routes/
-│  ├─ auth.js
-│  └─ users.js
-├─ server.js              # Express server setup
-public/
-├─ index.html
-├─ login.html
-├─ account.html
-└─ ... other frontend assets
-admin/
-├─ index.html
-└─ ... admin frontend
-
-4. API Endpoints (RESTful)
-4.1 Authentication
-Method	Endpoint	Description
-POST	/api/auth/userLogin	Login user
-POST	/api/auth/logout	Logout user
-4.2 Users
-Method	Endpoint	Description
-GET	/api/users/profile	Get logged-in user profile
-PUT	/api/users/me	Update profile
-DELETE	/api/users/me	Delete account
-GET	/api/users/recent	Admin: recent users
-GET	/api/users/dashboard/status	Admin: dashboard stats
-4.3 Products
-Method	Endpoint	Description
-GET	/api/products	Fetch all products
-POST	/api/products	Add new product
-PUT	/api/products/:id	Update product
-DELETE	/api/products/:id	Delete product
-4.4 Orders
-Method	Endpoint	Description
-GET	/api/orders/my	Get logged-in user orders
-4.5 Cart & Wishlist
-Method	Endpoint	Description
-GET	/api/cart	Get cart
-POST	/api/cart	Add to cart
-DELETE	/api/cart/:id	Remove from cart
-GET	/api/wishlist	Get wishlist
-POST	/api/wishlist	Add to wishlist
-DELETE	/api/wishlist/:id	Remove from wishlist
-5. Setup
-
-Clone repository:
-
-git clone <repo-url>
+Dronemart is a full-stack dynamic e-commerce platform built for selling drones and accessories, along with a repair request module. The platform includes a complete Admin Panel for managing products, orders, leads, and revenue. It integrates a secure payment gateway and follows best practices for testing and data protection.
 
 
-Install backend dependencies:
+---
 
-cd backend
-npm install
+🚀 Features
 
+🧭 User Side
 
-Create .env file:
+Browse and purchase drones and accessories.
 
-MONGO_URI=<mongodb_connection_string>
-SESSION_SECRET=<your_session_secret>
-PORT=5000
+Submit repair inquiries directly through the website.
 
+Secure payments via PayU payment gateway.
 
-Run server:
+Mobile-friendly, fully responsive interface using Bootstrap.
 
-node server.js
-# or with nodemon
-nodemon server.js
+User sessions managed securely using Express Session.
 
 
-Open frontend pages via browser or local server.
+🛠️ Admin Panel
 
-6. Session & Auth Notes
+Add, edit, and delete products and accessories.
 
-Uses express-session; cookies with credentials: "include" required for frontend fetch calls.
+Update stock levels and product details.
 
-Admin routes require adminId in session.
+View and update order statuses.
 
-User routes require userId in session.
+Track revenue and manage leads.
 
-Session cookie config:
-
-cookie: {
-  httpOnly: true,
-  maxAge: 24*60*60*1000, // 1 day
-  sameSite: 'lax',
-  secure: false
-}
+View and update repair inquiries from users.
 
 
-7. Future Development / Updates
 
- Payment gateway integration
+---
 
- Advanced order management & status updates
+🧰 Tech Stack
 
- Admin analytics charts
+Frontend: HTML, CSS, JavaScript, Bootstrap
+Backend: Node.js, Express.js
+Database: MongoDB
+Testing: Postman (API Testing), Unit Testing, Functional Testing
+Payment Gateway: PayU
+Session Management: Express Session
 
- Unit tests and API testing
+
+---
+
+🧪 Testing
+
+Implemented unit testing and functional testing for backend routes and frontend workflows.
+
+Created detailed test cases covering all user and admin scenarios.
+
+Performed API testing using Postman to ensure data consistency and error handling.
+
+Verified payment and order flow integration end-to-end.
+
+
+
+---
+
+🔒 Security
+
+Implemented Express Sessions for secure authentication and session handling.
+
+Sanitized inputs and validated API routes to prevent vulnerabilities.
+
+Protected admin routes and ensured role-based access control.
+
+
+
+---
+
+💼 Project Highlights
+
+Developed single-handedly from scratch, handling design, backend logic, database structure, and deployment.
+
+Achieved a fully dynamic e-commerce platform capable of managing real-time inventory, order tracking, and repair requests.
+
+Integrated complete admin control panel for business operations management.
+
+
+
+---
+
+📂 Folder Structure
+
+Dronemart/
+│
+├── frontend/
+│   ├── index.html
+│   ├── product.html
+│   ├── accessories.html
+│   ├── repair.html
+│   └── admin/
+│       ├── dashboard.html
+│       ├── manage-products.html
+│       ├── manage-orders.html
+│       ├── manage-leads.html
+│
+├── backend/
+│   ├── server.js
+│   ├── routes/
+│   ├── models/
+│   ├── controllers/
+│   └── config/
+│
+├── tests/
+│   ├── api-tests/
+│   ├── unit-tests/
+│
+└── README.md
+
+
+---
+
+📸 Screenshots (optional)
+
+
+
+
+---
+
+🧑‍💻 Developer
+
+Developed & Tested by: Gulnaz Sheikh

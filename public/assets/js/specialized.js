@@ -5,11 +5,11 @@ document.addEventListener('DOMContentLoaded', async function () {
     const productGrid = document.getElementById('productGrid');
     const scrollTopButton = document.getElementById('scroll-top');
 
-    let products = []; 
+    let products = [];
     let accessories = []; // ✅ FIXED: store accessories globally for wishlist/cart
 
     // === Detect Page Type ===
-    const pageTitle = document.querySelector('.page-title h3')?.textContent || '';
+    const pageTitle = document.title || '';
     const isAgriculturePage = pageTitle.toLowerCase().includes('agriculture');
     const isFPVPage = pageTitle.toLowerCase().includes('fpv');
 
@@ -69,13 +69,13 @@ document.addEventListener('DOMContentLoaded', async function () {
             // === Filter logic for both products & accessories ===
             if (isAgriculturePage) {
                 data = data.filter(p =>
-                    (p.category?.toLowerCase().includes("agriculture") ||
-                        p.productCategory?.toLowerCase().includes("agriculture"))
+                (p.category?.toLowerCase().includes("agriculture") ||
+                    p.productCategory?.toLowerCase().includes("agriculture"))
                 );
             } else if (isFPVPage) {
                 data = data.filter(p =>
-                    (p.category?.toLowerCase().includes("fpv") ||
-                        p.productCategory?.toLowerCase().includes("fpv"))
+                (p.category?.toLowerCase().includes("fpv") ||
+                    p.productCategory?.toLowerCase().includes("fpv"))
                 );
             }
 

@@ -48,27 +48,43 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     let accessories = [];
     let currentAccessory = null;
+
     // === Fetch Accessories ===
     async function fetchAccessories(category = "", type = "") {
         try {
             const params = new URLSearchParams();
-
-            // ✅ Add only category or type
             if (category) params.append("productCategory", category);
-            else if (type) params.append("type", type);
+            if (type) params.append("type", type);
 
             const res = await fetch(`/api/accessory?${params.toString()}`);
             if (!res.ok) throw new Error("Failed to fetch accessories");
 
             const result = await res.json();
-            const accessories = result.data || [];
+            let accessories = result.data || [];
+
+            // 🔹 If user clicked on "Battery" → show all battery items (any brand)
+            if (category.toLowerCase() === "battery") {
+                accessories = accessories.filter(
+                    a =>
+                        a.category?.toLowerCase() === "battery" ||
+                        a.productCategory?.toLowerCase() === "battery"
+                );
+            } else {
+                // 🔹 Otherwise → show only DJI brand accessories (default view)
+                accessories = accessories.filter(
+                    a => a.brand?.toLowerCase() === "dji"
+                );
+            }
 
             renderAccessories(accessories);
+            console.log("✅ Loaded accessories:", accessories.length);
         } catch (err) {
-            console.error("Error loading accessories:", err);
-            productGrid.innerHTML = `<p class="text-danger">Failed to load accessories.</p>`;
+            console.error("❌ Error loading accessories:", err);
+            if (productGrid)
+                productGrid.innerHTML = `<p class="text-danger text-center">Failed to load accessories.</p>`;
         }
     }
+
 
 
     // === Render Accessories ===

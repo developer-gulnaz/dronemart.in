@@ -41,9 +41,9 @@ document.addEventListener('DOMContentLoaded', async function () {
     let products = []; // Stores fetched products
 
     // === Detect Page Type ===
-    const pageTitle = document.querySelector('.page-title h3')?.textContent || '';
+    const pageTitle = document.title || '';
     const isSpecializedPage = pageTitle.toLowerCase().includes('specialized');
-    const isCategoryPage = pageTitle.toLowerCase().includes('dji');
+    const isCategoryPage = pageTitle.toLowerCase().includes('category');
 
     // === Fetch products from backend ===
     async function fetchProducts(query = "", category = "") {
@@ -64,6 +64,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
             products = data;
             renderProducts(products);
+            console.log("dji product -- " + products);
         } catch (err) {
             console.error("Error loading products:", err);
             if (productGrid) productGrid.innerHTML = `<p class="text-danger">Failed to load products.</p>`;
