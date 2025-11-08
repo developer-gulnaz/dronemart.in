@@ -15,16 +15,24 @@ const checkAdminSession = (req, res, next) => {
 
 // =============================
 // Add Product
-// =============================F
-
+// =============================
 exports.addProduct = [checkAdminSession, async (req, res) => {
     try {
+
+        console.log("Uploaded fields:", Object.keys(req.files || {}));
+
         const {
-            title, slug, category, brand, price, salePrice = 0, badge = "",
-            stock = 0, description, shortDescription, specs, inTheBox, features
+            title, slug, category, brand,
+            price, salePrice = 0, badge = "",
+            stock = 0, description, shortDescription,
+            specs, inTheBox, features,
+            metaTitle, metaDescription, keywords,
+            featured
         } = req.body;
 
         const inStock = Number(stock) > 0;
+
+        console.log("✅ Inside product controller");
 
         // -----------------------
         // Handle images
@@ -33,39 +41,44 @@ exports.addProduct = [checkAdminSession, async (req, res) => {
         const thumbnailPaths = [];
         const boxImagesPaths = [];
 
-        if (req.files['image'] && req.files['image'][0]) {
-            mainImagePath = "/assets/img/product/" + req.files['image'][0].filename;
+        if (req.files?.image?.[0]) {
+            mainImagePath = "/assets/img/product/" + req.files.image[0].filename;
         }
 
-        if (req.files['thumbnails']) {
-            req.files['thumbnails'].forEach(f => {
+        if (req.files?.thumbnails) {
+            req.files.thumbnails.forEach(f => {
                 thumbnailPaths.push("/assets/img/product/" + f.filename);
             });
         }
 
-        if (req.files['inTheBoxImage']) {
-            req.files['inTheBoxImage'].forEach(f => {
+        if (req.files?.inTheBoxImage) {
+            req.files.inTheBoxImage.forEach(f => {
                 boxImagesPaths.push("/assets/img/product/in-the-box/" + f.filename);
             });
         }
 
         // -----------------------
-        // Parse dynamic fields
+        // Parse JSON fields
         // -----------------------
-        const specsJson = specs ? JSON.parse(specs) : {};
-        const inTheBoxJson = inTheBox ? JSON.parse(inTheBox) : [];
-        const featuresArray = features ? JSON.parse(features) : [];
+        let inTheBoxJson = [];
+        try { inTheBoxJson = JSON.parse(inTheBox || "[]"); } catch (e) { }
+
+        let specsJson = {};
+        try { specsJson = JSON.parse(specs || "{}"); } catch (e) { }
+
+        let featuresArray = [];
+        try { featuresArray = JSON.parse(features || "[]"); } catch (e) { }
 
         // -----------------------
-        // Assign box images based on brand/category
+        // Assign box images
         // -----------------------
-        if (brand === "DJI") {
-            inTheBoxJson.forEach((item, i) => {
+        inTheBoxJson.forEach((item, i) => {
+            if (brand === "DJI") {
                 if (boxImagesPaths[i]) item.image = boxImagesPaths[i];
-            });
-        } else {
-            inTheBoxJson.forEach(item => delete item.image);
-        }
+            } else {
+                delete item.image;
+            }
+        });
 
         // -----------------------
         // Save Product
@@ -86,17 +99,26 @@ exports.addProduct = [checkAdminSession, async (req, res) => {
             shortDescription,
             specs: specsJson,
             inTheBox: inTheBoxJson,
-            features: featuresArray
+            features: featuresArray,
+
+            // ✅ Added missing SEO fields
+            metaTitle,
+            metaDescription,
+            keywords: keywords ? keywords.split(",").map(x => x.trim()) : [],
+
+            // ✅ Featured checkbox handling
+            featured: featured === "true" || featured === true
         });
 
         const savedProduct = await newProduct.save();
-        res.status(201).json({ message: "Product added successfully", product: savedProduct });
+        res.status(201).json({ message: "✅ Product added successfully", product: savedProduct });
 
     } catch (error) {
-        console.error(error);
+        console.error("❌ Add Product Error:", error);
         res.status(500).json({ message: "Failed to add product", error });
     }
 }];
+
 
 
 // =============================

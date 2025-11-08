@@ -19,15 +19,18 @@ const checkAdminSession = (req, res, next) => {
 // =============================
 // Multer storage setup
 // =============================
-// Storage config
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    if (file.fieldname === "image" || file.fieldname === "thumbnails") {
-      cb(null, "../public/assets/img/product");
-    } else if (file.fieldname === "inTheBoxImage") {
-      cb(null, "../public/assets/img/product/in-the-box");
-    } else if (file.fieldname === "thumbnails") {
-      cb(null, "../public/assets/img/product"); // fallback
+    switch (file.fieldname) {
+      case "image":
+      case "thumbnails":
+        cb(null, "../public/assets/img/product");
+        break;
+      case "inTheBoxImage":
+        cb(null, "../public/assets/img/product/in-the-box");
+        break;
+      default:
+        cb(null, "../public/assets/img/product"); // safe fallback
     }
   },
   filename: (req, file, cb) => {
@@ -36,14 +39,16 @@ const storage = multer.diskStorage({
   }
 });
 
+// Accept fields
 const upload = multer({ storage });
 
-// Fields setup
 const uploadFields = upload.fields([
   { name: "image", maxCount: 1 },
   { name: "thumbnails", maxCount: 10 },
-  { name: "inTheBoxImage", maxCount: 20 }
+  { name: "inTheBoxImage", maxCount: 20 },
+  { name: "inTheBoxImage[]", maxCount: 30 },
 ]);
+
 
 router.post("/", checkAdminSession, uploadFields, productController.addProduct);
 

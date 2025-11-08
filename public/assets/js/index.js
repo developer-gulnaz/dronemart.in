@@ -395,7 +395,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Initialize the slider
     initSlider();
     renderBestSellers();
-    loadCardProducts();
+    // loadCardProducts();
+    loadFeaturedProducts();
 
 });
 
@@ -419,43 +420,50 @@ window.addEventListener("scroll", function () {
     }
 });
 
-// ===== Render Best Sellers Dynamically =====
-async function renderBestSellers() {
+async function loadFeaturedProducts() {
     try {
-        // Fetch all products from backend
         const res = await fetch("/api/products", { credentials: "include" });
         if (!res.ok) throw new Error("Failed to fetch products");
 
         const products = await res.json();
 
-        // Filter only Best Sellers
-        const bestSellers = products.filter(p => p.badge === "Best Sellers");
+        // ✅ Filter Featured only
+        const featuredProducts = products.filter(p => p.badge === "Featured");
 
-        // Select the row container inside the Best Sellers section
-        const container = document.querySelector("#best-sellers .row.g-5 px-5");
-        if (!container) return console.error("Best Sellers container not found");
+        // ✅ Still using #best-sellers (as you requested)
+        const container = document.querySelector("#best-sellers .row.g-5");
+        if (!container) return console.error("Best sellers section not found");
 
-        container.innerHTML = ""; // Clear existing static products
+        container.innerHTML = ""; // clear old products
 
-        bestSellers.forEach(product => {
-            // const badgeHTML = product.badge ? `<div class="product-badge">${product.badge}</div>` : "";
+        featuredProducts.forEach(product => {
             const productHTML = `
         <div class="col-lg-3 col-md-6">
-          <div class="product-item" data-id="${product._id}">
+          <div class="product-item" data-id="${product._id}" data-slug="${product.slug}">
             <div class="product-image">
-              ${badgeHTML}
-              <img src="${product.image}" alt="${product.title}" class="img-fluid" loading="lazy">
+              <a href="productDetails.html?slug=${product.slug}">
+                <img src="${product.image}" alt="${product.title}" class="img-fluid" loading="lazy">
+              </a>
+
               <div class="product-actions">
                 <button class="action-btn wishlist-btn">
                   <i class="bi bi-heart"></i>
                 </button>
               </div>
-              <button class="cart-btn">Add to Cart</button>
+
             </div>
+
             <div class="product-info">
-              <div class="product-category">${product.category}</div>
-              <h4 class="product-name"><a href="productDetails.html">${product.title}</a></h4>
-              <div class="product-price">${product.price}</div>
+              <div class="product-category">Featured</div>
+              <h4 class="product-name">
+                <a href="productDetails.html?slug=${product.slug}">
+                  ${product.title}
+                </a>
+              </h4>
+              <div class="product-price">
+                ${product.oldPrice ? `<span class="old-price">₹${product.oldPrice}</span>` : ``}
+                <span class="current-price">₹${product.price}</span>
+              </div>
             </div>
           </div>
         </div>
@@ -464,100 +472,99 @@ async function renderBestSellers() {
             container.insertAdjacentHTML("beforeend", productHTML);
         });
 
-        container.querySelectorAll("#best-sellers .cart-btn").forEach(btn => {
+        // ✅ Add to Cart
+        // container.querySelectorAll(".cart-btn").forEach(btn => {
+        //     btn.addEventListener("click", function () {
+        //         const id = this.closest(".product-item").dataset.id;
+        //         const product = featuredProducts.find(p => p._id === id);
+        //         if (product) window.addToCart(product);
+        //     });
+        // });
+
+        // ✅ Wishlist
+        container.querySelectorAll(".wishlist-btn").forEach(btn => {
             btn.addEventListener("click", function () {
-                const card = this.closest(".product-item");
-                const id = card.dataset.id;
-                const product = bestSellers.find(p => p._id === id); // your fetched Best Sellers
-                if (!product) return;
-                window.addToCart(product);
+                const id = this.closest(".product-item").dataset.id;
+                const product = featuredProducts.find(p => p._id === id);
+
+                if (product) {
+                    window.addToWishlist(product);
+                    this.querySelector("i").classList.replace("bi-heart", "bi-heart-fill");
+                }
             });
         });
 
-        // Wishlist functionality
-        document.querySelectorAll("#best-sellers .wishlist-btn").forEach(btn => {
-            btn.addEventListener("click", function () {
-                const card = this.closest(".product-item");
-                if (!card) return;
-
-                const id = card.dataset.id;
-                const product = bestSellers.find(p => p._id === id); // your best sellers array
-                if (!product) return;
-
-                window.addToWishlist(product);
-            });
-        });
-
-
     } catch (err) {
-        console.error("Error rendering Best Sellers:", err);
+        console.error("Error loading Featured products:", err);
     }
 }
 
+loadFeaturedProducts();
 
-const cardsContainer = document.getElementById("cardsContainer");
 
-// Badge configuration for icon and card background color
-const badgeConfig = {
-    "Trending": { icon: "bi bi-fire", color: "#ff1919ff" },
-    "Best Sellers": { icon: "bi bi-award", color: "#094098ff" },
-    "Featured": { icon: "bi bi-star-fill", color: "#ffea00ff" },
-    "New": { icon: "bi bi-star", color: "#00a600ff" },
-    "Hot": { icon: "bi bi-lightning-charge", color: "#FFF0F5" },
-    "Limited": { icon: "bi bi-hourglass-split", color: "#f58607ff" },
-};
+// const cardsContainer = document.getElementById("cardsContainer");
 
-async function loadCardProducts() {
-    try {
-        const res = await fetch("/api/products");
-        if (!res.ok) throw new Error("Failed to fetch products");
-        const products = await res.json();
+// // Badge configuration for icon and card background color
+// const badgeConfig = {
+//     "Trending": { icon: "bi bi-fire", color: "#ff1919ff" },
+//     "Best Sellers": { icon: "bi bi-award", color: "#094098ff" },
+//     "Featured": { icon: "bi bi-star-fill", color: "#ffea00ff" },
+//     "New": { icon: "bi bi-star", color: "#00a600ff" },
+//     "Hot": { icon: "bi bi-lightning-charge", color: "#FFF0F5" },
+//     "Limited": { icon: "bi bi-hourglass-split", color: "#f58607ff" },
+// };
 
-        Object.keys(badgeConfig).forEach((badge, index) => {
-            const filtered = products.filter(p => p.badge === badge);
-            if (filtered.length === 0) return;
+// async function loadCardProducts() {
+//     try {
+//         const res = await fetch("/api/products");
+//         if (!res.ok) throw new Error("Failed to fetch products");
+//         const products = await res.json();
 
-            const col = document.createElement("div");
-            col.className = "col-lg-4 col-md-6 mb-5 mb-md-0 bestseller-card";
-            col.dataset.aosDelay = `${200 + index * 100}`;
+//         Object.keys(badgeConfig).forEach((badge, index) => {
+//             const filtered = products.filter(p => p.badge === badge);
+//             if (filtered.length === 0) return;
 
-            col.innerHTML = `
-                <div class="product-category" style="  background: linear-gradient(135deg, var(--surface-color) 20%, color-mix(in srgb, var(--accent-color), transparent 95%) 100%);">
-                    <h3 class="category-title">
-                        <i class="${badgeConfig[badge].icon}" style="color: ${badgeConfig[badge].color};"></i> ${badge}
-                    </h3>
-                    <div class="product-list">
-                        ${filtered.map(product => `
-                            <div class="product-card">
-                                <div class="product-image">
-                                    <a href="productDetails.html?slug=${product.slug}">
-                                        <img src="${product.image}" alt="${product.title}" class="img-fluid" style="border-radius: 8px;">
-                                    </a>
-                                    
-                                </div>
-                                <div class="product-info">
-                               
-                                    <h4 class="product-name">
-                                        <a href="productDetails.html?slug=${product.slug}" style="color:#1f2937;">${product.title}</a>
-                                    </h4>
-                                    <div class="product-price" style="font-weight:600; color:#111;">
-                                        ${product.oldPrice ? `<span class="old-price" style="text-decoration: line-through; margin-right:5px;">${product.oldPrice}</span>` : ''}
-                                        <span class="current-price">${product.price}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `;
+//             const col = document.createElement("div");
+//             col.className = "col-lg-4 col-md-6 mb-5 mb-md-0 bestseller-card";
+//             col.dataset.aosDelay = `${200 + index * 100}`;
 
-            cardsContainer.appendChild(col);
-        });
+//             col.innerHTML = `
+//                 <div class="product-category" style="  background: linear-gradient(135deg, var(--surface-color) 20%, color-mix(in srgb, var(--accent-color), transparent 95%) 100%);">
+//                     <h3 class="category-title">
+//                         <i class="${badgeConfig[badge].icon}" style="color: ${badgeConfig[badge].color};"></i> ${badge}
+//                     </h3>
+//                     <div class="product-list">
+//                         ${filtered.map(product => `
+//                             <div class="product-card">
+//                                 <div class="product-image">
+//                                     <a href="productDetails.html?slug=${product.slug}">
+//                                         <img src="${product.image}" alt="${product.title}" class="img-fluid" style="border-radius: 8px;">
+//                                     </a>
 
-    } catch (err) {
-        console.error("Error loading card products:", err);
-    }
-}
+//                                 </div>
+//                                 <div class="product-info">
+
+//                                     <h4 class="product-name">
+//                                         <a href="productDetails.html?slug=${product.slug}" style="color:#1f2937;">${product.title}</a>
+//                                     </h4>
+//                                     <div class="product-price" style="font-weight:600; color:#111;">
+//                                         ${product.oldPrice ? `<span class="old-price" style="text-decoration: line-through; margin-right:5px;">${product.oldPrice}</span>` : ''}
+//                                         <span class="current-price">${product.price}</span>
+//                                     </div>
+//                                 </div>
+//                             </div>
+//                         `).join('')}
+//                     </div>
+//                 </div>
+//             `;
+
+//             cardsContainer.appendChild(col);
+//         });
+
+//     } catch (err) {
+//         console.error("Error loading card products:", err);
+//     }
+// }
 
 
 // 🧩 Modern Center Dialog Box

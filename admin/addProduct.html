@@ -51,26 +51,26 @@
                 </a>
             </li>
 
-           <li>
-        <a href="customerInquiries.html">
-          <i class="fa-solid fa-users-gear"></i>
-          <span class="menu-text">Customer Inquiries</span>
-        </a>
-      </li>
+            <li>
+                <a href="customerInquiries.html">
+                    <i class="fa-solid fa-users-gear"></i>
+                    <span class="menu-text">Customer Inquiries</span>
+                </a>
+            </li>
 
-      <li>
-        <a href="products.html">
-          <i class="fa-solid fa-box-open"></i>
-          <span class="menu-text">Products</span>
-        </a>
-      </li>
+            <li>
+                <a href="products.html">
+                    <i class="fa-solid fa-box-open"></i>
+                    <span class="menu-text">Products</span>
+                </a>
+            </li>
 
-      <li>
-        <a href="accessories.html">
-          <i class="fa-solid fa-toolbox"></i>
-          <span class="menu-text">Accessories</span>
-        </a>
-      </li>
+            <li>
+                <a href="accessories.html">
+                    <i class="fa-solid fa-toolbox"></i>
+                    <span class="menu-text">Accessories</span>
+                </a>
+            </li>
 
             <li>
                 <a href="orders.html">
@@ -149,7 +149,18 @@
                     <label>Brand</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" name="category" placeholder="Category" class="form-control" required>
+                    <!-- <input type="text" name="category" placeholder="Category" class="form-control" required> -->
+                    <select name="category" class="form-control" required>
+                        <option value="">Select Category</option>
+                        <option value="agriculture">Agriculture</option>
+                        <option value="air-series">DJI Air</option>
+                        <option value="mini-series">DJI Mini</option>
+                        <option value="mavic-series">DJI Mavic</option>
+                        <option value="flip-series">DJI Flip</option>
+                        <option value="neo-series">DJI Neo</option>
+                        <option value="avata-series">DJI Avata</option>
+                        <option value="FPV">FPV</option>
+                    </select>
                     <label>Category</label>
                 </div>
 
@@ -222,18 +233,17 @@
 
                 <!-- Specs -->
                 <div class="section-block">
-                    <h6>Specs</h6>
-                    <div id="specCategoriesContainer"></div>
-                    <button type="button" onclick="addSpecCategory()" class="btn btn-sm btn-success mt-2">+ Add
-                        Category</button>
+                    <h6>Specifications JSON</h6>
+                    <textarea name="specs" class="form-control" rows="8"
+                        placeholder='{"General":{"Brand":"DJI","Model":"Mini 3"}}'></textarea>
+
                 </div>
 
                 <!-- Features -->
                 <div class="section-block">
                     <h6>Features</h6>
-                    <div id="featuresContainer"></div>
-                    <button type="button" onclick="addFeature()" class="btn btn-sm btn-success mt-2">+ Add
-                        Feature</button>
+                    <input type="text" name="featuresText" class="form-control">
+
                 </div>
 
                 <!-- Featured Checkbox -->
@@ -242,8 +252,8 @@
                     <label class="form-check-label" for="featured">Featured</label>
                 </div>
 
-                <div class="col-12 mt-3">
-                    <button type="submit" class="btn btn-primary w-100">Add Product</button>
+                <div class="mt-3">
+                    <button type="submit" class="btn btn-primary w-25">Add Product</button>
                 </div>
             </form>
         </div>
@@ -254,128 +264,62 @@
     <script src="assets/js/common.js"></script>
     <script src="assets/js/main.js"></script>
 
-
     <script>
-        // ===== Utility =====
         function generateSlug(title) {
             return title.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '');
         }
 
-        // ===== Specs =====
-        const specCategoriesContainer = document.getElementById('specCategoriesContainer');
-
-        function addSpecCategory(name = '') {
-            const div = document.createElement('div');
-            div.classList.add('spec-category', 'mb-3', 'border', 'p-2', 'rounded');
-            div.innerHTML = `
-            <div class="d-flex gap-2 mb-2">
-                <input type="text" placeholder="Category Name" class="form-control spec-category-name" value="${name}">
-                <button type="button" class="btn btn-sm btn-success">+ Add Spec</button>
-                <button type="button" class="btn btn-sm btn-danger">Remove Category</button>
-            </div>
-            <div class="specsContainer ps-3"></div>
-        `;
-            div.querySelector('.btn-success').addEventListener('click', () => addSpec(div.querySelector('.specsContainer')));
-            div.querySelector('.btn-danger').addEventListener('click', () => div.remove());
-            specCategoriesContainer.appendChild(div);
-        }
-
-        function addSpec(container, key = '', value = '') {
-            const div = document.createElement('div');
-            div.classList.add('spec-item', 'mb-2');
-            div.innerHTML = `
-            <div class="d-flex gap-2 mb-1">
-                <input type="text" placeholder="Spec Key" class="spec-key form-control" value="${key}">
-                <input type="text" placeholder="Spec Value (optional)" class="spec-value form-control" value="${value}">
-                <button type="button" class="btn btn-sm btn-success">+ Nested</button>
-                <button type="button" class="btn btn-sm btn-danger">Remove</button>
-            </div>
-            <div class="nested-specs ps-3"></div>
-        `;
-            div.querySelector('.btn-success').addEventListener('click', () => addSpec(div.querySelector('.nested-specs')));
-            div.querySelector('.btn-danger').addEventListener('click', () => div.remove());
-            container.appendChild(div);
-        }
-
-        function buildSpecs(container) {
-            const obj = {};
-            Array.from(container.children).forEach(child => {
-                if (child.classList.contains('spec-item')) {
-                    const key = child.querySelector('.spec-key').value.trim();
-                    const value = child.querySelector('.spec-value').value.trim();
-                    const nested = child.querySelector('.nested-specs');
-                    obj[key] = nested && nested.children.length ? buildSpecs(nested) : value;
-                }
-            });
-            return obj;
-        }
-
-        function buildSpecsJSON() {
-            const specs = {};
-            Array.from(specCategoriesContainer.children).forEach(categoryDiv => {
-                const catName = categoryDiv.querySelector('.spec-category-name').value.trim();
-                if (!catName) return;
-                const container = categoryDiv.querySelector('.specsContainer');
-                specs[catName] = buildSpecs(container);
-            });
-            return specs;
-        }
-
-        // ===== In The Box =====
+        // ✅ In The Box Functions (KEEP SAME)
         const inTheBoxContainer = document.getElementById('inTheBoxContainer');
         function addInTheBox(title = '', qty = 1) {
             const div = document.createElement('div');
-            div.classList.add('box-item', 'd-flex', 'gap-3' , 'mb-2');
+            div.classList.add('box-item', 'd-flex', 'gap-3', 'mb-2');
             div.innerHTML = `
-            <input type="text" name="inTheBoxTitle[]" placeholder="Item Title" class="form-control mb-1" value="${title}" required>
-            <input type="number" name="inTheBoxQty[]" placeholder="Quantity" value="${qty}" class="form-control mb-1">
-            <input type="file" name="inTheBoxImage[]" accept="image/*" class="form-control mb-1">
-            <button type="button" class="btn btn-sm btn-danger mb-2">Remove</button>
-        `;
+        <input type="text" name="inTheBoxTitle[]" placeholder="Item Title" class="form-control mb-1" value="${title}" required>
+        <input type="number" name="inTheBoxQty[]" placeholder="Quantity" value="${qty}" class="form-control mb-1">
+        <input type="file" name="inTheBoxImage" accept="image/*" class="form-control mb-1">
+        <button type="button" class="btn btn-sm btn-danger mb-2">Remove</button>
+    `;
             div.querySelector('button').addEventListener('click', () => div.remove());
             inTheBoxContainer.appendChild(div);
         }
 
-        // ===== Features =====
-        const featuresContainer = document.getElementById('featuresContainer');
-        function addFeature(text = '') {
-            const div = document.createElement('div');
-            div.classList.add('feature-item', 'mb-2', 'd-flex', 'gap-2');
-            div.innerHTML = `
-            <input type="text" name="features[]" placeholder="Feature" class="form-control" value="${text}">
-            <button type="button" class="btn btn-sm btn-danger">Remove</button>
-        `;
-            div.querySelector('button').addEventListener('click', () => div.remove());
-            featuresContainer.appendChild(div);
-        }
-
-        // ===== Form Submit =====
         document.getElementById('productForm').addEventListener('submit', async e => {
             e.preventDefault();
+
             const form = document.getElementById('productForm');
             const formData = new FormData(form);
 
-            // slug
+            // ✅ Slug
             const title = form.querySelector('[name="title"]').value;
             formData.append('slug', generateSlug(title));
 
-            // specs
-            formData.append('specs', JSON.stringify(buildSpecsJSON()));
+            // ✅ Specs as plain JSON text
+            const specsText = form.querySelector('[name="specs"]').value;
+            formData.append('specs', specsText);
 
-            // InTheBox
+            // ✅ In The Box (same logic)
             const boxItems = [];
-            Array.from(inTheBoxContainer.children).forEach(div => {
+            document.querySelectorAll('.box-item').forEach(div => {
                 const title = div.querySelector('input[name="inTheBoxTitle[]"]').value;
                 const qty = div.querySelector('input[name="inTheBoxQty[]"]').value;
+
+                const fileInput = div.querySelector('input[name="inTheBoxImage"]');
+                const file = fileInput ? fileInput.files[0] : null;
+
+                if (file) formData.append("inTheBoxImage", file);
+
                 boxItems.push({ title, quantity: Number(qty) });
             });
+
             formData.append('inTheBox', JSON.stringify(boxItems));
 
-            // Features
-            const features = Array.from(featuresContainer.querySelectorAll('input[name="features[]"]')).map(f => f.value);
-            formData.append('features', JSON.stringify(features));
+            // ✅ Features (comma separated → array)
+            const featuresText = form.querySelector('[name="featuresText"]').value;
+            const featuresArr = featuresText.split(",").map(f => f.trim()).filter(f => f);
+            formData.append('features', JSON.stringify(featuresArr));
 
-            // Featured checkbox
+            // ✅ Featured checkbox
             formData.set('featured', form.querySelector('[name="featured"]').checked);
 
             try {
@@ -388,6 +332,7 @@
             }
         });
     </script>
+
 
 </body>
 

@@ -1051,6 +1051,10 @@ h2 {
     left: 100%;
 }
 
+.mr-left {
+    margin-left: -20px;
+}
+
 /* ==============================
 # Responsive
 ============================== */
@@ -1066,6 +1070,10 @@ h2 {
     .product-image img {
         width: 85%;
     }
+
+    .mr-left {
+        margin: 0;
+    }
 }
 
 @media (max-width: 768px) {
@@ -1079,6 +1087,10 @@ h2 {
 
     .product-image img {
         width: 90%;
+    }
+
+    .mr-left {
+        margin: 0;
     }
 }
 
