@@ -121,189 +121,94 @@ exports.addProduct = [checkAdminSession, async (req, res) => {
 
 
 
-// =============================
-// Update Product
-// =============================
 exports.updateProduct = [
     checkAdminSession,
     async (req, res) => {
         try {
-            const productId = req.params.id;
-            const product = await Product.findById(productId);
+            const product = await Product.findById(req.params.id);
             if (!product) return res.status(404).json({ message: "Product not found" });
 
             const {
-                title,
-                slug,
-                category,
-                brand,
-                price,
-                salePrice = 0,
-                badge = "",
-                stock = 0,
-                description,
-                shortDescription,
-                specs,
-                inTheBox,
-                features
+                title, slug, category, brand,
+                price, salePrice = 0, badge = "",
+                stock = 0, description, shortDescription,
+                specs, inTheBox, features,
+                metaTitle, metaDescription, keywords,
+                featured
             } = req.body;
 
             const inStock = Number(stock) > 0;
 
             // -----------------------
-            // 🖼️ Handle Main Image
+            // Main Image
             // -----------------------
-            let mainImagePath = product.image;
-            if (req.files?.image?.[0]) {
-                mainImagePath = "/assets/img/product/" + req.files.image[0].filename;
-            } else if (req.body.image_existing) {
-                mainImagePath = Array.isArray(req.body.image_existing)
-                    ? req.body.image_existing[0]
-                    : req.body.image_existing;
-            }
+            let mainImage = product.image;
+            if (req.files?.image?.[0]) mainImage = "/assets/img/product/" + req.files.image[0].filename;
+            else if (req.body.image_existing) mainImage = req.body.image_existing;
 
             // -----------------------
-            // 🖼️ Handle Thumbnails
+            // Thumbnails
             // -----------------------
-            let thumbnailPaths = [];
-
-            // Existing thumbnail URLs from form
+            let thumbnails = [];
             if (req.body["thumbnails_existing[]"]) {
-                const existingThumbs = Array.isArray(req.body["thumbnails_existing[]"])
-                    ? req.body["thumbnails_existing[]"]
-                    : [req.body["thumbnails_existing[]"]];
-                thumbnailPaths.push(...existingThumbs);
+                thumbnails = Array.isArray(req.body["thumbnails_existing[]"]) ? req.body["thumbnails_existing[]"] : [req.body["thumbnails_existing[]"]];
             }
-
-            // Newly uploaded thumbnails
-            if (req.files?.thumbnails?.length) {
-                const uploadedThumbs = req.files.thumbnails.map(
-                    (file) => "/assets/img/product/" + file.filename
-                );
-                thumbnailPaths.push(...uploadedThumbs);
-            }
-
-            // If no thumbnails exist, fallback to previous ones
-            if (thumbnailPaths.length === 0 && Array.isArray(product.thumbnails)) {
-                thumbnailPaths = product.thumbnails;
-            }
+            if (req.files?.thumbnails?.length) thumbnails.push(...req.files.thumbnails.map(f => "/assets/img/product/" + f.filename));
+            if (!thumbnails.length && Array.isArray(product.thumbnails)) thumbnails = product.thumbnails;
 
             // -----------------------
-            // 📦 Handle In-The-Box Items
+            // In-The-Box
             // -----------------------
-            let inTheBoxJson =
-                inTheBox
-                    ? typeof inTheBox === "string"
-                        ? JSON.parse(inTheBox)
-                        : inTheBox
-                    : product.inTheBox || [];
+            let inTheBoxArr = [];
+            try { inTheBoxArr = JSON.parse(inTheBox || "[]"); } catch (e) { inTheBoxArr = []; }
 
-            // Existing images
-            if (req.body["inTheBoxImage_existing[]"]) {
-                const existingBoxImages = Array.isArray(req.body["inTheBoxImage_existing[]"])
-                    ? req.body["inTheBoxImage_existing[]"]
-                    : [req.body["inTheBoxImage_existing[]"]];
-                existingBoxImages.forEach((img, i) => {
-                    if (inTheBoxJson[i]) inTheBoxJson[i].image = img;
-                });
-            }
+            // Assign images
+            const existingImages = req.body["inTheBoxImage_existing[]"] ? (Array.isArray(req.body["inTheBoxImage_existing[]"]) ? req.body["inTheBoxImage_existing[]"] : [req.body["inTheBoxImage_existing[]"]]) : [];
+            const uploadedFiles = req.files?.inTheBoxImage || [];
 
-            // New uploaded images
-            if (req.files?.inTheBoxImage?.length) {
-                req.files.inTheBoxImage.forEach((f, i) => {
-                    if (inTheBoxJson[i])
-                        inTheBoxJson[i].image = "/assets/img/product/in-the-box/" + f.filename;
-                });
-            }
+            // inTheBoxArr.forEach((item, index) => {
+            //     if (uploadedFiles[index]) item.image = "/assets/img/product/in-the-box/" + uploadedFiles[index].filename;
+            //     else if (existingImages[index]) item.image = existingImages[index];
+            // });
 
             // -----------------------
-            // ⚙️ Handle Specs
+            // Specs & Features
             // -----------------------
-            const defaultSpecs = {
-                aircraft: {
-                    weight: "",
-                    dimensions: { length: "", width: "", height: "" },
-                    maxAccelerationSpeed: "",
-                    maxFlightTime: "",
-                    sensorType: ""
-                },
-                camera: {
-                    sensor: "",
-                    fov: "",
-                    aperture: "",
-                    focusRange: "",
-                    maxImageSize: "",
-                    stillModes: { singleShot: "", burst: "" },
-                    videoResolution: "",
-                    maxVideoBitrate: "",
-                    digitalZoom: "",
-                    imageFormat: ""
-                },
-                gimbal: {
-                    stabilization: "",
-                    mechanicalRange: "",
-                    controllableRange: "",
-                    angularVibrationRange: ""
-                }
-            };
+            let specsJson = {};
+            try { specsJson = JSON.parse(specs || "{}"); } catch (e) { specsJson = {}; }
 
-            let specsJson =
-                specs
-                    ? typeof specs === "string"
-                        ? JSON.parse(specs)
-                        : specs
-                    : product.specs || {};
-
-            const mergedSpecs = { ...defaultSpecs, ...specsJson };
+            let featuresArr = [];
+            try { featuresArr = JSON.parse(features || "[]"); } catch (e) { featuresArr = []; }
 
             // -----------------------
-            // ✳️ Handle Features
+            // Keywords
             // -----------------------
-            let featuresArray =
-                features
-                    ? typeof features === "string"
-                        ? JSON.parse(features)
-                        : features
-                    : product.features || [];
+            const keywordsArr = keywords ? keywords.split(",").map(k => k.trim()) : product.keywords || [];
 
             // -----------------------
-            // 🧩 Ensure inTheBox fallback
-            // -----------------------
-            const defaultInTheBox =
-                inTheBoxJson.length > 0
-                    ? inTheBoxJson
-                    : [{ title: "", quantity: "", image: "" }];
-
-            // -----------------------
-            // 📝 Update Product Fields
+            // Update Product
             // -----------------------
             Object.assign(product, {
-                title,
-                slug,
-                category,
-                brand,
-                price: Number(price),
-                salePrice: Number(salePrice),
-                badge,
-                stock: Number(stock),
-                inStock,
-                image: mainImagePath,
-                thumbnails: thumbnailPaths,
-                description,
-                shortDescription,
-                specs: mergedSpecs,
-                inTheBox: defaultInTheBox,
-                features: featuresArray
+                title, slug, category, brand,
+                price: Number(price), salePrice: Number(salePrice), badge,
+                stock: Number(stock), inStock,
+                image: mainImage,
+                thumbnails,
+                description, shortDescription,
+                specs: specsJson,
+                // inTheBox: inTheBoxArr,
+                features: featuresArr,
+                metaTitle, metaDescription,
+                keywords: keywordsArr,
+                featured: featured === "true" || featured === true
             });
 
-            const updatedProduct = await product.save();
-            res.json({
-                message: "✅ Product updated successfully",
-                product: updatedProduct
-            });
-        } catch (error) {
-            console.error("❌ Error updating product:", error);
-            res.status(500).json({ message: "Failed to update product", error: error.message });
+            const updated = await product.save();
+            res.json({ message: "✅ Product updated successfully", product: updated });
+
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ message: "Failed to update product", error: err.message });
         }
     }
 ];

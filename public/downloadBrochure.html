@@ -1,0 +1,107 @@
+<!-- brochure.html template -->
+<!-- Save as brochure.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Brochure</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+    <style>
+        body {
+            padding: 20px;
+        }
+
+        .product-img {
+            max-width: 350px;
+            border-radius: 10px;
+        }
+
+        .thumb-img {
+            width: 80px;
+            margin-right: 8px;
+            border-radius: 6px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        td,
+        th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2 id="brochure-title"></h2>
+        <p id="brochure-shortdesc"></p>
+
+        <img id="brochure-main-img" class="product-img mb-3" />
+
+        <div id="brochure-thumbs" class="d-flex mb-3"></div>
+
+        <h4>In the Box</h4>
+        <ul id="brochure-inbox"></ul>
+
+        <h4>Technical Specifications</h4>
+        <table id="brochure-specs"></table>
+    </div>
+
+    <script>
+        async function loadBrochure() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const slug = urlParams.get("slug");
+            if (!slug) return;
+
+            let res = await fetch(`/api/products/slug/${slug}`);
+            let { product } = await res.json();
+            if (!product) {
+                res = await fetch(`/api/accessory/slug/${slug}`);
+                const data = await res.json();
+                product = data.accessory;
+            }
+
+            document.getElementById("brochure-title").textContent = product.title;
+            document.getElementById("brochure-shortdesc").textContent = product.shortDescription || "";
+            document.getElementById("brochure-main-img").src = product.image;
+
+            // thumbnails
+            const thumbBox = document.getElementById("brochure-thumbs");
+            (product.thumbnails || []).forEach(img => {
+                const t = document.createElement("img");
+                t.src = img; t.className = "thumb-img";
+                thumbBox.appendChild(t);
+            });
+
+            // in the box
+            const ib = document.getElementById("brochure-inbox");
+            (product.inTheBox || []).forEach(i => {
+                const li = document.createElement("li");
+                li.textContent = `${i.quantity} × ${i.title}`;
+                ib.appendChild(li);
+            });
+
+            // specs
+            const specTable = document.getElementById("brochure-specs");
+            function addRows(obj) {
+                Object.entries(obj).forEach(([k, v]) => {
+                    if (typeof v === "object") return addRows(v);
+                    const row = document.createElement("tr");
+                    row.innerHTML = `<th>${k}</th><td>${v}</td>`;
+                    specTable.appendChild(row);
+                });
+            }
+            addRows(product.specs || {});
+        }
+        loadBrochure();
+    </script>
+</body>
+
+</html>

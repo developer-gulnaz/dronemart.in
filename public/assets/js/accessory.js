@@ -91,35 +91,43 @@ document.addEventListener('DOMContentLoaded', async function () {
     function renderAccessories(list) {
         if (!productGrid) return;
         productGrid.innerHTML = '';
+
         if (!list.length) {
             productGrid.innerHTML = `<p class="text-center text-muted">No accessories found.</p>`;
             return;
         }
 
         list.forEach(a => {
+            const hasSale = a.salePrice && Number(a.salePrice) < Number(a.price);
+
+            const priceHTML = hasSale
+                ? `₹${a.salePrice} <span class="regular-price fs-6">₹${a.price}</span>`
+                : `₹${a.price}`;
+
             const col = document.createElement('div');
             col.className = 'col-12 col-md-6 col-lg-4 mb-4';
             col.innerHTML = `
-      <div class="product-card card shadow-sm border-0 position-relative"
-           data-id="${a._id}"
-           data-title="${a.title}"
-           data-price="${a.price}"
-           data-image="${a.image}">
-        <div class="product-image position-relative overflow-hidden">
-          <img src="${a.image}" alt="${a.title}" class="w-100">
-          <div class="product-overlay d-flex justify-content-center align-items-center gap-2">
-            <button class="btn btn-light view-btn" title="View"><i class="bi bi-eye"></i></button>
-            <button class="btn btn-light cart-btn" title="Add to Cart"><i class="bi bi-cart-plus"></i></button>
-            <button class="btn btn-light wishlist-btn" title="Add to Wishlist"><i class="bi bi-heart"></i></button>
+        <div class="product-card card shadow-sm border-0 position-relative"
+             data-id="${a._id}"
+             data-title="${a.title}"
+             data-price="${a.price}"
+             data-image="${a.image}">
+          <div class="product-image position-relative overflow-hidden">
+            <img src="${a.image}" alt="${a.title}" class="w-100">
+            <div class="product-overlay d-flex justify-content-center align-items-center gap-2">
+              <button class="btn btn-light view-btn" title="View"><i class="bi bi-eye"></i></button>
+              <button class="btn btn-light cart-btn" title="Add to Cart"><i class="bi bi-cart-plus"></i></button>
+              <button class="btn btn-light wishlist-btn" title="Add to Wishlist"><i class="bi bi-heart"></i></button>
+            </div>
+          </div>
+          <div class="p-3 text-center">
+            <h6 class="mb-1">${a.title}</h6>
+            <p class="text-muted mb-2">${a.productCategory || ''}</p>
+            <h6 class="text-primary mb-0">${priceHTML}</h6>
           </div>
         </div>
-        <div class="p-3 text-center">
-          <h6 class="mb-1">${a.title}</h6>
-          <p class="text-muted mb-2">${a.productCategory || ''}</p>
-          <h6 class="text-primary mb-0">₹${a.price}</h6>
-        </div>
-      </div>
-    `;
+      `;
+
             productGrid.appendChild(col);
         });
 

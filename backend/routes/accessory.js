@@ -11,10 +11,11 @@ const Accessory = require('../models/Accessory');
 // -----------------------------
 const checkAdminSession = (req, res, next) => {
     if (!req.session.adminId) {
-        return res.redirect('/admin');
+        return res.status(401).json({ success: false, message: "Unauthorized - Admin login required" });
     }
     next();
 };
+
 
 // GET /api/accessory
 router.get('/', async (req, res) => {
@@ -126,16 +127,27 @@ router.delete("/:id", checkAdminSession, async (req, res) => {
     }
 });
 
+const formatPublicPath = (filePath) => {
+    if (!filePath) return "";
+
+    // Normalize path
+    const clean = filePath.replace(/\\/g, "/");
+
+    // Remove "/public" part so URL is correct
+    return clean.replace(/^.*\/public/, "");
+};
+
+
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        let folder = "/assets/img/accessories";
+        let folder = "../public/assets/img/product/specialized";
 
         // DJI products
-        if (req.body.brand === "DJI") folder = "/assets/img/product/dji";
+        if (req.body.brand === "DJI") folder = "../public/assets/img/product/dji";
 
         // Specialized categories
         else if (req.body.productCategory === "FPV" || req.body.productCategory === "Agriculture") {
-            folder = "/assets/img/product/specialized";
+            folder = "../public/assets/img/product/specialized";
         }
 
         cb(null, folder);
@@ -180,15 +192,20 @@ router.post("/", checkAdminSession, uploadFields, async (req, res) => {
         } = req.body;
 
         // ✅ Safe specs parsing
-        let parsedSpecs = {};
-        if (specs) {
+        let parsedSpecs = specs;
+
+        if (specs?.trim()) {
             try {
                 parsedSpecs = JSON.parse(specs);
-            } catch {
-                parsedSpecs = {};
-                console.warn("⚠️ Specs not valid JSON — skipped parsing:", specs);
+            } catch (e) {
+                try {
+                    parsedSpecs = eval("(" + specs + ")");
+                } catch {
+                    console.warn("⚠️ Could not parse specs, storing raw text");
+                }
             }
         }
+
 
         // ✅ Parse In-the-Box items
         const inTheBox = [];
@@ -202,8 +219,8 @@ router.post("/", checkAdminSession, uploadFields, async (req, res) => {
             for (let i = 0; i < totalItems; i++) {
                 const titleItem = Array.isArray(titles) ? titles[i] : titles;
                 const quantityItem = Array.isArray(quantities) ? quantities[i] : quantities;
-                const imageItem =
-                    images && images[i] ? images[i].path.replace(/\\/g, "/") : "";
+                const imageItem = images && images[i] ? formatPublicPath(images[i].path) : "";
+
 
                 inTheBox.push({
                     title: titleItem,
@@ -228,11 +245,13 @@ router.post("/", checkAdminSession, uploadFields, async (req, res) => {
             description,
             shortDescription,
             specs: parsedSpecs,
-            image: req.files["image"]
-                ? req.files["image"][0].path.replace(/\\/g, "/")
+            image: formatPublicPath(imageItem)
+
+                ? formatPublicPath(req.files["image"][0].path)
                 : "",
+
             thumbnails: req.files["thumbnails"]
-                ? req.files["thumbnails"].map(f => f.path.replace(/\\/g, "/"))
+                ? req.files["thumbnails"].map(f => formatPublicPath(f.path))
                 : [],
             inTheBox,
             metaTitle,

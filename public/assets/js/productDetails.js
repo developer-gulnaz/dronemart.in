@@ -99,6 +99,9 @@ function populateProductUI(product) {
   if (buyNowBtn) buyNowBtn.onclick = () => window.buyNow?.(product);
   if (wishlistBtn) wishlistBtn.onclick = () => window.addToWishlist(product);
 
+
+  
+
   // ---------- Overview ----------
   const overviewDesc = document.querySelector("#product-overview .content-section p");
   if (overviewDesc) overviewDesc.textContent = product.description || "-";
@@ -244,6 +247,7 @@ function populateProductUI(product) {
       <h4>In the box</h4>
       <div class="in-the-box-grid" id="in-the-box-grid"></div>
     </div>
+    
   `;
     mainContainer.appendChild(djiContainer);
 

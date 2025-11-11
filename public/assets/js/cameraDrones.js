@@ -89,6 +89,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                    data-slug="${p.slug}" 
                    data-title="${p.title}" 
                    data-price="${p.price}" 
+                   data-salePrice="${p.salePrice}" 
                    data-image="${p.image}">
                 <div class="product-image">
                   <img src="${p.image}" alt="${p.title}" class="w-100">
@@ -105,20 +106,20 @@ ${p.badge?.toLowerCase() === "discontinued"
                   ${p.badge ? `<div class="product-badge">${p.badge}</div>` : ''}
                 </div>
                 <div class="productDetails">
-                  <div class="product-category">${p.category || ""}</div>
-                  <h4 class="product-title"><a href="productDetails.html?slug=${p.slug}">${p.title}</a></h4>
-                  <div class="product-meta">
-                    <div class="product-price">₹${p.price}</div>
-                    <div class="product-rating"><i class="bi bi-star-fill"></i> ${p.rating || 0}</div>
-                  </div>
+                    <div class="product-category">${p.category || ""}</div>
+                        <h4 class="product-title"><a href="productDetails.html?slug=${p.slug}">${p.title}</a></h4>
+                        <div class="product-meta">
+                            <div class="product-price">₹${p.salePrice} <span class="regular-price fs-6">₹${p.price} </span></div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            `;
+                    `;
             productGrid.appendChild(col);
         });
 
         attachActionEvents();
     }
+    // <div class="product-rating"><i class="bi bi-star-fill"></i> ${p.rating || 0}</div>
 
     // === Attach Quick View, Cart & Wishlist Events ===
     function attachActionEvents() {

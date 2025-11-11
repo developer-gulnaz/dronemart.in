@@ -10,11 +10,12 @@ const fs = require("fs");
 // Middleware
 // -----------------------------
 const checkAdminSession = (req, res, next) => {
-  if (!req.session.adminId) {
-    return res.redirect('/admin');
-  }
-  next();
+    if (!req.session.adminId) {
+        return res.status(401).json({ success: false, message: "Unauthorized - Admin login required" });
+    }
+    next();
 };
+
 
 // =============================
 // Multer storage setup
@@ -81,6 +82,7 @@ router.patch('/:id/stock', checkAdminSession, async (req, res) => {
     const { id } = req.params;
     const { stock } = req.body;
 
+    // Validate stock
     if (stock == null || isNaN(stock) || stock < 0) {
       return res.status(400).json({ success: false, message: 'Invalid stock value' });
     }
@@ -88,7 +90,9 @@ router.patch('/:id/stock', checkAdminSession, async (req, res) => {
     const product = await Product.findById(id);
     if (!product) return res.status(404).json({ success: false, message: 'Product not found' });
 
-    product.stock = stock;
+    product.stock = Number(stock);
+    product.inStock = Number(stock) > 0; // ✅ Align with add/update product logic
+
     await product.save();
 
     res.status(200).json({ success: true, message: 'Stock updated successfully', product });
@@ -97,6 +101,7 @@ router.patch('/:id/stock', checkAdminSession, async (req, res) => {
     res.status(500).json({ success: false, message: 'Server error' });
   }
 });
+
 
 
 module.exports = router;

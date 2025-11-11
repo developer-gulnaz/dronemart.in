@@ -211,16 +211,18 @@
                     <label>Keywords</label>
                 </div>
 
-                <!-- Main Image & Thumbnails -->
+                <!-- Main Image-->
                 <div class="form-floating mb-3">
                     <h6>Main Image</h6>
-                    <input type="file" name="image" accept="image/*" class="form-control">
-                    <div class="image-preview" id="mainPreview"></div>
+                    <input type="file" name="image" accept="image/*" class="form-control" id="mainImage">
+                    <div class="image-preview d-flex gap-2" id="mainPreview"></div>
                 </div>
+
+                <!-- Thumbnails  -->
                 <div class="form-floating mb-3">
                     <h6>Thumbnails</h6>
-                    <input type="file" name="thumbnails" multiple accept="image/*" class="form-control">
-                    <div class="image-preview" id="thumbPreview"></div>
+                    <input type="file" name="thumbnails" multiple accept="image/*" class="form-control" id="thumbInput">
+                    <div class="image-preview d-flex flex-wrap gap-2" id="thumbPreview"></div>
                 </div>
 
                 <!-- In The Box -->
@@ -265,67 +267,209 @@
     <script src="assets/js/main.js"></script>
 
     <script>
-        function generateSlug(title) {
-            return title.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '');
+        // ---------------------------
+        // Helper: Create preview image with remove
+        // ---------------------------
+        function createPreviewImage(file, container, width = 80, height = 80, onRemove = null) {
+            const reader = new FileReader();
+            reader.onload = e => {
+                const wrapper = document.createElement('div');
+                wrapper.classList.add('position-relative');
+                wrapper.style.display = 'inline-block';
+                wrapper.style.cursor = 'grab';
+
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.width = width + 'px';
+                img.style.height = height + 'px';
+                img.style.objectFit = 'cover';
+                img.classList.add('border', 'rounded');
+
+                const removeBtn = document.createElement('button');
+                removeBtn.type = 'button';
+                removeBtn.innerHTML = '&times;';
+                removeBtn.style.position = 'absolute';
+                removeBtn.style.top = '-5px';
+                removeBtn.style.right = '-5px';
+                removeBtn.classList.add('btn', 'btn-sm', 'btn-danger');
+                removeBtn.addEventListener('click', () => {
+                    wrapper.remove();
+                    if (onRemove) onRemove();
+                });
+
+                wrapper.appendChild(img);
+                wrapper.appendChild(removeBtn);
+                container.appendChild(wrapper);
+
+                return wrapper;
+            };
+            reader.readAsDataURL(file);
         }
 
-        // ✅ In The Box Functions (KEEP SAME)
+        // ---------------------------
+        // Main Image Preview
+        // ---------------------------
+        const mainInput = document.getElementById('mainImage');
+        const mainPreview = document.getElementById('mainPreview');
+
+        mainInput.addEventListener('change', function () {
+            mainPreview.innerHTML = '';
+            if (this.files && this.files[0]) {
+                createPreviewImage(this.files[0], mainPreview, 120, 120, () => mainInput.value = '');
+            }
+        });
+
+        // ---------------------------
+        // Thumbnails Preview + Drag & Drop
+        // ---------------------------
+        const thumbInputEl = document.getElementById('thumbInput');
+        const thumbPreviewEl = document.getElementById('thumbPreview');
+        let thumbFiles = [];
+
+        function renderThumbs() {
+            thumbPreviewEl.innerHTML = '';
+            thumbFiles.forEach((file, index) => {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    const wrapper = document.createElement('div');
+                    wrapper.classList.add('position-relative');
+                    wrapper.style.display = 'inline-block';
+                    wrapper.style.cursor = 'grab';
+                    wrapper.dataset.index = index;
+
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.style.width = '80px';
+                    img.style.height = '80px';
+                    img.style.objectFit = 'cover';
+                    img.classList.add('border', 'rounded');
+
+                    const removeBtn = document.createElement('button');
+                    removeBtn.type = 'button';
+                    removeBtn.innerHTML = '&times;';
+                    removeBtn.style.position = 'absolute';
+                    removeBtn.style.top = '-5px';
+                    removeBtn.style.right = '-5px';
+                    removeBtn.classList.add('btn', 'btn-sm', 'btn-danger');
+                    removeBtn.addEventListener('click', () => {
+                        thumbFiles.splice(index, 1);
+                        renderThumbs();
+                    });
+
+                    wrapper.appendChild(img);
+                    wrapper.appendChild(removeBtn);
+                    thumbPreviewEl.appendChild(wrapper);
+
+                    // Drag & Drop
+                    wrapper.draggable = true;
+                    wrapper.addEventListener('dragstart', e => e.dataTransfer.setData('text/plain', index));
+                    wrapper.addEventListener('dragover', e => e.preventDefault());
+                    wrapper.addEventListener('drop', e => {
+                        e.preventDefault();
+                        const fromIndex = parseInt(e.dataTransfer.getData('text/plain'));
+                        const toIndex = parseInt(wrapper.dataset.index);
+                        const temp = thumbFiles[fromIndex];
+                        thumbFiles.splice(fromIndex, 1);
+                        thumbFiles.splice(toIndex, 0, temp);
+                        renderThumbs();
+                    });
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        thumbInputEl.addEventListener('change', function () {
+            thumbFiles = Array.from(this.files);
+            renderThumbs();
+        });
+
+
+        // ---------------------------
+        // In-The-Box Dynamic Items
+        // ---------------------------
         const inTheBoxContainer = document.getElementById('inTheBoxContainer');
+
         function addInTheBox(title = '', qty = 1) {
             const div = document.createElement('div');
-            div.classList.add('box-item', 'd-flex', 'gap-3', 'mb-2');
+            div.classList.add('box-item', 'd-flex', 'gap-3', 'mb-2', 'align-items-center');
+
             div.innerHTML = `
-        <input type="text" name="inTheBoxTitle[]" placeholder="Item Title" class="form-control mb-1" value="${title}" required>
-        <input type="number" name="inTheBoxQty[]" placeholder="Quantity" value="${qty}" class="form-control mb-1">
-        <input type="file" name="inTheBoxImage" accept="image/*" class="form-control mb-1">
-        <button type="button" class="btn btn-sm btn-danger mb-2">Remove</button>
-    `;
-            div.querySelector('button').addEventListener('click', () => div.remove());
+            <input type="text" name="inTheBoxTitle[]" placeholder="Item Title" class="form-control mb-1" value="${title}" required>
+            <input type="number" name="inTheBoxQty[]" placeholder="Quantity" value="${qty}" class="form-control mb-1">
+            <input type="file" name="inTheBoxImage" accept="image/*" class="form-control mb-1 inBoxImage">
+            <div class="inBoxPreview d-flex gap-2"></div>
+            <button type="button" class="btn btn-sm btn-danger mb-2">Remove</button>
+        `;
+
+            const removeBtn = div.querySelector('button');
+            removeBtn.addEventListener('click', () => div.remove());
+
+            // In-the-box image preview
+            const fileInput = div.querySelector('.inBoxImage');
+            const previewDiv = div.querySelector('.inBoxPreview');
+            fileInput.addEventListener('change', function () {
+                previewDiv.innerHTML = '';
+                if (this.files && this.files[0]) {
+                    createPreviewImage(this.files[0], previewDiv, 80, 80, () => fileInput.value = '');
+                }
+            });
+
             inTheBoxContainer.appendChild(div);
         }
 
+        // ---------------------------
+        // Form Submission
+        // ---------------------------
         document.getElementById('productForm').addEventListener('submit', async e => {
             e.preventDefault();
-
             const form = document.getElementById('productForm');
             const formData = new FormData(form);
 
-            // ✅ Slug
+            // Slug
             const title = form.querySelector('[name="title"]').value;
             formData.append('slug', generateSlug(title));
 
-            // ✅ Specs as plain JSON text
+            // Specs
             const specsText = form.querySelector('[name="specs"]').value;
             formData.append('specs', specsText);
 
-            // ✅ In The Box (same logic)
-            const boxItems = [];
-            document.querySelectorAll('.box-item').forEach(div => {
-                const title = div.querySelector('input[name="inTheBoxTitle[]"]').value;
-                const qty = div.querySelector('input[name="inTheBoxQty[]"]').value;
-
-                const fileInput = div.querySelector('input[name="inTheBoxImage"]');
-                const file = fileInput ? fileInput.files[0] : null;
-
-                if (file) formData.append("inTheBoxImage", file);
-
-                boxItems.push({ title, quantity: Number(qty) });
-            });
-
-            formData.append('inTheBox', JSON.stringify(boxItems));
-
-            // ✅ Features (comma separated → array)
+            // Features
             const featuresText = form.querySelector('[name="featuresText"]').value;
-            const featuresArr = featuresText.split(",").map(f => f.trim()).filter(f => f);
+            const featuresArr = featuresText.split(',').map(f => f.trim()).filter(f => f);
             formData.append('features', JSON.stringify(featuresArr));
 
-            // ✅ Featured checkbox
+            // Featured
             formData.set('featured', form.querySelector('[name="featured"]').checked);
+
+            // Main image
+            if (mainInput.files[0]) formData.append('image', mainInput.files[0]);
+
+            // Thumbnails
+            thumbFiles.forEach(file => formData.append('thumbnails[]', file));
+
+            // In-the-box items
+            const boxItems = [];
+            document.querySelectorAll('.box-item').forEach(div => {
+                const itemTitle = div.querySelector('input[name="inTheBoxTitle[]"]').value;
+                const qty = div.querySelector('input[name="inTheBoxQty[]"]').value;
+                const fileInput = div.querySelector('input[name="inTheBoxImage"]');
+                if (fileInput && fileInput.files[0]) formData.append("inTheBoxImage", fileInput.files[0]);
+                boxItems.push({ title: itemTitle, quantity: Number(qty) });
+            });
+            formData.append('inTheBox', JSON.stringify(boxItems));
 
             try {
                 const res = await fetch('/api/products', { method: 'POST', body: formData, credentials: 'include' });
-                if (res.ok) alert('✅ Product added!');
-                else alert('❌ Error adding product');
+                if (res.ok) {
+                    alert('✅ Product added!');
+                    form.reset();
+                    mainPreview.innerHTML = '';
+                    thumbPreviewEl.innerHTML = '';
+                    inTheBoxContainer.innerHTML = '';
+                    thumbFiles = [];
+                } else {
+                    alert('❌ Error adding product');
+                }
             } catch (err) {
                 console.error(err);
                 alert('❌ Error adding product');

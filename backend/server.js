@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
-require("dotenv").config();
+// require("dotenv").config();
+require('dotenv').config({ path: __dirname + '/.env' });
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const mongoose = require("mongoose");

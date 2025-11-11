@@ -119,7 +119,15 @@ document.addEventListener('DOMContentLoaded', async function () {
         const renderSection = (items, sectionTitle = "") => {
             if (!items.length) return "";
 
-            const cards = items.map(item => `
+            const cards = items.map(item => {
+
+                // ✅ SALE PRICE LOGIC
+                const hasSale = item.salePrice && Number(item.salePrice) < Number(item.price);
+                const priceHTML = hasSale
+                    ? `₹${item.salePrice} <span class="regular-price fs-6">₹${item.price}</span>`
+                    : `₹${item.price}`;
+
+                return `
             <div class="col-12 col-md-6 col-lg-4 mb-4">
                 <div class="product-card card shadow-sm border-0"
                     data-id="${item._id}"
@@ -127,31 +135,38 @@ document.addEventListener('DOMContentLoaded', async function () {
                     data-title="${item.title}"
                     data-price="${item.price}"
                     data-image="${item.image}">
+                    
                     <div class="product-image">
                         <img src="${item.image}" alt="${item.title}">
+                        
                         <div class="product-overlay">
                             <div class="product-actions">
                                 <button type="button" class="action-btn view-btn" title="Quick View"><i class="bi bi-eye"></i></button>
 
                                 ${item.badge?.toLowerCase() === "discontinued"
-                    ? `<button type="button" class="action-btn cart-btn disabled" title="Unavailable" disabled><i class="bi bi-ban"></i></button>`
-                    : `<button type="button" class="action-btn cart-btn" title="Add to Cart"><i class="bi bi-cart-plus"></i></button>`}
+                        ? `<button type="button" class="action-btn cart-btn disabled" disabled title="Unavailable"><i class="bi bi-ban"></i></button>`
+                        : `<button type="button" class="action-btn cart-btn" title="Add to Cart"><i class="bi bi-cart-plus"></i></button>`
+                    }
 
                                 <button type="button" class="action-btn wishlist-btn" title="Add to Wishlist"><i class="bi bi-heart"></i></button>
                             </div>
                         </div>
+
                         ${item.badge ? `<div class="product-badge">${item.badge}</div>` : ""}
                     </div>
+
                     <div class="productDetails">
                         <h4 class="product-title"><a href="productDetails.html?slug=${item.slug}">${item.title}</a></h4>
+                        
                         <div class="product-meta">
-                            <div class="product-price">₹${item.price}</div>
+                            <div class="product-price">${priceHTML}</div>
                             <div class="product-rating"><i class="bi bi-star-fill"></i> ${item.rating || 0}</div>
                         </div>
                     </div>
                 </div>
             </div>
-        `).join("");
+        `;
+            }).join("");
 
             return `
             ${sectionTitle ? `<h5 class="mt-4 mb-3 text-uppercase text-secondary">${sectionTitle}</h5>` : ""}
@@ -163,10 +178,11 @@ document.addEventListener('DOMContentLoaded', async function () {
         ${renderSection(activeItems)}
         ${discontinuedItems.length ? `<hr class="my-4">` : ""}
         ${renderSection(discontinuedItems, "Discontinued Products")}
-        `;
+    `;
 
         attachActionEvents();
     }
+
 
     // ============================================================== 
     // 🔧 ACTION BUTTON HANDLERS

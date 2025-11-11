@@ -52,26 +52,26 @@
                 </a>
             </li>
 
-           <li>
-        <a href="customerInquiries.html">
-          <i class="fa-solid fa-users-gear"></i>
-          <span class="menu-text">Customer Inquiries</span>
-        </a>
-      </li>
+            <li>
+                <a href="customerInquiries.html">
+                    <i class="fa-solid fa-users-gear"></i>
+                    <span class="menu-text">Customer Inquiries</span>
+                </a>
+            </li>
 
-      <li>
-        <a href="products.html">
-          <i class="fa-solid fa-box-open"></i>
-          <span class="menu-text">Products</span>
-        </a>
-      </li>
+            <li>
+                <a href="products.html">
+                    <i class="fa-solid fa-box-open"></i>
+                    <span class="menu-text">Products</span>
+                </a>
+            </li>
 
-      <li>
-        <a href="accessories.html">
-          <i class="fa-solid fa-toolbox"></i>
-          <span class="menu-text">Accessories</span>
-        </a>
-      </li>
+            <li>
+                <a href="accessories.html">
+                    <i class="fa-solid fa-toolbox"></i>
+                    <span class="menu-text">Accessories</span>
+                </a>
+            </li>
 
             <li>
                 <a href="orders.html">
@@ -137,6 +137,125 @@
         <div class="container my-4">
             <form id="productForm" enctype="multipart/form-data">
 
+                <!-- Title -->
+                <div class="form-floating mb-3">
+                    <input type="text" name="title" id="title" placeholder="Product Title" class="form-control"
+                        required>
+                    <label>Title</label>
+                </div>
+
+                <!-- Brand & Category -->
+                <div class="form-floating mb-3">
+                    <input type="text" name="brand" placeholder="Brand" class="form-control" required>
+                    <label>Brand</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <!-- <input type="text" name="category" placeholder="Category" class="form-control" required> -->
+                    <select name="category" class="form-control" required>
+                        <option value="">Select Category</option>
+                        <option value="agriculture">Agriculture</option>
+                        <option value="air-series">DJI Air</option>
+                        <option value="mini-series">DJI Mini</option>
+                        <option value="mavic-series">DJI Mavic</option>
+                        <option value="flip-series">DJI Flip</option>
+                        <option value="neo-series">DJI Neo</option>
+                        <option value="avata-series">DJI Avata</option>
+                        <option value="FPV">FPV</option>
+                    </select>
+                    <label>Category</label>
+                </div>
+
+                <!-- Price & Sale Price -->
+                <div class="form-floating mb-3">
+                    <input type="number" name="price" placeholder="Price" class="form-control" required>
+                    <label>Price</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="number" name="salePrice" placeholder="Sale Price" class="form-control">
+                    <label>Sale Price</label>
+                </div>
+
+                <!-- Stock & Badge -->
+                <div class="form-floating mb-3">
+                    <input type="number" name="stock" placeholder="Stock" class="form-control">
+                    <label>Stock</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" name="badge" placeholder="Badge" class="form-control">
+                    <label>Badge</label>
+                </div>
+
+                <!-- Descriptions -->
+                <div class="form-floating mb-3">
+                    <textarea name="description" placeholder="Description" class="form-control"
+                        style="height:80px;"></textarea>
+                    <label>Description</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <textarea name="shortDescription" placeholder="Short Description" class="form-control"
+                        style="height:60px;"></textarea>
+                    <label>Short Description</label>
+                </div>
+
+                <!-- Meta info -->
+                <div class="form-floating mb-3">
+                    <input type="text" name="metaTitle" placeholder="Meta Title" class="form-control">
+                    <label>Meta Title</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <textarea name="metaDescription" placeholder="Meta Description" class="form-control"
+                        style="height:60px;"></textarea>
+                    <label>Meta Description</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" name="keywords" placeholder="Keywords" class="form-control">
+                    <label>Keywords</label>
+                </div>
+
+                <!-- Main Image & Thumbnails -->
+                <div class="form-floating mb-3">
+                    <h6>Main Image</h6>
+                    <input type="file" name="image" accept="image/*" class="form-control">
+                    <div class="image-preview" id="mainPreview"></div>
+                </div>
+                <div class="form-floating mb-3">
+                    <h6>Thumbnails</h6>
+                    <input type="file" name="thumbnails" multiple accept="image/*" class="form-control">
+                    <div class="image-preview" id="thumbPreview"></div>
+                </div>
+
+                <!-- In The Box -->
+                <!-- <div class="section-block">
+                    <h6>In The Box Items</h6>
+                    <div id="inTheBoxContainer"></div>
+                    <button type="button" onclick="addInTheBox()" class="btn btn-sm btn-success mt-2">+ Add
+                        Item</button>
+                </div> -->
+
+                <!-- Specs -->
+                <div class="section-block">
+                    <h6>Specifications JSON</h6>
+                    <textarea name="specs" class="form-control" rows="8"
+                        placeholder='{"General":{"Brand":"DJI","Model":"Mini 3"}}'></textarea>
+
+                </div>
+
+                <!-- Features -->
+                <div class="section-block">
+                    <h6>Features</h6>
+                    <input type="text" name="featuresText" class="form-control">
+
+                </div>
+
+                <!-- Featured Checkbox -->
+                <div class="form-check mb-3">
+                    <input type="checkbox" name="featured" class="form-check-input" id="featured">
+                    <label class="form-check-label" for="featured">Featured</label>
+                </div>
+
+                <div class="mt-3">
+                    <button type="submit" class="btn btn-primary w-25">Update Product</button>
+                </div>
             </form>
         </div>
 
@@ -151,114 +270,102 @@
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
             const productId = new URLSearchParams(window.location.search).get("id");
-            if (!productId) {
-                alert("No product ID provided");
-                return;
-            }
+            if (!productId) return alert("No product ID provided");
 
             const form = document.getElementById("productForm");
-            if (!form) {
-                console.error("Form not found");
-                return;
-            }
+            const inTheBoxContainer = document.getElementById('inTheBoxContainer');
+            const mainPreview = document.getElementById('mainPreview');
+            const thumbPreview = document.getElementById('thumbPreview');
 
-            // ✅ Fetch product
-            async function loadProductData() {
+            let currentThumbnails = [];
+            let currentInTheBox = [];
+
+            
+            // --------------------------
+            // Load Product Data
+            // --------------------------
+            async function loadProduct() {
                 try {
-                    const res = await fetch(`/api/products/${productId}`, { credentials: "include" });
-                    if (!res.ok) throw new Error("Failed to fetch product data");
+                    const res = await fetch(`/api/products/${productId}`, { credentials: 'include' });
+                    if (!res.ok) throw new Error("Failed to fetch product");
                     const product = await res.json();
 
-                    form.innerHTML = "";
-                    generateFieldsFromObject(product, form);
-                    addSubmitButton();
-
-                    // ============================
-                    // Handle existing images
-                    // ============================
+                    // Populate basic fields
+                    form.querySelector('[name="title"]').value = product.title || '';
+                    form.querySelector('[name="brand"]').value = product.brand || '';
+                    form.querySelector('[name="category"]').value = product.category || '';
+                    form.querySelector('[name="price"]').value = product.price || '';
+                    form.querySelector('[name="salePrice"]').value = product.salePrice || '';
+                    form.querySelector('[name="stock"]').value = product.stock || '';
+                    form.querySelector('[name="badge"]').value = product.badge || '';
+                    form.querySelector('[name="description"]').value = product.description || '';
+                    form.querySelector('[name="shortDescription"]').value = product.shortDescription || '';
+                    form.querySelector('[name="metaTitle"]').value = product.metaTitle || '';
+                    form.querySelector('[name="metaDescription"]').value = product.metaDescription || '';
+                    form.querySelector('[name="keywords"]').value = Array.isArray(product.keywords) ? product.keywords.join(', ') : '';
+                    form.querySelector('[name="featuresText"]').value = Array.isArray(product.features) ? product.features.join(', ') : '';
+                    form.querySelector('[name="featured"]').checked = !!product.featured;
+                    form.querySelector('[name="specs"]').value = product.specs ? JSON.stringify(product.specs, null, 2) : '';
 
                     // Main Image
-                    const mainImgField = form.querySelector('input[name="image"]');
-                    if (product.image && mainImgField) {
-                        const preview = document.createElement("div");
-                        preview.className = "image-preview";
-                        preview.innerHTML = `<img src="${product.image}" style="max-width:150px">`;
-                        mainImgField.parentNode.insertBefore(preview, mainImgField.nextSibling);
-
-                        // hidden input to preserve existing image
-                        const hidden = document.createElement("input");
-                        hidden.type = "hidden";
-                        hidden.name = "image_existing";
+                    if (product.image) {
+                        mainPreview.innerHTML = `<img src="${product.image}" style="max-width:150px; border-radius:6px;">`;
+                        const hidden = document.createElement('input');
+                        hidden.type = 'hidden';
+                        hidden.name = 'image_existing';
                         hidden.value = product.image;
-                        mainImgField.parentNode.insertBefore(hidden, preview.nextSibling);
+                        form.appendChild(hidden);
                     }
 
                     // Thumbnails
-                    // ============================
-                    // ✅ Thumbnails Handling (simple + synced with preview)
-                    // ============================
-                    const thumbInput = form.querySelector('input[name="thumbnails"]');
-                    const thumbPreview = document.createElement("div");
-                    thumbPreview.className = "thumbnail-preview";
-                    thumbPreview.style.display = "flex";
-                    thumbPreview.style.flexWrap = "wrap";
-                    thumbPreview.style.gap = "6px";
-                    thumbInput.parentNode.insertBefore(thumbPreview, thumbInput.nextSibling);
-
-                    // Keep track of current thumbnails (URLs or local files)
-                    let currentThumbnails = [];
-
-                    // 🔹 Load existing thumbnails
-                    if (product.thumbnails && Array.isArray(product.thumbnails)) {
+                    if (Array.isArray(product.thumbnails)) {
                         currentThumbnails = [...product.thumbnails];
                         renderThumbnails();
                     }
 
-                    // 🔹 Render preview box
                     function renderThumbnails() {
-                        thumbPreview.innerHTML = "";
-
+                        thumbPreview.innerHTML = '';
                         currentThumbnails.forEach((thumb, i) => {
-                            const wrapper = document.createElement("div");
-                            wrapper.style.position = "relative";
-                            wrapper.style.width = "100px";
-                            wrapper.style.height = "100px";
+                            const wrapper = document.createElement('div');
+                            wrapper.style.position = 'relative';
+                            wrapper.style.width = '100px';
+                            wrapper.style.height = '100px';
+                            wrapper.style.marginRight = '6px';
+                            wrapper.style.display = 'inline-block';
 
-                            const img = document.createElement("img");
-                            img.src = typeof thumb === "string" ? thumb : URL.createObjectURL(thumb);
-                            img.style.width = "100%";
-                            img.style.height = "100%";
-                            img.style.objectFit = "cover";
-                            img.style.borderRadius = "6px";
-                            img.style.border = "1px solid #ccc";
+                            const img = document.createElement('img');
+                            img.src = typeof thumb === 'string' ? thumb : URL.createObjectURL(thumb);
+                            img.style.width = '100%';
+                            img.style.height = '100%';
+                            img.style.objectFit = 'cover';
+                            img.style.borderRadius = '6px';
+                            img.style.border = '1px solid #ccc';
                             wrapper.appendChild(img);
 
-                            // ❌ Remove Button
-                            const delBtn = document.createElement("button");
-                            delBtn.textContent = "×";
-                            delBtn.type = "button";
-                            delBtn.style.position = "absolute";
-                            delBtn.style.top = "2px";
-                            delBtn.style.right = "2px";
-                            delBtn.style.background = "rgba(0,0,0,0.6)";
-                            delBtn.style.color = "#fff";
-                            delBtn.style.border = "none";
-                            delBtn.style.borderRadius = "50%";
-                            delBtn.style.width = "20px";
-                            delBtn.style.height = "20px";
-                            delBtn.style.cursor = "pointer";
-                            delBtn.addEventListener("click", () => {
+                            const delBtn = document.createElement('button');
+                            delBtn.type = 'button';
+                            delBtn.textContent = '×';
+                            delBtn.style.position = 'absolute';
+                            delBtn.style.top = '2px';
+                            delBtn.style.right = '2px';
+                            delBtn.style.width = '20px';
+                            delBtn.style.height = '20px';
+                            delBtn.style.background = 'rgba(0,0,0,0.6)';
+                            delBtn.style.color = '#fff';
+                            delBtn.style.border = 'none';
+                            delBtn.style.borderRadius = '50%';
+                            delBtn.style.cursor = 'pointer';
+                            delBtn.addEventListener('click', () => {
                                 currentThumbnails.splice(i, 1);
                                 renderThumbnails();
                             });
-
                             wrapper.appendChild(delBtn);
+
                             thumbPreview.appendChild(wrapper);
                         });
                     }
 
-                    // 🔹 When new files are added
-                    thumbInput.addEventListener("change", (e) => {
+                    form.querySelector('input[name="thumbnails"]').addEventListener('change', e => {
                         const newFiles = Array.from(e.target.files);
                         if (newFiles.length > 0) {
                             currentThumbnails.push(...newFiles);
@@ -266,60 +373,6 @@
                         }
                     });
 
-                    // 🔹 On form submit
-                    form.addEventListener("submit", async (e) => {
-                        e.preventDefault();
-                        const formData = new FormData(form);
-
-                        // Clear old thumbnail fields
-                        formData.delete("thumbnails");
-                        formData.delete("thumbnails_existing[]");
-
-                        // Separate URLs and Files
-                        currentThumbnails.forEach(item => {
-                            if (typeof item === "string") {
-                                formData.append("thumbnails_existing[]", item);
-                            } else {
-                                formData.append("thumbnails", item);
-                            }
-                        });
-
-                        // Submit to backend
-                        try {
-                            const res = await fetch(`/api/products/${productId}`, {
-                                method: "PATCH",
-                                body: formData,
-                                credentials: "include",
-                            });
-
-                            if (!res.ok) throw new Error("Failed to update product");
-                            alert("✅ Product updated successfully!");
-                            window.location.href = "products.html";
-                        } catch (err) {
-                            console.error(err);
-                            alert("Error updating product");
-                        }
-                    });
-
-                    // InTheBox images
-                    const inTheBoxItems = form.querySelectorAll('.box-item input[name*="inTheBoxImage"]');
-                    if (product.inTheBox && Array.isArray(product.inTheBox)) {
-                        product.inTheBox.forEach((item, idx) => {
-                            const boxDiv = inTheBoxItems[idx]?.parentNode;
-                            if (boxDiv && item.image) {
-                                const preview = document.createElement("div");
-                                preview.className = "image-preview";
-                                preview.innerHTML = `<img src="${item.image}" style="max-width:100px">`;
-                                boxDiv.insertBefore(preview, boxDiv.querySelector('input[type="file"]'));
-
-                                const hidden = document.createElement("input");
-                                hidden.type = "hidden";
-                                hidden.name = "inTheBoxImage_existing[]";
-                                hidden.value = item.image;
-                                boxDiv.appendChild(hidden);
-                            }
-                        });
-                    }
 
                 } catch (err) {
                     console.error(err);
@@ -327,189 +380,61 @@
                 }
             }
 
-            // 🧩 Recursive Field Generator (2-column applied everywhere)
-            function generateFieldsFromObject(obj, container, parentKey = "") {
-                Object.entries(obj).forEach(([key, value]) => {
-                    const fullKey = parentKey ? `${parentKey}.${key}` : key;
+            await loadProduct();
 
-                    if (["_id", "__v", "createdAt", "updatedAt"].includes(key)) return;
-
-                    // ========== OBJECTS ==========
-                    if (typeof value === "object" && !Array.isArray(value) && value !== null) {
-                        const block = document.createElement("div");
-                        block.classList.add("section-block");
-
-                        const title = document.createElement("h6");
-                        title.textContent = key.replace(/([A-Z])/g, " $1").toUpperCase();
-                        block.appendChild(title);
-
-                        const innerGrid = document.createElement("div");
-                        innerGrid.classList.add("nested-grid");
-                        generateFieldsFromObject(value, innerGrid, fullKey);
-
-                        block.appendChild(innerGrid);
-                        container.appendChild(block);
-                    }
-
-                    // ========== ARRAYS ==========
-                    else if (Array.isArray(value)) {
-                        const block = document.createElement("div");
-                        block.classList.add("section-block");
-
-                        const title = document.createElement("h6");
-                        title.textContent = key.replace(/([A-Z])/g, " $1").toUpperCase();
-                        block.appendChild(title);
-
-                        if (key.toLowerCase().includes("image") || key.toLowerCase().includes("thumbnail")) {
-                            const fileInput = document.createElement("input");
-                            fileInput.type = "file";
-                            fileInput.name = fullKey;
-                            fileInput.multiple = true;
-                            fileInput.accept = "image/*";
-                            fileInput.className = "form-control mt-2";
-                            block.appendChild(fileInput);
-                        } else {
-                            const arrayGrid = document.createElement("div");
-                            arrayGrid.classList.add("nested-grid");
-                            value.forEach((item, i) => {
-                                if (typeof item === "object") {
-                                    const subBlock = document.createElement("div");
-                                    subBlock.classList.add("section-subblock");
-                                    generateFieldsFromObject(item, subBlock, `${fullKey}[${i}]`);
-                                    arrayGrid.appendChild(subBlock);
-                                } else {
-                                    const input = createInputField(`${fullKey}[${i}]`, item, `Item ${i + 1}`);
-                                    arrayGrid.appendChild(input);
-                                }
-                            });
-                            block.appendChild(arrayGrid);
-                        }
-
-                        container.appendChild(block);
-                    }
-
-                    // ========== PRIMITIVE ==========
-                    else {
-                        if (key.toLowerCase().includes("image") && typeof value === "string" && /\.(jpg|png|jpeg|webp)$/i.test(value)) {
-                            const block = document.createElement("div");
-                            block.classList.add("section-block");
-
-                            const label = document.createElement("h6");
-                            label.textContent = key.toUpperCase();
-                            block.appendChild(label);
-
-                            const fileInput = document.createElement("input");
-                            fileInput.type = "file";
-                            fileInput.name = fullKey;
-                            fileInput.accept = "image/*";
-                            fileInput.className = "form-control mt-2";
-                            block.appendChild(fileInput);
-
-                            container.appendChild(block);
-                        } else {
-                            container.appendChild(createInputField(fullKey, value, key));
-                        }
-                    }
-                });
-            }
-
-            function createInputField(name, value, labelText) {
-                const wrapper = document.createElement("div");
-                wrapper.classList.add("form-floating");
-
-                const input = document.createElement("input");
-                input.type = typeof value === "number" ? "number" : "text";
-                input.name = name;
-                input.id = name;
-                input.value = value ?? "";
-                input.className = "form-control";
-                input.placeholder = labelText;
-
-                const label = document.createElement("label");
-                label.setAttribute("for", name);
-                label.textContent = labelText.replace(/([A-Z])/g, " $1");
-
-                wrapper.appendChild(input);
-                wrapper.appendChild(label);
-                return wrapper;
-            }
-
-            function addSubmitButton() {
-                const btnDiv = document.createElement("div");
-                btnDiv.classList.add("col-12");
-                const submit = document.createElement("button");
-                submit.type = "submit";
-                submit.className = "btn btn-primary w-100";
-                submit.textContent = "Save Product";
-                btnDiv.appendChild(submit);
-                form.appendChild(btnDiv);
-            }
-
-            await loadProductData();
-
-            form.addEventListener("submit", async (e) => {
+            // --------------------------
+            // Form Submit
+            // --------------------------
+            form.addEventListener('submit', async e => {
                 e.preventDefault();
-
                 const formData = new FormData(form);
 
-                // -------------------
+                // Slug
+                const title = form.querySelector('[name="title"]').value;
+                formData.set('slug', title.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, ''));
+
+                // Specs
+                formData.set('specs', form.querySelector('[name="specs"]').value);
+
+                // Thumbnails
+                formData.delete('thumbnails');
+                currentThumbnails.forEach(t => {
+                    if (typeof t === 'string') formData.append('thumbnails_existing[]', t);
+                    else formData.append('thumbnails', t);
+                });
+
                 // Main Image
-                // -------------------
                 const mainFileInput = form.querySelector('input[name="image"]');
                 const mainExisting = form.querySelector('input[name="image_existing"]')?.value;
                 if (!mainFileInput.files.length && mainExisting) {
-                    // preserve existing image
-                    formData.delete("image");
-                    formData.append("image_existing", mainExisting);
+                    formData.delete('image');
+                    formData.set('image_existing', mainExisting);
                 }
 
-                // -------------------
-                // Thumbnails: gather all images in preview box
-                // -------------------
-                const thumbnailsArray = [];
-                document.querySelectorAll(".thumbnail-preview img").forEach(img => {
-                    thumbnailsArray.push(img.src); // keep all preview images
-                });
-                // Remove old FormData keys
-                formData.delete("thumbnails");
-                thumbnailsArray.forEach(t => formData.append("thumbnails[]", t));
-                // -------------------
-                // InTheBox images
-                // -------------------
-                const boxFiles = form.querySelectorAll('input[name*="inTheBoxImage"]');
-                boxFiles.forEach((input, idx) => {
-                    if (!input.files.length) {
-                        const existing = form.querySelectorAll('input[name="inTheBoxImage_existing[]"]')[idx]?.value;
-                        formData.append("inTheBoxImage_existing[]", existing || "");
-                    }
-                });
+                // Features
+                const featuresText = form.querySelector('[name="featuresText"]').value;
+                formData.set('features', JSON.stringify(featuresText.split(',').map(f => f.trim()).filter(f => f)));
+
+                // Featured
+                formData.set('featured', form.querySelector('[name="featured"]').checked);
 
                 try {
                     const res = await fetch(`/api/products/${productId}`, {
-                        method: "PATCH",
-                        body: formData, // send FormData directly
-                        credentials: "include",
+                        method: 'PATCH',
+                        body: formData,
+                        credentials: 'include'
                     });
-                    if (!res.ok) throw new Error("Failed to update product");
-                    alert("✅ Product updated successfully!");
-                    window.location.href = "products.html";
+                    if (res.ok) alert('✅ Product updated successfully!');
+                    else {
+                        const errData = await res.json();
+                        console.error(errData);
+                        alert('❌ Error updating product: ' + (errData.message || 'Unknown error'));
+                    }
                 } catch (err) {
                     console.error(err);
-                    alert("Error updating product.");
+                    alert('❌ Error updating product');
                 }
             });
-
-            function assignNestedValue(obj, path, value) {
-                const keys = path.replace(/\[(\d+)\]/g, ".$1").split(".");
-                let current = obj;
-                keys.forEach((key, i) => {
-                    if (i === keys.length - 1) current[key] = value;
-                    else {
-                        if (!current[key]) current[key] = isNaN(keys[i + 1]) ? {} : [];
-                        current = current[key];
-                    }
-                });
-            }
         });
     </script>
 
