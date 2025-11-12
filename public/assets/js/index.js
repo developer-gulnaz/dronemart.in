@@ -115,8 +115,8 @@ const sliderData = [
         title: "DJI Avata 2 Fly More Combo",
         description: "Dive into the sky with Avata 2 the ultimate FPV freedom — compact, agile, and cinematic from every breathtaking angle.",
         featuredProduct: {
-            image: "assets/img/product/AVATA_2.webp",
-            name: "DJI Mini 4 Pro Fly More Combo",
+            image: "assets/img/product/dji-avata-2.webp",
+            name: "DJI Avata 2 Fly More Combo",
             salePrice: "₹1,10,000",
             originalPrice: "₹1,33,000",
             badge: "Sale"

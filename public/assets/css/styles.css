@@ -1010,7 +1010,6 @@ h2 {
 # Button
 ============================== */
 .action-buttons {
-    display: flex;
     justify-content: center;
     margin-top: 10px;
 }

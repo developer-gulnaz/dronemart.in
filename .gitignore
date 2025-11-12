@@ -8,11 +8,4 @@
 /backend/*.log
 
 #files
-/backend/createAdmin.js
-/backend/addUser.js
-/backend/addDJI.js
-/backend/addAgri.js
-/backend/addFPV.js
-/backend/addAccess.js
-/backend/djiAcc.js
-/backend/addBattery.js
+/backend/scripts/

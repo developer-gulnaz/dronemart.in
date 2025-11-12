@@ -4,8 +4,8 @@ document.addEventListener("DOMContentLoaded", async function () {
   const totalEl = document.querySelector(".summary-total .summary-value");
   const checkoutBtn = document.getElementById("confirm-payment-btn"); // added reference
 
-  const sgstEl = document.getElementById("sgst-value");
-  const cgstEl = document.getElementById("cgst-value");
+  // const sgstEl = document.getElementById("sgst-value");
+  // const cgstEl = document.getElementById("cgst-value");
   // const discountEl = document.getElementById("discount-value");
   const checkoutLink = document.querySelector(".checkout-button a");
 
@@ -30,22 +30,19 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   function renderCart() {
     cartContainer.innerHTML = `
-      <div class="cart-header d-none d-lg-block">
-        <div class="row align-items-center">
-          <div class="col-lg-5"><h5>Product</h5></div>
-          <div class="col-lg-2 text-center"><h5>Price</h5></div>
-          <div class="col-lg-3 text-center"><h5>Quantity</h5></div>
-          <div class="col-lg-2 text-center"><h5>Total</h5></div>
-        </div>
+    <div class="cart-header d-none d-lg-block">
+      <div class="row align-items-center">
+        <div class="col-lg-5"><h5>Product</h5></div>
+        <div class="col-lg-2 text-center"><h5>Price</h5></div>
+        <div class="col-lg-3 text-center"><h5>Quantity</h5></div>
+        <div class="col-lg-2 text-center"><h5>Total</h5></div>
       </div>
-    `;
+    </div>
+  `;
 
     if (cart.length === 0) {
       cartContainer.innerHTML += `<p class="text-center my-4">Your cart is empty.</p>`;
       subtotalEl.textContent = "₹0.00";
-      cgstEl.textContent = "₹0.00";
-      sgstEl.textContent = "₹0.00";
-      // discountEl.textContent = "₹0.00";
       totalEl.textContent = "₹0.00";
       if (checkoutLink) checkoutLink.classList.add("disabled");
       return;
@@ -54,117 +51,64 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     let subtotal = 0;
+    let totalItems = 0;
 
     cart.forEach((item) => {
       const itemTotal = parseFloat(item.price) * parseInt(item.quantity);
       subtotal += itemTotal;
+      totalItems += parseInt(item.quantity);
 
       cartContainer.innerHTML += `
-        <div class="cart-item">
-          <div class="row align-items-center">
-            <div class="col-lg-5 col-12 mt-3 mt-lg-0 mb-lg-0 mb-3">
-              <div class="product-info d-flex align-items-center">
-                <div class="product-image">
-                  <img src="${item.image}" alt="${item.title}" class="img-fluid" loading="lazy">
-                </div>
-                <div class="productDetails">
-                  <h6 class="product-title">${item.title}</h6>
-                  <button class="remove-item" data-product-id="${item.product}" type="button">
-                    <i class="bi bi-trash"></i> Remove
-                  </button>
-                </div>
+      <div class="cart-item">
+        <div class="row align-items-center">
+          <div class="col-lg-5 col-12 mt-3 mt-lg-0 mb-lg-0 mb-3">
+            <div class="product-info d-flex align-items-center">
+              <div class="product-image">
+                <img src="${item.image}" alt="${item.title}" class="img-fluid" loading="lazy">
               </div>
-            </div>
-            <div class="col-lg-2 col-12 mt-3 mt-lg-0 text-center">
-              <div class="price-tag">
-                <span class="current-price">₹${item.price.toFixed(2)}</span>
-              </div>
-            </div>
-            <div class="col-lg-3 col-12 mt-3 mt-lg-0 text-center">
-              <div class="quantity-selector">
-                <button class="quantity-btn decrease" data-product-id="${item.product}">
-                  <i class="bi bi-dash"></i>
+              <div class="productDetails">
+                <h6 class="product-title">${item.title}</h6>
+                <button class="remove-item" data-product-id="${item.product}" type="button">
+                  <i class="bi bi-trash"></i> Remove
                 </button>
-                <input type="number" class="quantity-input" value="${item.quantity}" min="1" max="10" data-product-id="${item.product}">
-                <button class="quantity-btn increase" data-product-id="${item.product}">
-                  <i class="bi bi-plus"></i>
-                </button>
-              </div>
-            </div>
-            <div class="col-lg-2 col-12 mt-3 mt-lg-0 text-center">
-              <div class="item-total">
-                <span>₹${itemTotal.toFixed(2)}</span>
               </div>
             </div>
           </div>
+          <div class="col-lg-2 col-12 mt-3 mt-lg-0 text-center">
+            <div class="price-tag">
+              <span class="current-price">₹${item.price.toFixed(2)}</span>
+            </div>
+          </div>
+          <div class="col-lg-3 col-12 mt-3 mt-lg-0 text-center">
+            <div class="quantity-selector">
+              <button class="quantity-btn decrease" data-product-id="${item.product}">
+                <i class="bi bi-dash"></i>
+              </button>
+              <input type="number" class="quantity-input" value="${item.quantity}" min="1" max="10" data-product-id="${item.product}">
+              <button class="quantity-btn increase" data-product-id="${item.product}">
+                <i class="bi bi-plus"></i>
+              </button>
+            </div>
+          </div>
+          <div class="col-lg-2 col-12 mt-3 mt-lg-0 text-center">
+            <div class="item-total">
+              <span>₹${itemTotal.toFixed(2)}</span>
+            </div>
+          </div>
         </div>
-      `;
+      </div>
+    `;
     });
 
-    subtotalEl.textContent = `₹${subtotal.toFixed(2)}`;
-
-    // --- Shipping logic ---
-    const shippingEl = document.querySelector(".summary-item.shipping-item");
-    let shipping = 220; // default standard numeric
-    let freeShipping = false;
-
-    if (subtotal >= 25000) { // corrected to match label threshold
-      shipping = 0;
-      freeShipping = true;
+    // ✅ Show item count if element exists
+    const itemCountEl = document.querySelector(".item-count");
+    if (itemCountEl) {
+      itemCountEl.textContent = `(${totalItems} item${totalItems > 1 ? "s" : ""})`;
     }
 
-    shippingEl.innerHTML = `
-        <span class="summary-label">Shipping</span>
-        <span class="summary-value"></span>
-        <div class="shipping-options">
-            <div class="form-check text-end">
-                <input class="form-check-input" type="radio" name="shipping" id="standard" ${!freeShipping ? "checked" : ""} ${freeShipping ? "disabled" : ""}>
-                <label class="form-check-label" for="standard">Standard Delivery - ₹220</label>
-            </div>
-            <div class="form-check text-end">
-                <input class="form-check-input" type="radio" name="shipping" id="express" ${!freeShipping ? "" : "disabled"}>
-                <label class="form-check-label" for="express">Express Delivery - ₹350</label>
-            </div>
-            <div class="form-check text-end">
-                <input class="form-check-input" type="radio" name="shipping" id="free" ${freeShipping ? "checked" : ""} disabled>
-                <label class="form-check-label" for="free">Free Shipping (Orders over ₹25000)</label>
-            </div>
-        </div>
-    `;
-
-    // --- Total calculation ---
-    // --- Total calculation ---
-    const cgst = subtotal * 0.09;
-    const sgst = subtotal * 0.09;
-    const totalTax = cgst + sgst;
-    // const discount = 0;
-    const total = subtotal + totalTax + shipping ;
-
-    cgstEl.textContent = `₹${cgst.toFixed(2)}`;
-    sgstEl.textContent = `₹${sgst.toFixed(2)}`;
-    // discountEl.textContent = `₹${discount.toFixed(2)}`;
-    totalEl.textContent = `₹${total.toFixed(2)}`;
-
-    // --- Update shipping dynamically ---
-    const shippingRadios = document.querySelectorAll('input[name="shipping"]');
-    shippingRadios.forEach(radio => {
-      radio.addEventListener("change", () => {
-        let newShipping = 0;
-        if (radio.id === "standard") newShipping = 220;
-        else if (radio.id === "express") newShipping = 350;
-        else newShipping = 0; // free
-
-        const cgst = subtotal * 0.09;
-        const sgst = subtotal * 0.09;
-        const newTotal = subtotal + cgst + sgst + newShipping - 0;
-
-        cgstEl.textContent = `₹${cgst.toFixed(2)}`;
-        sgstEl.textContent = `₹${sgst.toFixed(2)}`;
-        totalEl.textContent = `₹${newTotal.toFixed(2)}`;
-
-      });
-    });
-
+    // ✅ Show only subtotal = total
+    subtotalEl.textContent = `₹${subtotal.toFixed(2)}`;
+    totalEl.textContent = `₹${subtotal.toFixed(2)}`;
   }
 
 

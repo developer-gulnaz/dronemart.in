@@ -5311,6 +5311,10 @@ section,
   padding-top: 8px;
 }
 
+.checkout .checkout-section .section-content .payment-details .subheading {
+  font-size: 0.8rem;
+}
+
 .checkout .checkout-section .section-content .payment-details.d-none {
   display: none;
 }
@@ -8476,7 +8480,7 @@ section,
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
 }
 
-.register .decorative-elements {
+.decorative-elements {
   position: absolute;
   top: 0;
   left: 0;
@@ -8487,12 +8491,12 @@ section,
   pointer-events: none;
 }
 
-.register .decorative-elements .circle {
+.decorative-elements .circle {
   position: absolute;
   border-radius: 50%;
 }
 
-.register .decorative-elements .circle.circle-1 {
+.decorative-elements .circle.circle-1 {
   top: -50px;
   right: -50px;
   width: 200px;
@@ -8500,28 +8504,28 @@ section,
   background: linear-gradient(135deg, color-mix(in srgb, var(--accent-color), transparent 85%), color-mix(in srgb, var(--accent-color), transparent 95%));
 }
 
-.register .decorative-elements .circle.circle-2 {
-  bottom: -80px;
-  left: -80px;
+.decorative-elements .circle.circle-2 {
+  bottom: -90px;
+  left: -110px;
   width: 250px;
   height: 250px;
   background: linear-gradient(135deg, color-mix(in srgb, var(--heading-color), transparent 90%), color-mix(in srgb, var(--heading-color), transparent 97%));
 }
 
-.register .decorative-elements .circle.circle-3 {
+.decorative-elements .circle.circle-3 {
   top: 40%;
-  right: 10%;
+  right: 5%;
   width: 60px;
   height: 60px;
   background: linear-gradient(135deg, color-mix(in srgb, var(--accent-color), transparent 70%), color-mix(in srgb, var(--accent-color), transparent 90%));
 }
 
-.register .decorative-elements .square {
+.decorative-elements .square {
   position: absolute;
   transform: rotate(45deg);
 }
 
-.register .decorative-elements .square.square-1 {
+.decorative-elements .square.square-1 {
   top: 20%;
   left: 5%;
   width: 40px;
@@ -8529,11 +8533,11 @@ section,
   background: linear-gradient(135deg, color-mix(in srgb, var(--accent-color), transparent 80%), color-mix(in srgb, var(--accent-color), transparent 95%));
 }
 
-.register .decorative-elements .square.square-2 {
+.decorative-elements .square.square-2 {
   bottom: 15%;
-  right: 10%;
-  width: 60px;
-  height: 60px;
+  right: 5%;
+  width: 45px;
+  height: 45px;
   background: linear-gradient(135deg, color-mix(in srgb, var(--heading-color), transparent 85%), color-mix(in srgb, var(--heading-color), transparent 95%));
 }
 
