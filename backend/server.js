@@ -44,7 +44,27 @@ async function startServer() {
   });
 
   // 4) Apply express-session middleware
-  app.set("trust proxy", process.env.NODE_ENV === "production" ? 1 : 0);
+  // app.set("trust proxy", process.env.NODE_ENV === "production" ? 1 : 0);
+  // app.use(
+  //   session({
+  //     name: "sessionId",
+  //     secret: process.env.SESSION_SECRET || "secret123",
+  //     resave: false,
+  //     saveUninitialized: false,
+  //     store: sessionStore,
+  //     rolling: false, // false => fixed expiry 1 hour after creation; set true for sliding expiry
+  //     cookie: {
+  //       httpOnly: true,
+  //       maxAge: 1000 * 60 * 60, // 1 hour in ms
+  //       sameSite: "lax",
+  //       secure: process.env.NODE_ENV === "production" // set true only behind HTTPS
+  //       // secure: false
+  //     }
+  //   })
+  // );
+
+  app.set("trust proxy", 1);
+
   app.use(
     session({
       name: "sessionId",
@@ -52,16 +72,15 @@ async function startServer() {
       resave: false,
       saveUninitialized: false,
       store: sessionStore,
-      rolling: false, // false => fixed expiry 1 hour after creation; set true for sliding expiry
       cookie: {
         httpOnly: true,
-        maxAge: 1000 * 60 * 60, // 1 hour in ms
-        sameSite: "lax",
-        secure: process.env.NODE_ENV === "production" // set true only behind HTTPS
-        // secure: false
-      }
+        maxAge: 1000 * 60 * 60, // 1 hour
+        sameSite: "none",       // ✅ allows secure cross-site and modern HTTPS handling
+        secure: true,           // ✅ required for HTTPS
+      },
     })
   );
+
 
   // API routes
   app.use("/api/auth", require("./routes/auth"));
