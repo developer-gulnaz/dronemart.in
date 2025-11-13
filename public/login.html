@@ -190,7 +190,7 @@
 
         if (!emailInput || !passwordInput) {
           console.error("Email or password input not found!");
-          window.showDialog(`Email or password input not found!`, "error");
+          window.showMessageDialog(`Email or password input not found!`, "error");
           return;
         }
 
@@ -208,12 +208,12 @@
           const data = await res.json();
           if (!res.ok) throw new Error(data.message || "Login failed");
           // alert("login successful!");
-          window.showDialog(`Login Successful!`, "success");
+          window.showMessageDialog(`Login Successful!`, "success");
 
           window.location.href = "account.html";
         } catch (err) {
           console.error("Login error:", err);
-          window.showDialog(err.message, "error");
+          window.showMessageDialog(err.message, "error");
           // alert(err.message);
         }
       });
@@ -251,7 +251,7 @@
       // Step 1: Send OTP
       sendOtpBtn.addEventListener("click", async () => {
         currentEmail = emailInput.value.trim();
-        if (!currentEmail) return window.showDialog("Enter your email!", "error");
+        if (!currentEmail) return window.showMessageDialog("Enter your email!", "error");
 
         const res = await fetch("/api/auth/requestReset", {
           method: "POST",
@@ -261,18 +261,18 @@
 
         const data = await res.json();
         if (data.success) {
-          window.showDialog("OTP sent to your email!", "success");
+          window.showMessageDialog("OTP sent to your email!", "success");
           emailStep.style.display = "none";
           otpStep.style.display = "block";
         } else {
-          window.showDialog(data.message, "error");
+          window.showMessageDialog(data.message, "error");
         }
       });
 
       // Step 2: Verify OTP
       verifyOtpBtn.addEventListener("click", async () => {
         const otp = otpInput.value.trim();
-        if (!otp) return window.showDialog("Enter the OTP!", "error");
+        if (!otp) return window.showMessageDialog("Enter the OTP!", "error");
 
         const res = await fetch("/api/auth/verifyReset", {
           method: "POST",
@@ -282,18 +282,18 @@
 
         const data = await res.json();
         if (data.success) {
-          window.showDialog("OTP verified!", "success");
+          window.showMessageDialog("OTP verified!", "success");
           otpStep.style.display = "none";
           passStep.style.display = "block";
         } else {
-          window.showDialog(data.message, "error");
+          window.showMessageDialog(data.message, "error");
         }
       });
 
       // Step 3: Reset Password
       resetPassBtn.addEventListener("click", async () => {
         const newPassword = newPassInput.value.trim();
-        if (!newPassword) return window.showDialog("Enter a new password!", "error");
+        if (!newPassword) return window.showMessageDialog("Enter a new password!", "error");
 
         const res = await fetch("/api/auth/resetPassword", {
           method: "POST",
@@ -303,10 +303,10 @@
 
         const data = await res.json();
         if (data.success) {
-          window.showDialog("Password reset successfully!", "success");
+          window.showMessageDialog("Password reset successfully!", "success");
           modal.hide();
         } else {
-          window.showDialog(data.message, "error");
+          window.showMessageDialog(data.message, "error");
         }
       });
     });

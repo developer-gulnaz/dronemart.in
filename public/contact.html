@@ -741,7 +741,7 @@
       // ✅ Validate required fields
       for (const field of requiredFields) {
         if (!fd.get(field)?.trim()) {
-          window.showDialog?.(`Please fill in the ${field} field.`, "error");
+          window.showMessageDialog?.(`Please fill in the ${field} field.`, "error");
           return;
         }
       }
@@ -768,14 +768,14 @@
 
         // ✅ Success
         successEl.style.display = 'block';
-        window.showDialog?.("✅ Message sent successfully!", "success");
+        window.showMessageDialog?.("✅ Message sent successfully!", "success");
         form.reset();
 
       } catch (err) {
         console.error('Contact form submission failed:', err);
         errorEl.textContent = '❌ ' + err.message;
         errorEl.style.display = 'block';
-        window.showDialog?.(`❌ Error: ${err.message}`, "error");
+        window.showMessageDialog?.(`❌ Error: ${err.message}`, "error");
       } finally {
         submitBtn.disabled = false;
         submitBtn.textContent = 'SEND MESSAGE';

@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const requiredFields = ['name', 'email', 'phone', 'state', 'brand', 'modelName', 'description'];
         for (const field of requiredFields) {
             if (!fd.get(field)) {
-                window.showDialog(`Please fill in the ${field} field.`, "error");
+                window.showMessageDialog(`Please fill in the ${field} field.`, "error");
                 return;
             }
         }
@@ -61,13 +61,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (!res.ok) throw new Error(data.message || 'Failed to submit request.');
 
             // Success
-            window.showDialog("✅ Repair request submitted successfully! ID: " + (data.repair?._id || ""), "success");
+            window.showMessageDialog("✅ Repair request submitted successfully! ID: " + (data.repair?._id || ""), "success");
             form.reset();
 
         } catch (err) {
             console.error('Repair form submission failed:', err);
             alert('❌ Error: ' + err.message);
-            window.showDialog(`❌ Error: ` + err.message, "error");
+            window.showMessageDialog(`❌ Error: ` + err.message, "error");
         } finally {
             submitBtn.disabled = false;
             submitBtn.textContent = 'Submit Request';

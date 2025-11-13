@@ -12,7 +12,7 @@ async function loadRepairs() {
         renderRepairsTable(allRepairs);
     } catch (err) {
         console.error("Error loading repairs:", err);
-        window.showDialog("Failed to load repair requests.", "error");
+        window.showMessageDialog("Failed to load repair requests.", "error");
     }
 }
 

@@ -44,7 +44,7 @@ async function startServer() {
   });
 
   // 4) Apply express-session middleware
-  // app.set("trust proxy", process.env.NODE_ENV === "production" ? 1 : 0);
+  // app.set("trust proxy",  0);
   // app.use(
   //   session({
   //     name: "sessionId",
@@ -57,8 +57,7 @@ async function startServer() {
   //       httpOnly: true,
   //       maxAge: 1000 * 60 * 60, // 1 hour in ms
   //       sameSite: "lax",
-  //       secure: process.env.NODE_ENV === "production" // set true only behind HTTPS
-  //       // secure: false
+  //       secure: false
   //     }
   //   })
   // );

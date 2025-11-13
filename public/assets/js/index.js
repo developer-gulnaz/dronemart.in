@@ -568,7 +568,7 @@ loadFeaturedProducts();
 
 
 // 🧩 Modern Center Dialog Box
-window.showDialog = function (message, type = "info") {
+window.showMessageDialog = function (message, type = "info") {
     // Overlay background
     const overlay = document.createElement("div");
     overlay.className = "dialog-overlay";
@@ -712,7 +712,7 @@ window.addToCart = async function (product, quantity = 1) {
         });
 
         if (res.status === 401) {
-            window.showDialog("Please login to add items to cart", "error");
+            window.showMessageDialog("Please login to add items to cart", "error");
             window.location.href = "login.html";
             return;
         }
@@ -720,17 +720,17 @@ window.addToCart = async function (product, quantity = 1) {
         const data = await res.json();
 
         if (res.status === 400) {
-            window.showDialog(data.message || "Item already in cart", "error");
+            window.showMessageDialog(data.message || "Item already in cart", "error");
             return;
         }
 
         if (res.ok) {
-            window.showDialog(`${product.title} added to cart 🛒`, "success");
+            window.showMessageDialog(`${product.title} added to cart 🛒`, "success");
             window.updateCartBadge?.(data.items?.length || 0);
         }
     } catch (err) {
         console.error("Error adding to cart:", err);
-        window.showDialog("Something went wrong. Please try again.", "error");
+        window.showMessageDialog("Something went wrong. Please try again.", "error");
     }
 };
 
@@ -763,7 +763,7 @@ window.addToWishlist = async function (product) {
         });
 
         if (res.status === 401) {
-            window.showDialog("Please login to add to wishlist", "error");
+            window.showMessageDialog("Please login to add to wishlist", "error");
             window.location.href = "login.html";
             return;
         }
@@ -771,18 +771,18 @@ window.addToWishlist = async function (product) {
         const data = await res.json();
 
         if (res.status === 400) {
-            window.showDialog(data.message || "Item already in wishlist", "error");
+            window.showMessageDialog(data.message || "Item already in wishlist", "error");
             return;
         }
 
         if (res.ok) {
-            window.showDialog(`${product.title} added to wishlist ❤️`, "success");
+            window.showMessageDialog(`${product.title} added to wishlist ❤️`, "success");
             window.updateWishlistBadge?.(data.items?.length || 0);
         }
 
     } catch (err) {
         console.error("Error adding to wishlist:", err);
-        window.showDialog("Something went wrong. Please try again.", "error");
+        window.showMessageDialog("Something went wrong. Please try again.", "error");
     }
 };
 
@@ -794,11 +794,11 @@ window.buyNow = async function (item, quantity = 1) {
     try {
         const stock = await checkProductStock(item._id, item.refType);
         if (stock === null) {
-            window.showDialog("Unable to verify stock. Please try again.", "error");
+            window.showMessageDialog("Unable to verify stock. Please try again.", "error");
             return;
         }
         if (stock < quantity) {
-            window.showDialog("Not enough stock available.", "error");
+            window.showMessageDialog("Not enough stock available.", "error");
             return;
         }
 
@@ -814,21 +814,21 @@ window.buyNow = async function (item, quantity = 1) {
         });
 
         if (res.status === 401) {
-            window.showDialog("Please login to proceed", "error");
+            window.showMessageDialog("Please login to proceed", "error");
             window.location.href = "login.html";
             return;
         }
 
         const data = await res.json();
         if (res.ok && data.success) {
-            window.showDialog("Redirecting to checkout...", "success");
+            window.showMessageDialog("Redirecting to checkout...", "success");
             setTimeout(() => (window.location.href = "/checkout.html?buyNow=true"), 1000);
         } else {
-            window.showDialog("Failed to proceed to checkout", "error");
+            window.showMessageDialog("Failed to proceed to checkout", "error");
         }
     } catch (err) {
         console.error("Error in Buy Now:", err);
-        window.showDialog("Something went wrong. Please try again.", "error");
+        window.showMessageDialog("Something went wrong. Please try again.", "error");
     }
 };
 

@@ -17,7 +17,7 @@ const userSchema = mongoose.Schema(
     // Added fields
     statusTag: { type: String, default: "New" },
     modifiedAt: { type: Date },
-
+    visibility: { type: Number, default: 1 },
     resetOTP: String,
     resetOTPExpires: Date,
 

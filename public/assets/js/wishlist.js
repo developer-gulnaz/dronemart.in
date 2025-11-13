@@ -5,7 +5,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Fetch wishlist from backend
     const res = await fetch("/api/wishlist", { credentials: "include" });
     if (res.status === 401) {
-      alert("Please login to view your wishlist");
+      // alert("Please login to view your wishlist");
+      window.showMessageDialog("You must login to access your wishlist!", "error");
+      // Force a small delay before redirecting
+      await new Promise(resolve => setTimeout(resolve, 1)); // match your dialog duration
+
       window.location.href = "login.html";
       return;
     }

@@ -4819,7 +4819,8 @@ section,
   border-color: #dc3545;
 }
 
-.cart .btn-accent {
+.cart .btn-accent,
+.btn-accent {
   color: var(--contrast-color);
   background-color: var(--accent-color);
   border-color: var(--accent-color);
@@ -4827,7 +4828,10 @@ section,
 
 .cart .btn-accent:hover,
 .cart .btn-accent:focus,
-.cart .btn-accent:active {
+.cart .btn-accent:active,
+.btn-accent:hover,
+.btn-accent:focus,
+.btn-accent:active {
   color: var(--contrast-color);
   background-color: color-mix(in srgb, var(--accent-color), #000 15%);
   border-color: color-mix(in srgb, var(--accent-color), #000 15%);

@@ -338,13 +338,13 @@
                     if (!data.success) throw new Error(data.message);
 
                     // alert('✅ Status updated successfully!');
-                    window.showDialog(`Status updated successfully!`, "success");
+                    window.showMessageDialog(`Status updated successfully!`, "success");
 
                     modal.hide();
                     await loadContacts();
                 } catch (err) {
                     console.error('Update failed:', err);
-                    window.showDialog(`Error updating Status!`, "error");
+                    window.showMessageDialog(`Error updating Status!`, "error");
                 } finally {
                     saveBtn.disabled = false;
                     saveBtn.textContent = 'Save Changes';

@@ -19,7 +19,10 @@ document.addEventListener("DOMContentLoaded", async function () {
       if (res.ok) {
         cart = (await res.json()).items || [];
       } else {
-        alert("You must login to access your cart!");
+        window.showMessageDialog("You must login to access your cart!", "error");
+        // Force a small delay before redirecting
+        await new Promise(resolve => setTimeout(resolve, 1)); // match your dialog duration
+
         window.location.href = "login.html";
         return;
       }

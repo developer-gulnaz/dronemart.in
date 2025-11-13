@@ -957,7 +957,7 @@
 
 
   // 🧩 Modern Center Dialog Box
-window.showDialog = function (message, type = "info") {
+window.showMessageDialog = function (message, type = "info") {
   // Overlay background
   const overlay = document.createElement("div");
   overlay.className = "dialog-overlay";

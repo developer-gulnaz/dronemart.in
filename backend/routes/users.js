@@ -10,7 +10,8 @@ const {
   updateUserProfile,
   deleteUser,
   updateAddress,
-  updateUserStatus
+  updateUserStatus,
+  changePassword
 } = require('../controllers/userController');
 
 
@@ -60,10 +61,12 @@ router.get('/profile', checkUserSession, getUserProfile);
 router.put('/me', checkUserSession, updateUserProfile);
 
 // DELETE user profile
-router.delete('/:id', checkUserSession, deleteUser);
+router.delete('/me', checkUserSession, deleteUser);
 
 // Add / Update shipping address
 router.post("/update-address", checkUserSession, updateAddress);
+
+router.put("/change-password", checkUserSession, changePassword);
 
 router.patch("/:id/status", checkAdminSession, updateUserStatus);
 

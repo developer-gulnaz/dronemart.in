@@ -46,14 +46,16 @@ exports.registerUser = async (req, res) => {
 // -----------------------------
 exports.loginUserSession = async (req, res) => {
   const { email, password } = req.body;
-
   try {
     const user = await User.findOne({ email });
-    if (!user) return res.status(401).json({ message: "Invalid email or password" });
+    if (!user) return res.status(400).json({ message: "No user found with this email" });
 
+    if (user.isDeleted || user.visibility === 0) {
+      return res.status(403).json({ message: "Account has been deleted or disabled" });
+    }
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(401).json({ message: "Invalid password" });
-    req.session.userId = user._id; 
+    req.session.userId = user._id;
 
     res.json({
       message: "Login successfully !",
@@ -89,7 +91,7 @@ exports.updateUserProfile = async (req, res) => {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
-      phone: req.body.phone,
+      mobile: req.body.mobile,
     };
 
     const user = await User.findByIdAndUpdate(req.session.userId, updates, { new: true }).select("-password");
@@ -248,6 +250,41 @@ exports.updateAddress = async (req, res) => {
   res.json({ message: "Address updated successfully", address: user.address });
 };
 
+exports.changePassword = async (req, res) => {
+  try {
+    // Must have valid session
+    if (!req.session.userId) {
+      return res.status(401).json({ message: "Not authenticated" });
+    }
+
+    const { currentPassword, newPassword } = req.body;
+
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
+    // Find user by session ID
+    const user = await User.findById(req.session.userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // ✅ Check current password matches the stored (hashed) one
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "Current password is incorrect" });
+    }
+
+    // ✅ Update user password
+    user.password = newPassword;
+    await user.save();
+
+    res.json({ message: "Password updated successfully!" });
+  } catch (err) {
+    console.error("Password update error:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
 
 
 function assignUserStatusTag(user) {
@@ -328,22 +365,30 @@ exports.getRecentLeads = [
 
 
 // Soft delete user
-exports.deleteUser = [
-  checkAdminSession, async (req, res) => {
-    try {
-      const user = await User.findByIdAndUpdate(
-        req.params.id,
-        { isDeleted: true },
-        { new: true }
-      );
+exports.deleteUser = async (req, res) => {
+  try {
+    const userId = req.session.userId; // comes from session
+    if (!userId) return res.status(401).json({ message: "Not authenticated" });
 
-      if (!user) return res.status(404).json({ message: "User not found" });
-      res.json({ message: "User soft deleted successfully" });
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ message: "Server error" });
-    }
-  }];
+    // Soft delete (mark as deleted)
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { isDeleted: true, visibility: 0 },
+      { new: true }
+    );
+
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    // Clear the session
+    req.session.destroy(() => {
+      res.clearCookie("connect.sid");
+      return res.json({ message: "Account deleted successfully" });
+    });
+  } catch (err) {
+    console.error("Error deleting user:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
 
 //upate user status
 exports.updateUserStatus = [checkAdminSession, async (req, res) => {
